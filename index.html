@@ -21,8 +21,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
   (function(){
-    // ⚠️ ЗАМЕНИ на свой Public Key из EmailJS
-    emailjs.init("YOUR_PUBLIC_KEY");
+    emailjs.init("TUy6SYxNFho3xWTa-");
   })();
 </script>
 
@@ -1078,7 +1077,7 @@ $('sendB').onclick = function(){
   setMsg('Отправляем код…','');
   $('sendB').disabled = true;
 
-  emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+  emailjs.send('service_si2snd6', 'template_kwa8lmj', templateParams)
     .then(function(){
       $('cbox').innerHTML = '🔑 Код отправлен на почту<b>******</b>';
       $('cbox').classList.add('on');
