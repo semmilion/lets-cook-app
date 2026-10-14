@@ -1034,6 +1034,47 @@ function rlCheck(action, max, ms){
 }
 /* ============ /БЕЗОПАСНОСТЬ ============ */
 
+/* ============ ЗАЩИТА ОТ БРУТФОРСА ============ */
+var PWMAX = 3;                    // макс. попыток
+var PWBLOCK = 10 * 60 * 1000;     // блокировка на 10 минут
+var pwBlkTimer = null;
+
+function pwGet(email){
+  try{
+    var d = JSON.parse(localStorage.getItem('ck_pwl_' + email) || '{}');
+    return { attempts: d.attempts || 0, until: d.until || 0 };
+  }catch(e){ return { attempts: 0, until: 0 }; }
+}
+function pwSet(email, obj){
+  try{ localStorage.setItem('ck_pwl_' + email, JSON.stringify(obj)); }catch(e){}
+}
+function pwBlockLeft(email){
+  var d = pwGet(email);
+  if(d.until && d.until > Date.now()) return d.until - Date.now();
+  return 0;
+}
+function pwFmt(ms){
+  var s = Math.ceil(ms/1000);
+  var m = Math.floor(s/60);
+  var ss = s % 60;
+  return m + ':' + (ss < 10 ? '0' : '') + ss;
+}
+function pwStartCountdown(email){
+  if(pwBlkTimer) clearInterval(pwBlkTimer);
+  var tick = function(){
+    var left = pwBlockLeft(email);
+    if(left <= 0){
+      clearInterval(pwBlkTimer); pwBlkTimer = null;
+      setMsg('Можно попробовать снова.','ok');
+      return;
+    }
+    setMsg('Заблокировано. Подождите ' + pwFmt(left) + '.','err');
+  };
+  tick();
+  pwBlkTimer = setInterval(tick, 1000);
+}
+/* ============ /ЗАЩИТА ОТ БРУТФОРСА ============ */
+
 function G(k,f){try{var v=localStorage.getItem(k);return v?JSON.parse(v):f}catch(e){return f}}
 function S(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 function DL(k){try{localStorage.removeItem(k)}catch(e){}}
@@ -1163,6 +1204,7 @@ function setMsg(t, c){ $('msg').textContent = t; $('msg').className = 'msg ' + (
 function resetFlow(){
   pc = null; pe = null; cdAttempts = 3;
   if(cdTimer){ clearInterval(cdTimer); cdTimer = null; }
+  if(pwBlkTimer){ clearInterval(pwBlkTimer); pwBlkTimer = null; }
   $('sendB').disabled = false; $('sendB').textContent = 'Код';
   $('s1').style.display = 'block'; $('s2').style.display = 'none';
   $('cbox').classList.remove('on'); $('cbox').innerHTML = '';
@@ -1173,6 +1215,18 @@ $('sendB').onclick = function(){
   var em = ($('em').value||'').trim().toLowerCase();
   if(!em){ setMsg('Введите email','err'); return; }
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){ setMsg('Некорректный email','err'); return; }
+
+  // Проверка блокировки от брутфорса (только для входа)
+  if(tab === 'login'){
+    var blk = pwBlockLeft(em);
+    if(blk > 0){
+      pwStartCountdown(em);
+      toast('Вход заблокирован. Подождите ' + pwFmt(blk),'err','🚫');
+      if(navigator.vibrate) try{ navigator.vibrate([60,80,60]); }catch(e){}
+      return;
+    }
+  }
+
   var us = G(UK,{}) || {};
   if(tab==='reg' && us[em]){ setMsg('Email уже зарегистрирован','err'); return; }
   if(tab==='login' && !us[em]){ setMsg('Пользователь не найден','err'); return; }
@@ -1266,10 +1320,54 @@ $('verB').onclick = function(){
     S(SK,{email:pe, name:dn, guest:false});
     toast('Регистрация успешна!','ok','🎉');
     setTimeout(function(){ enter({email:pe, name:dn, guest:false}); }, 300);
-  } else {
+    } else {
     var us2 = G(UK,{}) || {};
     var u = us2[pe];
     if(!u){ setMsg('Пользователь не найден','err'); return; }
+
+    // Проверка блокировки
+    var blk = pwBlockLeft(pe);
+    if(blk > 0){
+      pwStartCountdown(pe);
+      toast('Заблокировано. Подождите ' + pwFmt(blk),'err','🚫');
+      return;
+    }
+
+    // Проверка пароля
+    var pw = $('pw').value || '';
+    if(pw.length < 4){
+      setMsg('Введите пароль (минимум 4 символа)','err');
+      return;
+    }
+    if(!u.password || u.password !== pw){
+      var lock = pwGet(pe);
+      lock.attempts++;
+
+      if(lock.attempts >= PWMAX){
+        lock.until = Date.now() + PWBLOCK;
+        lock.attempts = 0;
+        pwSet(pe, lock);
+        setMsg('Слишком много неверных попыток. Вход заблокирован на 10 минут.','err');
+        toast('Заблокировано на 10 минут','err','🚫');
+        if(navigator.vibrate) try{ navigator.vibrate([120,80,120,80,120]); }catch(e){}
+        $('pw').value = '';
+        pwStartCountdown(pe);
+      } else {
+        pwSet(pe, lock);
+        var left = PWMAX - lock.attempts;
+        var word = (left === 1) ? 'попытка' : 'попытки';
+        setMsg('Неверный пароль. Осталось ' + left + ' ' + word + '.','err');
+        toast('Осталось попыток: ' + left,'err','⚠️');
+        if(navigator.vibrate) try{ navigator.vibrate([40,60,40]); }catch(e){}
+        $('pw').value = '';
+        $('pw').focus();
+      }
+      return;
+    }
+
+    // Успешный вход — сбрасываем счётчик
+    pwSet(pe, { attempts: 0, until: 0 });
+    if(pwBlkTimer){ clearInterval(pwBlkTimer); pwBlkTimer = null; }
     S(SK,{email:pe, name:u.name, guest:false});
     toast('С возвращением!','ok','👋');
     setTimeout(function(){ enter({email:pe, name:u.name, guest:false}); }, 300);
