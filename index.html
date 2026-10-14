@@ -435,12 +435,24 @@ input,textarea,select{font-family:inherit}
 .match .mp{font-family:Caveat;font-size:22px;color:var(--accent);font-weight:700}
 
 /* === FIX: нижнее меню — отступ под системные кнопки телефона === */
-.bnav{position:absolute;left:14px;right:14px;
-  bottom:calc(60px + var(--sab));
-  height:64px;z-index:50;
-  background:var(--paper);border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--sh-4);
-  display:flex;align-items:center;justify-content:space-around;padding:0 6px;
-  max-width:580px;margin:0 auto}
+.bnav{
+  position:fixed;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:calc(12px + env(safe-area-inset-bottom, 0px));
+  width:calc(100% - 28px);
+  max-width:580px;
+  height:64px;
+  z-index:50;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--r-xl);
+  box-shadow:var(--sh-4);
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding:0 6px;
+}
 .ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;background:none;border:none;
   padding:6px 2px;color:var(--muted);font-weight:800;font-size:9.5px;transition:all .2s;position:relative}
 .ni .em{font-size:19px;transition:all .2s var(--bounce)}
@@ -520,7 +532,7 @@ input,textarea,select{font-family:inherit}
   <div class="foot">Твой личный кулинарный помощник 🍳</div>
 </div>
 
-<div class="scr" id="main" style="padding-bottom:calc(150px + var(--sab))">
+<div class="scr" id="main" style="padding-bottom:calc(110px + var(--sab))">
   <div class="hdr">
     <div class="ttl">Let's cook!</div>
     <button class="thbtn" id="thB" type="button">🌙</button>
