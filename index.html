@@ -55,7 +55,7 @@ button{font-family:inherit;color:inherit;cursor:pointer}
 input,textarea,select{font-family:inherit}
 :focus{outline:none}
 
-.view{position:relative;width:100%;height:100vh;max-width:620px;margin:0 auto;overflow:hidden;
+.view{position:relative;width:100%;height:100vh;height:100dvh;max-width:620px;margin:0 auto;overflow:hidden;
   background:radial-gradient(circle at 15% -5%,rgba(245,165,94,.18),transparent 50%),
              radial-gradient(circle at 90% 105%,rgba(232,104,58,.12),transparent 45%)}
 
@@ -436,7 +436,7 @@ input,textarea,select{font-family:inherit}
 
 /* === FIX: нижнее меню — отступ под системные кнопки телефона === */
 .bnav{position:absolute;left:14px;right:14px;
-  bottom:calc(12px + var(--sab));
+  bottom:calc(60px + var(--sab));
   height:64px;z-index:50;
   background:var(--paper);border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--sh-4);
   display:flex;align-items:center;justify-content:space-around;padding:0 6px;
@@ -520,7 +520,7 @@ input,textarea,select{font-family:inherit}
   <div class="foot">Твой личный кулинарный помощник 🍳</div>
 </div>
 
-<div class="scr" id="main" style="padding-bottom:calc(96px + var(--sab))">
+<div class="scr" id="main" style="padding-bottom:calc(150px + var(--sab))">
   <div class="hdr">
     <div class="ttl">Let's cook!</div>
     <button class="thbtn" id="thB" type="button">🌙</button>
