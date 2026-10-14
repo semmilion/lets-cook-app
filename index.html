@@ -1903,13 +1903,51 @@ function renderShop(){
       '<button class="del" data-d="'+i+'" type="button">×</button></div>';
   });
   l.innerHTML = html;
-
+  var cbs = l.querySelectorAll('.cb');
+  for(var i=0; i<cbs.length; i++){
+    (function(c){
+      c.onclick = function(){
+        var idx = parseInt(c.getAttribute('data-i'), 10);
+        shopping[idx].done = !shopping[idx].done;
+        S(SHK, shopping); renderShop();
+      };
+    })(cbs[i]);
+  }
+  var dels = l.querySelectorAll('[data-d]');
+  for(var j=0; j<dels.length; j++){
+    (function(b){
+      b.onclick = function(){
+        var idx = parseInt(b.getAttribute('data-d'), 10);
+        shopping.splice(idx, 1); S(SHK, shopping); renderShop();
+      };
+    })(dels[j]);
+  }
+}
+$('clrB').onclick = function(){
+  if(!shopping.length) return;
+  if(confirm('Очистить список?')){
+    shopping = []; S(SHK, shopping); renderShop();
+    toast('Очищено','','🗑');
   }
 };
 $('shopShareB').onclick = function(){
   if(!shopping.length){ toast('Список пуст','err'); return; }
   var text = '🛒 Список покупок (Let\'s cook!)\n\n' +
-    shopping.map(fun{}
+    shopping.map(function(it){ return (it.done?'✓ ':'• ') + it.name + (it.qty?' — '+it.qty:''); }).join('\n');
+  if(navigator.share){
+    navigator.share({title:'Список покупок', text:text}).catch(function(){});
+  } else if(navigator.clipboard){
+    navigator.clipboard.writeText(text).then(function(){ toast('Скопировано','ok','📋'); });
+  } else {
+    toast('Не поддерживается','err');
+  }
+};
+
+/* ============ НАВИГАЦИЯ ============ */
+$('bk1').onclick = goB;
+$('bk2').onclick = function(){
+  if(tmInt){clearInterval(tmInt);tmInt=null;}
+  if('speechSynthesis' in window) try{ window.speechSynthesis.cancel(); }catch(e){}
   goB();
 };
 $('bk3').onclick = goB;
