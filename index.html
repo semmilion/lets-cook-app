@@ -507,8 +507,9 @@ input,textarea,select{font-family:inherit}
 .ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.5);transform:scale(0);animation:rip .6s linear;pointer-events:none}
 [data-theme=dark] .ripple{background:rgba(255,255,255,.25)}
 @keyframes rip{to{transform:scale(4);opacity:0}}
-.hdr{background:linear-gradient(180deg,var(--bg) 60%,transparent);position:sticky;top:0;z-index:10;
-  margin:-26px -22px 16px;padding:26px 22px 8px}
+.hdr{background:var(--bg);position:sticky;top:0;z-index:20;
+  margin:-26px -22px 16px;padding:26px 22px 14px;
+  border-bottom:1px solid var(--line)}
 .dod:hover .em{transform:scale(1.08) rotate(-4deg)}
 .dod .em{transition:transform .4s var(--bounce)}
 .dod::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at var(--mx,80%) var(--my,20%),rgba(232,104,58,.14),transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none}
@@ -579,18 +580,21 @@ input,textarea,select{font-family:inherit}
     </div>
     <div class="cbox" id="cbox"></div>
     <div id="s1">
-      <div class="fld">
+           <div class="fld">
         <label>Email</label>
         <div style="display:flex;gap:8px">
           <input id="em" type="email" placeholder="you@mail.ru" style="flex:1">
           <button id="sendB" class="codeBtn" type="button">Код</button>
         </div>
       </div>
+      <div id="forgotWrap" style="text-align:right;margin-top:-6px;margin-bottom:14px">
+        <button id="forgotB" type="button" style="background:none;border:none;color:var(--accent);font-weight:700;font-size:12px;padding:4px 0;cursor:pointer">🔑 Забыли пароль?</button>
+      </div>
     </div>
     <div id="s2" style="display:none">
       <div class="fld"><label>Код</label><input id="cd" maxlength="6" placeholder="000000"></div>
       <div class="fld" id="nf" style="display:none"><label>Имя</label><input id="nm" maxlength="30" placeholder="Как тебя зовут?"></div>
-      <div class="fld"><label>Пароль</label><input id="pw" type="password" placeholder="Минимум 4 символа"></div>
+      <div class="fld"><label id="pwLbl">Пароль</label><input id="pw" type="password" placeholder="Минимум 4 символа"></div>
       <button class="btn" id="verB" type="button">Подтвердить</button>
       <button class="btn gh" id="backB" type="button" style="margin-top:10px">← Другой email</button>
     </div>
@@ -1195,14 +1199,22 @@ function updNav(){
 }
 
 /* ============ АВТОРИЗАЦИЯ ============ */
-var tab = 'login', pc = null, pe = null, pxp = 0, cdTimer = null, cdAttempts = 3;
+var tab = 'login', pc = null, pe = null, pxp = 0, cdTimer = null, cdAttempts = 3, recovery = false;
 
-$('tbL').onclick = function(){ tab='login'; $('tbL').classList.add('on'); $('tbR').classList.remove('on'); resetFlow(); };
-$('tbR').onclick = function(){ tab='reg'; $('tbR').classList.add('on'); $('tbL').classList.remove('on'); resetFlow(); };
+$('tbL').onclick = function(){
+  tab='login'; $('tbL').classList.add('on'); $('tbR').classList.remove('on');
+  $('forgotWrap').style.display = 'block';
+  resetFlow();
+};
+$('tbR').onclick = function(){
+  tab='reg'; $('tbR').classList.add('on'); $('tbL').classList.remove('on');
+  $('forgotWrap').style.display = 'none';
+  resetFlow();
+};
 
 function setMsg(t, c){ $('msg').textContent = t; $('msg').className = 'msg ' + (c||''); }
 function resetFlow(){
-  pc = null; pe = null; cdAttempts = 3;
+  pc = null; pe = null; cdAttempts = 3; recovery = false;
   if(cdTimer){ clearInterval(cdTimer); cdTimer = null; }
   if(pwBlkTimer){ clearInterval(pwBlkTimer); pwBlkTimer = null; }
   $('sendB').disabled = false; $('sendB').textContent = 'Код';
@@ -1265,7 +1277,9 @@ $('sendB').onclick = function(){
       $('cbox').classList.add('on');
       $('s1').style.display = 'none'; $('s2').style.display = 'block';
       $('nf').style.display = (tab==='reg') ? 'block' : 'none';
-      setMsg('Код отправлен на ' + em,'ok');
+      $('pwLbl').textContent = recovery ? 'Новый пароль' : 'Пароль';
+      $('pw').placeholder = recovery ? 'Придумайте новый' : 'Минимум 4 символа';
+      setMsg(recovery ? 'Код отправлен. Придумайте новый пароль.' : ('Код отправлен на ' + em),'ok');
       toast('Код отправлен на почту','ok','📧');
       var left = 60; $('sendB').disabled = true;
       cdTimer = setInterval(function(){
@@ -1282,6 +1296,24 @@ $('sendB').onclick = function(){
 };
 
 $('backB').onclick = function(){ resetFlow(); };
+
+$('forgotB').onclick = function(){
+  var em = ($('em').value||'').trim().toLowerCase();
+  if(!em){ setMsg('Сначала введите email','err'); return; }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){ setMsg('Некорректный email','err'); return; }
+  var us = G(UK,{}) || {};
+  if(!us[em]){ setMsg('Пользователь с таким email не найден','err'); return; }
+
+  recovery = true;
+  tab = 'login';
+  $('tbL').classList.add('on');
+  $('tbR').classList.remove('on');
+  resetFlow();
+  recovery = true; // resetFlow сбрасывает — вернём обратно
+  $('em').value = em;
+  toast('Сброс пароля. Нажмите «Код»','ok','🔑');
+  setMsg('Введите email и нажмите «Код»','');
+};
 
 $('verB').onclick = function(){
   var e = ($('cd').value||'').trim();
@@ -1333,7 +1365,26 @@ $('verB').onclick = function(){
       return;
     }
 
-    // Проверка пароля
+        // === РЕЖИМ ВОССТАНОВЛЕНИЯ ПАРОЛЯ ===
+    if(recovery){
+      var npw = $('pw').value || '';
+      if(npw.length < 4){
+        setMsg('Новый пароль минимум 4 символа','err');
+        return;
+      }
+      u.password = npw;
+      us2[pe] = u;
+      S(UK, us2);
+      pwSet(pe, { attempts: 0, until: 0 });
+      if(pwBlkTimer){ clearInterval(pwBlkTimer); pwBlkTimer = null; }
+      recovery = false;
+      S(SK,{email:pe, name:u.name, guest:false});
+      toast('Пароль обновлён!','ok','🔑');
+      setMsg('Пароль сохранён. Входим…','ok');
+      setTimeout(function(){ enter({email:pe, name:u.name, guest:false}); }, 600);
+      return;
+    }
+    // === ОБЫЧНЫЙ ВХОД — ПРОВЕРКА ПАРОЛЯ ===
     var pw = $('pw').value || '';
     if(pw.length < 4){
       setMsg('Введите пароль (минимум 4 символа)','err');
