@@ -1367,10 +1367,12 @@ function resetTo(id){ stack = [id]; show(id); }function updNav(){
 /* ============ АВТОРИЗАЦИЯ ============ */
 /* ============ АВТОРИЗАЦИЯ (Firebase Auth) ============ */
 var FB_CONFIG = {
-  apiKey: 'AIzaSyDm0mvzoy4HLigSHu5wKeywOY2GwwH_QQY',
-  authDomain: 'lets-cook-9119c.firebaseapp.com',
-  projectId: 'lets-cook-9119c',
-  appId: '1:674455249399:web:092a50195e3a999cc7cef2'
+  apiKey: "AIzaSyDm0mvzoy4HLigSHu5wKeywOY2GwwH_QQY",
+  authDomain: "lets-cook-9119c.firebaseapp.com",
+  projectId: "lets-cook-9119c",
+  storageBucket: "lets-cook-9119c.firebasestorage.app",
+  messagingSenderId: "674455249399",
+  appId: "1:674455249399:web:092a50195e3a999cc7cef2"
 };
 var fbAuth = null;
 try{
@@ -2611,32 +2613,7 @@ screens.main.addEventListener('scroll', function(){ mainScroll = screens.main.sc
 })();
 
 })();
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
-        .then(registration => {
-          console.log('ServiceWorker зарегистрирован');
-          
-          // Принудительно проверяем обновления при каждой загрузке страницы
-          registration.update();
-          
-          // Слушаем обновления
-          registration.onupdatefound = () => {
-            const installingWorker = registration.installing;
-            installingWorker.onstatechange = () => {
-              if (installingWorker.state === 'installed') {
-                if (navigator.serviceWorker.controller) {
-                  // Новый контент доступен, можно перезагрузить страницу
-                  console.log('Доступно обновление. Перезагрузка...');
-                  window.location.reload();
-                }
-              }
-            };
-          };
-        })
-        .catch(err => console.log('Ошибка регистрации ServiceWorker:', err));
-    });
-  }
+
 </script>
 </body>
 </html>
