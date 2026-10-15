@@ -62,7 +62,6 @@ input,textarea,select{font-family:inherit}
 .scr::-webkit-scrollbar{display:none}
 .scr.on{display:flex;animation:scrSlide .45s cubic-bezier(.22,.9,.32,1)}
 @keyframes scrSlide{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
-@keyframes scrIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
 #splash{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;
   justify-content:center;gap:16px;background:var(--grad-2);
@@ -75,7 +74,7 @@ input,textarea,select{font-family:inherit}
 #splash .bar i{display:block;width:40%;height:100%;background:var(--grad);border-radius:var(--r-full);animation:slide 1.2s var(--ease) infinite}
 @keyframes slide{0%{transform:translateX(-100%)}100%{transform:translateX(300%)}}
 
-#auth{justify-content:center;text-align:center;padding:24px 20px;overflow:hidden}
+#auth{justify-content:center;text-align:center;padding:24px 20px 120px;overflow:hidden}
 #auth .blob{position:absolute;border-radius:50%;filter:blur(64px);opacity:.6;pointer-events:none;z-index:0}
 #auth .b1{top:-80px;left:-80px;width:280px;height:280px;background:radial-gradient(circle,#ffb877,transparent 70%);animation:blob 16s ease-in-out infinite}
 #auth .b2{bottom:-100px;right:-60px;width:320px;height:320px;background:radial-gradient(circle,#ff8a5c,transparent 70%);animation:blob 20s ease-in-out infinite reverse}
@@ -153,8 +152,8 @@ input,textarea,select{font-family:inherit}
   margin:0 -22px 16px;
   padding:calc(16px + env(safe-area-inset-top, 0px)) 22px 14px;
   border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:10px;flex-shrink:0;min-width:0;
 }
-.hdr{display:flex;align-items:center;gap:10px;flex-shrink:0;min-width:0}
 .ttl{font-family:Caveat;font-size:34px;flex:1;line-height:1;font-weight:700;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 .bk,.thbtn{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-sm);
@@ -231,7 +230,7 @@ input,textarea,select{font-family:inherit}
 .search .clr.on{display:flex}
 
 .searchHist{display:none;margin-top:-6px;margin-bottom:12px;padding:0 4px}
-.searchHist.on{display:block;animation:fadeUp .3s backwards}
+.searchHist.on{display:block}
 .searchHist .hdr2{font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
 .searchHist .hdr2 button{background:none;border:none;color:var(--accent);font-size:10px;font-weight:800;padding:0;cursor:pointer}
 .searchHist .chips{display:flex;gap:6px;flex-wrap:wrap}
@@ -320,14 +319,13 @@ input,textarea,select{font-family:inherit}
 .dc .go{font-size:10px;color:var(--accent);font-weight:900;text-transform:uppercase;margin-top:5px;letter-spacing:.6px}
 .dc .fav{position:absolute;top:10px;left:10px;width:34px;height:34px;border:none;border-radius:50%;
   background:rgba(255,255,255,.94);color:#c9c0b2;font-size:15px;z-index:3;box-shadow:var(--sh-1);
-  display:flex;align-items:center;justify-content:center;transition:all .2s;position:absolute}
+  display:flex;align-items:center;justify-content:center;transition:all .2s}
 .dc .fav.on{color:var(--accent);background:#fff;animation:heartBurst .7s cubic-bezier(.34,1.56,.64,1)}
 @keyframes heartBurst{0%{transform:scale(1)}30%{transform:scale(1.4)}50%{transform:scale(.9)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
 .dc .del{position:absolute;top:10px;right:10px;width:30px;height:30px;border:none;border-radius:50%;
   background:rgba(255,255,255,.94);color:var(--err);font-size:16px;z-index:3;
   display:flex;align-items:center;justify-content:center;box-shadow:var(--sh-1)}
 
-/* Градиенты карточек по категориям */
 .dc[data-cat="breakfast"] .ph{background:linear-gradient(160deg,#ffe4b5,#ffb87a)}
 .dc[data-cat="soups"] .ph{background:linear-gradient(160deg,#ffd7b8,#f59b6e)}
 .dc[data-cat="main"] .ph{background:linear-gradient(160deg,#f7c9a8,#e8845c)}
@@ -444,14 +442,6 @@ input,textarea,select{font-family:inherit}
 .step-t{margin-top:18px;font-size:16px;color:var(--ink-2);font-weight:600;line-height:1.6}
 .step-n{color:var(--accent);font-weight:900;font-size:11px;text-transform:uppercase;display:block;margin-bottom:5px;letter-spacing:1px}
 
-.stepTools{display:flex;gap:8px;margin-bottom:12px}
-.stepTools button{flex:1;font-weight:800;font-size:12px;padding:12px 8px;border:1.5px solid var(--line-2);
-  border-radius:var(--r-md);background:var(--paper);color:var(--ink);
-  display:flex;align-items:center;justify-content:center;gap:4px;transition:all .2s}
-.stepTools button.on{background:var(--grad);color:#fff;border-color:transparent;box-shadow:var(--sh-a)}
-.stepTools button:hover{border-color:var(--accent);color:var(--accent)}
-.stepTools button.on:hover{color:#fff}
-
 .timer{display:flex;gap:8px;margin-bottom:12px}
 .timer button{flex:1;font-weight:800;font-size:14px;padding:13px;border:1.5px solid var(--line-2);
   border-radius:var(--r-md);background:var(--paper);color:var(--ink);transition:all .25s;
@@ -536,6 +526,12 @@ input,textarea,select{font-family:inherit}
   animation:glowPulse 3s ease-in-out infinite}
 @keyframes glowPulse{0%,100%{box-shadow:0 8px 24px rgba(232,104,58,.3)}50%{box-shadow:0 8px 40px rgba(232,104,58,.55), 0 0 0 6px rgba(232,104,58,.12)}}
 
+@media (hover: hover) and (pointer: fine) and (min-width: 700px){
+  .bnav{bottom:16px}
+  .scr{padding-bottom:32px}
+  #main{padding-bottom:100px}
+}
+
 #toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:10000;display:flex;flex-direction:column;gap:8px;pointer-events:none;max-width:88vw}
 .tst{background:rgba(24,22,15,.96);color:#fff;padding:13px 20px;border-radius:var(--r-md);
   font-weight:700;font-size:14px;box-shadow:0 12px 36px rgba(0,0,0,.32);
@@ -592,42 +588,6 @@ input,textarea,select{font-family:inherit}
 .dots{display:flex;gap:6px;justify-content:center;margin-bottom:10px}
 .dots i{width:6px;height:6px;border-radius:50%;background:var(--line-2);transition:all .3s}
 .dots i.on{background:var(--accent);transform:scale(1.4)}
-/* ============ АДАПТИВНЫЙ ОТСТУП ДЛЯ НИЖНЕГО МЕНЮ ============ */
-/* На тач-устройствах (телефоны, планшеты) — поднимаем меню над системной панелью */
-@media (pointer: coarse), (max-width: 900px){
-  .bnav{
-    bottom:calc(64px + var(--sab));
-  }
-}
-
-/* Отступ контента снизу — чтобы последняя карточка не пряталась под меню */
-@media (pointer: coarse), (max-width: 900px){
-  .scr{
-    padding-bottom:calc(96px + var(--sab));
-  }
-  #main{
-    padding-bottom:calc(164px + var(--sab));
-  }
-}
-
-/* На очень широких экранах (десктоп) — обычный отступ */
-@media (pointer: fine) and (min-width: 901px){
-  .bnav{
-    bottom:calc(16px + var(--sab));
-  }
-  .scr{
-    padding-bottom:calc(32px + var(--sab));
-  }
-  #main{
-    padding-bottom:calc(100px + var(--sab));
-  }
-}
-/* Компенсация для ПК — там системных кнопок нет */
-@media (hover: hover) and (pointer: fine) and (min-width: 700px){
-  .bnav{bottom:16px}
-  .scr{padding-bottom:32px}
-  #main{padding-bottom:100px}
-}
 </style>
 </head>
 <body>
@@ -790,11 +750,6 @@ input,textarea,select{font-family:inherit}
   <div class="stage">
     <svg id="stg" viewBox="0 0 200 150"></svg>
     <div class="step-t"><span class="step-n" id="sN">Шаг 1</span><span id="sTxt"></span></div>
-  </div>
-  <div class="stepTools">
-    <button id="voiceB" type="button">🔊 Прочитать</button>
-    <button id="autoB" type="button">▶ Автоозвучка</button>
-    <button id="wakeB" type="button">🔆 Экран</button>
   </div>
   <div class="timer" id="tmRow" style="display:none"><button id="tmB" type="button">⏱ Таймер</button></div>
   <div class="stnav"><button class="gh" id="prevB" type="button">←</button><button id="nextB" type="button">Далее →</button></div>
@@ -1066,8 +1021,6 @@ function calcNutrition(rec, servings){
     t.f += per.f * gr/100;
     t.c += per.c * gr/100;
   });
-  // Базовая рецептура — на 2 порции.
-  // Масштабируем под выбранное количество порций.
   var factor = (servings || 2) / 2;
   return {
     k: Math.round(t.k * factor),
@@ -1481,10 +1434,10 @@ $('verB').onclick = function(){
       return;
     }
 
-    var blk = pwBlockLeft(pe);
-    if(blk > 0){
+    var blk2 = pwBlockLeft(pe);
+    if(blk2 > 0){
       pwStartCountdown(pe);
-      toast('Заблокировано. Подождите ' + pwFmt(blk),'err','🚫');
+      toast('Заблокировано. Подождите ' + pwFmt(blk2),'err','🚫');
       return;
     }
 
@@ -1850,7 +1803,7 @@ $('clrS').onclick = function(){
 };
 $('addB').onclick = function(){ openAdd(cc); };
 
-/* ============ РУЛЕТКА «МНЕ ПОВЕЗЁТ» ============ */
+/* ============ РУЛЕТКА ============ */
 var rouMode = 'any', rouPick = null, rouTimer = null, rouFrame = 0;
 
 function rouPool(mode){
@@ -2029,12 +1982,13 @@ function renderNutrition(id, rec){
   var n = getPortions(id);
   var nut = calcNutrition(rec, n);
   var box = $('rNut');
+  var word = n===1 ? 'порцию' : (n<5 ? 'порции' : 'порций');
   box.innerHTML =
     '<div class="nc"><div class="v">'+nut.k+'</div><div class="k">ккал</div></div>'+
     '<div class="nc"><div class="v">'+nut.p+'</div><div class="k">белки</div></div>'+
     '<div class="nc"><div class="v">'+nut.f+'</div><div class="k">жиры</div></div>'+
     '<div class="nc"><div class="v">'+nut.c+'</div><div class="k">углев.</div></div>'+
-    '<div class="hint">Примерно на '+n+' '+(n===1?'порцию':(n<5?'порции':'порций'))+'</div>';
+    '<div class="hint">Примерно на '+n+' '+word+'</div>';
 }
 
 function renderTags(rec){
@@ -2201,34 +2155,6 @@ function scene(type, emoji){
 }
 
 var si = 0, sd = [], tmInt = null, tmLeft = 0;
-var voiceOn = true, autoVoice = false, wakeLock = null;
-
-function speakStep(){
-  if(!voiceOn || !('speechSynthesis' in window)) return;
-  try{
-    window.speechSynthesis.cancel();
-    var u = new SpeechSynthesisUtterance(sd[si][0]);
-    u.lang = 'ru-RU';
-    u.rate = 1;
-    window.speechSynthesis.speak(u);
-  }catch(e){}
-}
-
-async function requestWake(){
-  try{
-    if('wakeLock' in navigator && !wakeLock){
-      wakeLock = await navigator.wakeLock.request('screen');
-      wakeLock.addEventListener('release', function(){ wakeLock = null; });
-      $('wakeB').classList.add('on');
-      toast('Экран будет включён','ok','🔆');
-    } else if(wakeLock){
-      try{ await wakeLock.release(); }catch(e){}
-      wakeLock = null;
-      $('wakeB').classList.remove('on');
-      toast('Wake Lock выключен','','🔅');
-    }
-  }catch(e){ toast('Не поддерживается','err'); }
-}
 
 function renderStep(){
   var step = sd[si];
@@ -2249,21 +2175,7 @@ function renderStep(){
   } else {
     $('tmRow').style.display = 'none';
   }
-  if(autoVoice) speakStep();
 }
-
-$('voiceB').onclick = function(){
-  voiceOn = !voiceOn;
-  this.classList.toggle('on', voiceOn);
-  this.textContent = voiceOn ? '🔊 Прочитать' : '🔇 Без звука';
-  if(voiceOn) speakStep();
-};
-$('autoB').onclick = function(){
-  autoVoice = !autoVoice;
-  this.classList.toggle('on', autoVoice);
-  if(autoVoice) speakStep();
-};
-$('wakeB').onclick = requestWake;
 
 $('tmB').onclick = function(){
   if(tmInt){
@@ -2310,7 +2222,6 @@ $('nextB').onclick = function(){
     conf();
     toast('Блюдо готово!','ok','🎉');
     if(tmInt){ clearInterval(tmInt); tmInt = null; }
-    if('speechSynthesis' in window) try{ window.speechSynthesis.cancel(); }catch(e){}
     resetTo('main');
   }
 };
@@ -2530,7 +2441,6 @@ $('shopShareB').onclick = function(){
 $('bk1').onclick = goB;
 $('bk2').onclick = function(){
   if(tmInt){clearInterval(tmInt);tmInt=null;}
-  if('speechSynthesis' in window) try{ window.speechSynthesis.cancel(); }catch(e){}
   goB();
 };
 $('bk3').onclick = goB;
