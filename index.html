@@ -18,12 +18,8 @@
 <link rel="icon" href="icon-192.png">
 <meta name="mobile-web-app-capable" content="yes">
 
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>
-  (function(){
-    if(typeof emailjs !== 'undefined') emailjs.init("TUy6SYxNFho3xWTa-");
-  })();
-</script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 
 <style>
 :root{
@@ -619,25 +615,15 @@ input,textarea,select{font-family:inherit;font-size:16px}
       <button id="tbL" class="on" type="button">Войти</button>
       <button id="tbR" type="button">Регистрация</button>
     </div>
-    <div class="cbox" id="cbox"></div>
     <div id="s1">
-      <div class="fld">
-        <label for="em">Email</label>
-        <div style="display:flex;gap:8px">
-          <input id="em" type="email" placeholder="you@mail.ru" style="flex:1">
-          <button id="sendB" class="codeBtn" type="button">Код</button>
-        </div>
-      </div>
+      <div class="fld"><label for="em">Email</label><input id="em" type="email" autocomplete="email" placeholder="you@mail.ru"></div>
+      <div class="fld" id="nf" style="display:none"><label for="nm">Имя</label><input id="nm" maxlength="30" autocomplete="name" placeholder="Как тебя зовут?"></div>
+      <div class="fld"><label for="pw">Пароль</label><input id="pw" type="password" autocomplete="current-password" placeholder="Пароль"></div>
       <div id="forgotWrap" style="text-align:right;margin-top:-6px;margin-bottom:14px">
         <button id="forgotB" type="button" style="background:none;border:none;color:var(--accent);font-weight:700;font-size:12px;padding:4px 0;cursor:pointer">🔑 Забыли пароль?</button>
       </div>
-    </div>
-    <div id="s2" style="display:none">
-      <div class="fld"><label for="cd">Код</label><input id="cd" maxlength="6" placeholder="000000" inputmode="numeric"></div>
-      <div class="fld" id="nf" style="display:none"><label for="nm">Имя</label><input id="nm" maxlength="30" placeholder="Как тебя зовут?"></div>
-      <div class="fld"><label id="pwLbl" for="pw">Пароль</label><input id="pw" type="password" placeholder="Минимум 4 символа"></div>
-      <button class="btn" id="verB" type="button">Подтвердить</button>
-      <button class="btn gh" id="backB" type="button" style="margin-top:10px">← Другой email</button>
+      <button class="btn" id="verB" type="button">Войти</button>
+      <div style="font-size:12px;color:var(--muted);margin-top:10px;text-align:center">Продолжая, вы соглашаетесь с <a href="privacy.html" target="_blank" rel="noopener" style="color:var(--accent)">политикой конфиденциальности</a></div>
     </div>
     <div class="msg" id="msg" role="alert" aria-live="polite"></div>
     <div class="divider">или</div>
@@ -799,6 +785,7 @@ input,textarea,select{font-family:inherit;font-size:16px}
   <input type="file" id="impFile" accept="application/json" style="display:none">
   <button class="btn gh" id="resetB" type="button" style="margin-bottom:10px">🧹 Сбросить прогресс</button>
   <button class="btn gh" id="outB2" type="button">Выйти</button>
+  <button class="btn gh" id="delB" type="button" style="margin-top:10px;color:var(--err)">🗑 Удалить аккаунт</button>
 </div>
 
 <div class="scr" id="shopping">
@@ -1229,63 +1216,6 @@ function esc(s){
     .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
     .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
-function hashPw(p, email){
-  // Простой "хеш" (btoa + соль). Не защита от брутфорса, но пароли не в plain text.
-  try{ return btoa(unescape(encodeURIComponent(p + '::' + email + '::lc'))); }catch(e){ return p; }
-}
-var RLK = 'ck_rl_';
-function rlCheck(action, max, ms){
-  var k = RLK + action;
-  var now = Date.now();
-  var arr = [];
-  try{ arr = JSON.parse(localStorage.getItem(k) || '[]'); }catch(e){ arr = []; }
-  arr = arr.filter(function(t){ return now - t < ms; });
-  if(arr.length >= max) return false;
-  arr.push(now);
-  try{ localStorage.setItem(k, JSON.stringify(arr)); }catch(e){}
-  return true;
-}
-
-/* ============ ЗАЩИТА ОТ БРУТФОРСА ============ */
-var PWMAX = 3;
-var PWBLOCK = 10 * 60 * 1000;
-var pwBlkTimer = null;
-
-function pwGet(email){
-  try{
-    var d = JSON.parse(localStorage.getItem('ck_pwl_' + email) || '{}');
-    return { attempts: d.attempts || 0, until: d.until || 0 };
-  }catch(e){ return { attempts: 0, until: 0 }; }
-}
-function pwSet(email, obj){
-  try{ localStorage.setItem('ck_pwl_' + email, JSON.stringify(obj)); }catch(e){}
-}
-function pwBlockLeft(email){
-  var d = pwGet(email);
-  if(d.until && d.until > Date.now()) return d.until - Date.now();
-  return 0;
-}
-function pwFmt(ms){
-  var s = Math.ceil(ms/1000);
-  var m = Math.floor(s/60);
-  var ss = s % 60;
-  return m + ':' + (ss < 10 ? '0' : '') + ss;
-}
-function pwStartCountdown(email){
-  if(pwBlkTimer) clearInterval(pwBlkTimer);
-  var tick = function(){
-    var left = pwBlockLeft(email);
-    if(left <= 0){
-      clearInterval(pwBlkTimer); pwBlkTimer = null;
-      setMsg('Можно попробовать снова.','ok');
-      return;
-    }
-    setMsg('Заблокировано. Подождите ' + pwFmt(left) + '.','err');
-  };
-  tick();
-  pwBlkTimer = setInterval(tick, 1000);
-}
-
 /* ============ ХРАНИЛИЩЕ ============ */
 function G(k,f){try{var v=localStorage.getItem(k);return v?JSON.parse(v):f}catch(e){return f}}
 function S(k,v){
@@ -1436,250 +1366,121 @@ function resetTo(id){ stack = [id]; show(id); }function updNav(){
 }
 
 /* ============ АВТОРИЗАЦИЯ ============ */
-var tab = 'login', pc = null, pe = null, pxp = 0, cdTimer = null, cdAttempts = 3, recovery = false;
+/* ============ АВТОРИЗАЦИЯ (Firebase Auth) ============ */
+var FB_CONFIG = {
+  apiKey: 'ВСТАВЬТЕ_API_KEY',
+  authDomain: 'ВАШ_ПРОЕКТ.firebaseapp.com',
+  projectId: 'ВАШ_ПРОЕКТ',
+  appId: 'ВСТАВЬТЕ_APP_ID'
+};
+var fbAuth = null;
+try{
+  if(typeof firebase !== 'undefined' && FB_CONFIG.apiKey.indexOf('ВСТАВЬТЕ') !== 0){
+    firebase.initializeApp(FB_CONFIG);
+    fbAuth = firebase.auth();
+    fbAuth.languageCode = 'ru';
+  }
+}catch(e){ console.warn('Firebase init error', e); }
 
-$('tbL').onclick = function(){
-  tab='login'; $('tbL').classList.add('on'); $('tbR').classList.remove('on');
-  $('forgotWrap').style.display = 'block';
-  resetFlow();
-};
-$('tbR').onclick = function(){
-  tab='reg'; $('tbR').classList.add('on'); $('tbL').classList.remove('on');
-  $('forgotWrap').style.display = 'none';
-  resetFlow();
-};
+var tab = 'login', busy = false, curUid = null, authReady = false;
+var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 function setMsg(t, c){
   var el = $('msg');
   el.textContent = t;
   el.className = 'msg ' + (c||'');
-  if(c === 'err'){
-    el.classList.remove('shake');
-    void el.offsetWidth;
-    el.classList.add('shake');
+  if(c === 'err'){ el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); }
+}
+function setBusy(b){ busy = b; $('verB').disabled = b; $('forgotB').disabled = b; }
+function resetFlow(){ $('pw').value = ''; setMsg(''); setBusy(false); }
+function setTab(t){
+  tab = t;
+  $('tbL').classList.toggle('on', t==='login');
+  $('tbR').classList.toggle('on', t==='reg');
+  $('nf').style.display = t==='reg' ? 'block' : 'none';
+  $('forgotWrap').style.display = t==='login' ? 'block' : 'none';
+  $('verB').textContent = t==='reg' ? 'Создать аккаунт' : 'Войти';
+  $('pw').autocomplete = t==='reg' ? 'new-password' : 'current-password';
+  $('pw').placeholder = t==='reg' ? 'Минимум 8 символов' : 'Пароль';
+  resetFlow();
+}
+$('tbL').onclick = function(){ setTab('login'); };
+$('tbR').onclick = function(){ setTab('reg'); };
+
+function authErr(e){
+  switch(e && e.code){
+    case 'auth/invalid-email': return 'Некорректный email';
+    case 'auth/weak-password': return 'Слишком простой пароль (минимум 8 символов)';
+    case 'auth/email-already-in-use': return 'Не удалось создать аккаунт. Если email уже используется, войдите или сбросьте пароль.';
+    case 'auth/user-not-found':
+    case 'auth/wrong-password':
+    case 'auth/invalid-credential': return 'Неверный email или пароль';
+    case 'auth/too-many-requests': return 'Слишком много попыток. Подождите и повторите позже.';
+    case 'auth/network-request-failed': return 'Нет соединения с интернетом';
+    default: return 'Что-то пошло не так. Попробуйте позже.';
   }
 }
-function resetFlow(){
-  pc = null; pe = null; cdAttempts = 3; recovery = false;
-  if(cdTimer){ clearInterval(cdTimer); cdTimer = null; }
-  if(pwBlkTimer){ clearInterval(pwBlkTimer); pwBlkTimer = null; }
-  $('sendB').disabled = false; $('sendB').textContent = 'Код';
-  $('s1').style.display = 'block'; $('s2').style.display = 'none';
-  $('cbox').classList.remove('on'); $('cbox').textContent = '';
-  $('cd').value = ''; $('pw').value = ''; setMsg('');
-}
-
-$('sendB').onclick = function(){
-  var em = ($('em').value||'').trim().toLowerCase();
-  if(!em){ setMsg('Введите email','err'); return; }
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){ setMsg('Некорректный email','err'); return; }
-
-  if(tab === 'login' && !recovery){
-    var blk = pwBlockLeft(em);
-    if(blk > 0){
-      pwStartCountdown(em);
-      toast('Вход заблокирован. Подождите ' + pwFmt(blk),'err','🚫');
-      if(navigator.vibrate) try{ navigator.vibrate([60,80,60]); }catch(e){}
-      return;
-    }
-  }
-
-  var us = G(UK,{}) || {};
-  if(tab==='reg' && us[em]){ setMsg('Email уже зарегистрирован','err'); return; }
-  if(tab==='login' && !us[em]){ setMsg('Пользователь не найден','err'); return; }
-
-  if(!rlCheck('sendcode', 3, 600000)){
-    setMsg('Слишком часто. Подождите 10 минут.','err');
-    return;
-  }
-
-  cdAttempts = 3;
-  pc = String(Math.floor(100000 + Math.random()*900000));
-  pe = em; pxp = Date.now() + 300000;
-
-  var templateParams = { to_email: em, code: pc, app_name: "Let's cook!" };
-
-  if(typeof emailjs === 'undefined' || typeof emailjs.send !== 'function'){
-    // Фолбэк — показываем код на экране
-    var cbox = $('cbox');
-    cbox.textContent = '';
-    var txt = document.createTextNode('🔑 Ваш код');
-    var b = document.createElement('b'); b.textContent = pc;
-    cbox.appendChild(txt); cbox.appendChild(b);
-    cbox.classList.add('on');
-    $('s1').style.display = 'none'; $('s2').style.display = 'block';
-    $('nf').style.display = (tab==='reg') ? 'block' : 'none';
-    $('pwLbl').textContent = recovery ? 'Новый пароль' : 'Пароль';
-    $('pw').placeholder = recovery ? 'Придумайте новый' : 'Минимум 4 символа';
-    setMsg('Код отправлен','ok');
-    toast('Код: ' + pc, 'ok', '📧');
-    var left1 = 60; $('sendB').disabled = true;
-    cdTimer = setInterval(function(){
-      left1--;
-      if(left1<=0){ clearInterval(cdTimer); cdTimer=null; $('sendB').disabled=false; $('sendB').textContent='Код'; }
-      else $('sendB').textContent = left1 + 'с';
-    }, 1000);
-    return;
-  }
-
-  setMsg('Отправляем код…','');
-  $('sendB').disabled = true;
-
-  emailjs.send('service_si2snd6', 'template_kwa8lmj', templateParams)
-    .then(function(){
-      var cbox = $('cbox');
-      cbox.textContent = '🔑 Код отправлен на почту ******';
-      cbox.classList.add('on');
-      $('s1').style.display = 'none'; $('s2').style.display = 'block';
-      $('nf').style.display = (tab==='reg') ? 'block' : 'none';
-      $('pwLbl').textContent = recovery ? 'Новый пароль' : 'Пароль';
-      $('pw').placeholder = recovery ? 'Придумайте новый' : 'Минимум 4 символа';
-      setMsg(recovery ? 'Код отправлен. Придумайте новый пароль.' : ('Код отправлен на ' + em),'ok');
-      toast('Код отправлен на почту','ok','📧');
-      var left = 60; $('sendB').disabled = true;
-      cdTimer = setInterval(function(){
-        left--;
-        if(left<=0){ clearInterval(cdTimer); cdTimer=null; $('sendB').disabled=false; $('sendB').textContent='Код'; }
-        else $('sendB').textContent = left + 'с';
-      }, 1000);
-    }, function(err){
-      console.warn('EmailJS error:', err);
-      $('sendB').disabled = false;
-      setMsg('Не удалось отправить письмо.','err');
-      toast('Ошибка отправки','err','❌');
-    });
-};
-
-$('backB').onclick = function(){ resetFlow(); };
 
 $('forgotB').onclick = function(){
+  if(busy) return;
+  if(!fbAuth){ setMsg('Вход временно недоступен. Можно войти как гость.','err'); return; }
   var em = ($('em').value||'').trim().toLowerCase();
-  if(!em){ setMsg('Сначала введите email','err'); return; }
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){ setMsg('Некорректный email','err'); return; }
-  var us = G(UK,{}) || {};
-  if(!us[em]){ setMsg('Пользователь с таким email не найден','err'); return; }
-
-  recovery = true;
-  tab = 'login';
-  $('tbL').classList.add('on');
-  $('tbR').classList.remove('on');
-  $('forgotWrap').style.display = 'block';
-  resetFlow();
-  recovery = true;
-  $('em').value = em;
-  toast('Сброс пароля. Нажмите «Код»','ok','🔑');
-  setMsg('Введите email и нажмите «Код»','');
+  if(!EMAIL_RE.test(em)){ setMsg('Сначала введите корректный email','err'); return; }
+  setBusy(true);
+  fbAuth.sendPasswordResetEmail(em)
+    .catch(function(e){ if(e && e.code !== 'auth/user-not-found') throw e; })
+    .then(function(){ setBusy(false); setMsg('Если такой аккаунт есть, мы отправили письмо для сброса пароля.','ok'); })
+    .catch(function(e){ setBusy(false); setMsg(authErr(e),'err'); });
 };
 
 $('verB').onclick = function(){
-  var e = ($('cd').value||'').trim();
-  if(!pc){ setMsg('Запросите код','err'); return; }
-  if(Date.now() > pxp){ setMsg('Код истёк. Запросите новый.','err'); return; }
-  if(cdAttempts <= 0){
-    setMsg('Попытки исчерпаны. Запросите новый код.','err');
-    toast('Слишком много неверных попыток','err','🚫');
-    setTimeout(function(){ resetFlow(); }, 1200);
+  if(busy) return;
+  if(!fbAuth){ setMsg('Вход временно недоступен. Можно войти как гость.','err'); return; }
+  var em = ($('em').value||'').trim().toLowerCase();
+  var pw = $('pw').value || '';
+  if(!EMAIL_RE.test(em)){ setMsg('Введите корректный email','err'); return; }
+
+  if(tab === 'reg'){
+    var nm = ($('nm').value||'').trim().slice(0,30);
+    if(pw.length < 8){ setMsg('Пароль — минимум 8 символов','err'); return; }
+    setBusy(true); setMsg('Создаём аккаунт…','');
+    var cred;
+    fbAuth.createUserWithEmailAndPassword(em, pw)
+      .then(function(c){ cred = c; return c.user.updateProfile({displayName: nm || em.split('@')[0]}); })
+      .then(function(){ return cred.user.sendEmailVerification(); })
+      .then(function(){ return fbAuth.signOut(); })
+      .then(function(){
+        setTab('login');
+        setMsg('Мы отправили письмо со ссылкой. Подтвердите email и войдите.','ok');
+        toast('Проверьте почту','ok','📧');
+      })
+      .catch(function(e){ setBusy(false); setMsg(authErr(e),'err'); });
     return;
   }
-  if(e !== pc){
-    cdAttempts--;
-    if(navigator.vibrate) try{ navigator.vibrate([40,60,40]); }catch(e){}
-    if(cdAttempts > 0){
-      var word = plural(cdAttempts, 'попытка', 'попытки', 'попыток');
-      setMsg('Неверный код. Осталось ' + cdAttempts + ' ' + word + '.','err');
-      toast('Осталось попыток: ' + cdAttempts, 'err', '⚠️');
-      $('cd').value = '';
-      $('cd').focus();
-    } else {
-      setMsg('Попытки исчерпаны. Запросите новый код.','err');
-      toast('Попытки закончились','err','🚫');
-      setTimeout(function(){ resetFlow(); }, 1200);
-    }
-    return;
-  }
-  if(tab==='reg'){
-    var n = ($('nm').value||'').trim();
-    var p = $('pw').value || '';
-    if(p.length < 4){ setMsg('Пароль минимум 4','err'); return; }
-    var us = G(UK,{}) || {};
-    if(us[pe]){ setMsg('Email уже занят','err'); return; }
-    var dn = n || pe.split('@')[0];
-    us[pe] = {name:dn, password:hashPw(p, pe)}; S(UK,us);
-    S(SK,{email:pe, name:dn, guest:false});
-    toast('Регистрация успешна!','ok','🎉');
-    setTimeout(function(){ enter({email:pe, name:dn, guest:false}); }, 300);
-  } else {
-    var us2 = G(UK,{}) || {};
-    var u = us2[pe];
-    if(!u){ setMsg('Пользователь не найден','err'); return; }
 
-    if(recovery){
-      var npw = $('pw').value || '';
-      if(npw.length < 4){
-        setMsg('Новый пароль минимум 4 символа','err');
-        return;
-      }
-      u.password = hashPw(npw, pe);
-      us2[pe] = u;
-      S(UK, us2);
-      pwSet(pe, { attempts: 0, until: 0 });
-      if(pwBlkTimer){ clearInterval(pwBlkTimer); pwBlkTimer = null; }
-      recovery = false;
-      S(SK,{email:pe, name:u.name, guest:false});
-      toast('Пароль обновлён!','ok','🔑');
-      setMsg('Пароль сохранён. Входим…','ok');
-      setTimeout(function(){ enter({email:pe, name:u.name, guest:false}); }, 600);
-      return;
-    }
+  if(!pw){ setMsg('Введите пароль','err'); return; }
+  setBusy(true); setMsg('Входим…','');
+  fbAuth.signInWithEmailAndPassword(em, pw)
+    .then(function(c){
+      if(c.user.emailVerified){ setBusy(false); setMsg(''); return; } // приложение откроет onAuthStateChanged
+      return c.user.sendEmailVerification().catch(function(){})
+        .then(function(){ return fbAuth.signOut(); })
+        .then(function(){ setBusy(false); setMsg('Email не подтверждён. Мы отправили новое письмо со ссылкой.','err'); });
+    })
+    .catch(function(e){ setBusy(false); setMsg(authErr(e),'err'); });
+};
 
-    var blk2 = pwBlockLeft(pe);
-    if(blk2 > 0){
-      pwStartCountdown(pe);
-      toast('Заблокировано. Подождите ' + pwFmt(blk2),'err','🚫');
-      return;
-    }
-
-    var pw = $('pw').value || '';
-    if(pw.length < 4){
-      setMsg('Введите пароль (минимум 4 символа)','err');
-      return;
-    }
-    // Сравнение с хешем, поддержка старых plain-text записей
-    var pwH = hashPw(pw, pe);
-    var okPw = (u.password === pwH) || (u.password === pw);
-    if(!okPw){
-      var lock = pwGet(pe);
-      lock.attempts++;
-      if(lock.attempts >= PWMAX){
-        lock.until = Date.now() + PWBLOCK;
-        lock.attempts = 0;
-        pwSet(pe, lock);
-        setMsg('Слишком много неверных попыток. Вход заблокирован на 10 минут.','err');
-        toast('Заблокировано на 10 минут','err','🚫');
-        if(navigator.vibrate) try{ navigator.vibrate([120,80,120,80,120]); }catch(e){}
-        $('pw').value = '';
-        pwStartCountdown(pe);
-      } else {
-        pwSet(pe, lock);
-        var left = PWMAX - lock.attempts;
-        var word2 = plural(left, 'попытка', 'попытки', 'попыток');
-        setMsg('Неверный пароль. Осталось ' + left + ' ' + word2 + '.','err');
-        toast('Осталось попыток: ' + left,'err','⚠️');
-        if(navigator.vibrate) try{ navigator.vibrate([40,60,40]); }catch(e){}
-        $('pw').value = '';
-        $('pw').focus();
-      }
-      return;
-    }
-    // Обновим хеш, если был plain-text
-    if(u.password === pw){ u.password = pwH; us2[pe] = u; S(UK, us2); }
-
-    pwSet(pe, { attempts: 0, until: 0 });
-    if(pwBlkTimer){ clearInterval(pwBlkTimer); pwBlkTimer = null; }
-    S(SK,{email:pe, name:u.name, guest:false});
-    toast('С возвращением!','ok','👋');
-    setTimeout(function(){ enter({email:pe, name:u.name, guest:false}); }, 300);
-  }
+$('delB').onclick = function(){
+  var u = fbAuth && fbAuth.currentUser;
+  if(!u){ toast('В гостевом режиме аккаунта нет','',''); return; }
+  if(!confirm('Удалить аккаунт и все данные на этом устройстве навсегда?')) return;
+  u.delete().then(function(){
+    try{ Object.keys(localStorage).forEach(function(k){ if(k.indexOf('ck_')===0) localStorage.removeItem(k); }); }catch(e){}
+    location.reload();
+  }).catch(function(e){
+    if(e && e.code === 'auth/requires-recent-login') toast('Выйдите, войдите снова и повторите удаление','err','⚠️');
+    else toast('Не удалось удалить аккаунт','err','❌');
+  });
 };
 
 $('guestB').onclick = function(){
@@ -1690,6 +1491,7 @@ $('guestB').onclick = function(){
 
 $('outB').onclick = function(){
   DL(SK);
+  if(fbAuth) fbAuth.signOut();
   resetFlow();
   $('em').value = '';
   setMsg('');
@@ -2398,7 +2200,7 @@ function scene(type, emoji){
   if(type==='grater') return bowl+'<path d="M82 26L118 26L112 56L88 56Z"/><circle class="fill" cx="95" cy="62" r="2.5" '+fs+'/><circle class="fill" cx="105" cy="68" r="2.5" '+fs+'/><circle class="fill" cx="100" cy="74" r="2.5" '+fs+'/>';
   if(type==='bake') return plate+'<ellipse class="fill" cx="100" cy="108" rx="32" ry="14" '+fs+'/>'+steam;
   if(type==='dough'||type==='cool') return bowl+'<ellipse class="fill" cx="100" cy="80" rx="32" ry="14" '+fs+'/>'+(type==='cool'?'':steam);
-  return bowl+'<text class="scene" x="100" y="118" text-anchor="middle" font-size="44">'+(emoji||'🍽')+'</text>'+steam;
+  return bowl+'<text class="scene" x="100" y="118" text-anchor="middle" font-size="44">'+esc(emoji||'🍽')+'</text>'+steam;
 }
 
 var si = 0, sd = [], tmInt = null, tmEnd = 0, wakeLock = null;
@@ -2586,10 +2388,30 @@ $('expB').onclick = function(){
   toast('Файл сохранён','ok','💾');
 };
 
+function sanitizeUR(src){
+  var out = {};
+  function str(v, n){ return typeof v === 'string' ? v.slice(0, n) : ''; }
+  Object.keys(src).slice(0,500).forEach(function(id){
+    var r = src[id];
+    if(!/^u_[a-z0-9]{1,30}$/.test(id) || !r || typeof r.name !== 'string' || CO.indexOf(r.category) < 0) return;
+    if(!Array.isArray(r.i) || !Array.isArray(r.s)) return;
+    var ings = r.i.slice(0,80).filter(function(g){ return Array.isArray(g) && typeof g[1] === 'string'; })
+      .map(function(g){ return [str(g[0],20), str(g[1],80), str(g[2],40)]; });
+    var steps = r.s.slice(0,60).filter(function(x){ return Array.isArray(x) && typeof x[0] === 'string'; })
+      .map(function(x){ return [str(x[0],600), 'plate']; });
+    if(!ings.length || !steps.length) return;
+    out[id] = {category:r.category, name:str(r.name,80), emoji:str(r.emoji,4)||'🍽', desc:str(r.desc,200),
+      time:str(r.time,20)||'30 мин', dif:str(r.dif,20)||'Средне',
+      base:Math.min(Math.max(parseInt(r.base,10)||2,1),50), i:ings, s:steps};
+  });
+  return out;
+}
+
 $('impB').onclick = function(){ $('impFile').click(); };
 $('impFile').onchange = function(){
   var f = this.files && this.files[0];
   if(!f) return;
+  if(f.size > 2*1024*1024){ toast('Файл слишком большой','err'); this.value=''; return; }
   var reader = new FileReader();
   reader.onload = function(){
     var d;
@@ -2598,8 +2420,8 @@ $('impFile').onchange = function(){
     if(!d || typeof d !== 'object'){ toast('Неверный формат','err'); return; }
     if(!confirm('Импорт заменит текущие данные. Продолжить?')) return;
 
-    if(d.uR && typeof d.uR === 'object') uR = d.uR;
-    if(Array.isArray(d.fav)) fav = d.fav;
+    if(d.uR && typeof d.uR === 'object') uR = sanitizeUR(d.uR);
+    if(Array.isArray(d.fav)) fav = d.fav.filter(function(x){ return typeof x === 'string'; }).slice(0,2000);
     if(d.ratings && typeof d.ratings === 'object') ratings = d.ratings;
     if(Array.isArray(d.shopping)) shopping = d.shopping;
     if(Array.isArray(d.cooked)) cooked = d.cooked;
@@ -2611,7 +2433,7 @@ $('impFile').onchange = function(){
     if(d.theme) applyTh(d.theme);
     if(d.portions && typeof d.portions === 'object'){
       Object.keys(d.portions).forEach(function(k){
-        if(k.indexOf('ck_p9_')===0) try{ localStorage.setItem(k, d.portions[k]); }catch(e){}
+        if(k.indexOf('ck_p9_')===0 && /^\d{1,3}$/.test(String(d.portions[k]))) try{ localStorage.setItem(k, d.portions[k]); }catch(e){}
       });
     }
 
@@ -2758,8 +2580,21 @@ screens.main.addEventListener('scroll', function(){ mainScroll = screens.main.sc
 /* ============ СТАРТ ============ */
 (function(){
   var s = G(SK, null);
-  if(s){ enter(s); }
-  else { show('auth'); }
+  if(s && s.guest){ authReady = true; enter(s); }
+  if(fbAuth){
+    fbAuth.onAuthStateChanged(function(u){
+      if(u && u.emailVerified){
+        if(curUid !== u.uid){
+          curUid = u.uid;
+          var cu = {email:u.email, name:u.displayName || u.email.split('@')[0], guest:false};
+          S(SK, cu); authReady = true; enter(cu);
+        }
+      } else {
+        curUid = null;
+        if(!authReady){ authReady = true; show('auth'); }
+      }
+    });
+  } else if(!authReady){ authReady = true; show('auth'); }
   // Спрячем сплэш, когда всё отрисовано
   setTimeout(function(){
     var sp = document.getElementById('splash');

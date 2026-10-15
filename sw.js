@@ -1,11 +1,13 @@
-const CACHE = 'lets-cook-v3';
+const CACHE = 'lets-cook-v4';
 
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './icon-192.png',
-  './icon-512.png'
+  './icon-512.png',
+  './icon-maskable-512.png',
+  './privacy.html'
 ];
 
 self.addEventListener('install', e => {
@@ -25,6 +27,8 @@ self.addEventListener('activate', e => {
 // Network-first для HTML, cache-first для остального
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
+  // API авторизации не кэшируем
+  if (/identitytoolkit|securetoken|firebaseinstallations/.test(e.request.url)) return;
 
   const isHTML = e.request.destination === 'document' ||
                  e.request.url.endsWith('/') ||
