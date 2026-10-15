@@ -57,7 +57,7 @@ input,textarea,select{font-family:inherit}
              radial-gradient(circle at 90% 105%,rgba(232,104,58,.12),transparent 45%)}
 
 .scr{position:absolute;inset:0;display:none;flex-direction:column;
-  padding:0 22px calc(90px + var(--sab));
+  padding:0 22px 120px;
   overflow-y:auto;overflow-x:hidden;scrollbar-width:none;scroll-behavior:smooth}
 .scr::-webkit-scrollbar{display:none}
 .scr.on{display:flex;animation:scrSlide .45s cubic-bezier(.22,.9,.32,1)}
@@ -519,7 +519,7 @@ input,textarea,select{font-family:inherit}
 .match .mp{font-family:Caveat;font-size:22px;color:var(--accent);font-weight:700}
 
 .bnav{position:fixed;left:50%;transform:translateX(-50%);
-  bottom:calc(12px + var(--sab));
+  bottom:100px;
   width:calc(100% - 28px);max-width:580px;
   height:64px;z-index:50;
   background:var(--paper);border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--sh-4);
@@ -622,6 +622,12 @@ input,textarea,select{font-family:inherit}
     padding-bottom:calc(100px + var(--sab));
   }
 }
+/* Компенсация для ПК — там системных кнопок нет */
+@media (hover: hover) and (pointer: fine) and (min-width: 700px){
+  .bnav{bottom:16px}
+  .scr{padding-bottom:32px}
+  #main{padding-bottom:100px}
+}
 </style>
 </head>
 <body>
@@ -674,7 +680,7 @@ input,textarea,select{font-family:inherit}
   <div class="foot">Твой личный кулинарный помощник 🍳</div>
 </div>
 
-<div class="scr" id="main" style="padding-bottom:calc(170px + var(--sab))">
+<div class="scr" id="main" style="padding-bottom:200px">
   <div class="hdr">
     <div class="ttl">Let's cook!</div>
     <button class="thbtn" id="thB" type="button">🌙</button>
