@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Let's cook!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
 
 <meta name="theme-color" content="#e8683a">
@@ -19,7 +21,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
   (function(){
-    emailjs.init("TUy6SYxNFho3xWTa-");
+    if(typeof emailjs !== 'undefined') emailjs.init("TUy6SYxNFho3xWTa-");
   })();
 </script>
 
@@ -39,9 +41,13 @@
   --ease:cubic-bezier(.22,.9,.32,1);
   --bounce:cubic-bezier(.34,1.56,.64,1);
   --sab:env(safe-area-inset-bottom, 0px);
+  --nav-h:100px;
+}
+@media (hover: hover) and (pointer: fine) and (min-width: 700px){
+  :root{--nav-h:16px;}
 }
 [data-theme=dark]{
-  --bg:#14110d;--paper:#221d17;--ink:#f7f1e4;--ink-2:#c9c0b0;--muted:#8e857a;
+  --bg:#14110d;--paper:#221d17;--ink:#f7f1e4;--ink-2:#c9c0b0;--muted:#a09788;
   --line:rgba(255,255,255,.07);--line-2:rgba(255,255,255,.12);
   --sh-1:0 1px 3px rgba(0,0,0,.3);--sh-2:0 3px 10px rgba(0,0,0,.35);
   --sh-3:0 8px 24px rgba(0,0,0,.45);--sh-4:0 16px 44px rgba(0,0,0,.55);
@@ -49,15 +55,16 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;margin:0;background:var(--bg);color:var(--ink);font-family:Nunito,sans-serif;overflow:hidden;-webkit-font-smoothing:antialiased;overscroll-behavior-y:none}
 button{font-family:inherit;color:inherit;cursor:pointer}
-input,textarea,select{font-family:inherit}
+input,textarea,select{font-family:inherit;font-size:16px}
 :focus{outline:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
 
 .view{position:relative;width:100%;height:100vh;height:100dvh;max-width:620px;margin:0 auto;overflow:hidden;
   background:radial-gradient(circle at 15% -5%,rgba(245,165,94,.18),transparent 50%),
              radial-gradient(circle at 90% 105%,rgba(232,104,58,.12),transparent 45%)}
 
 .scr{position:absolute;inset:0;display:none;flex-direction:column;
-  padding:0 22px 120px;
+  padding:0 22px calc(var(--nav-h) + 30px + var(--sab));
   overflow-y:auto;overflow-x:hidden;scrollbar-width:none;scroll-behavior:smooth}
 .scr::-webkit-scrollbar{display:none}
 .scr.on{display:flex;animation:scrSlide .45s cubic-bezier(.22,.9,.32,1)}
@@ -69,7 +76,7 @@ input,textarea,select{font-family:inherit}
 @keyframes splHide{to{opacity:0;visibility:hidden}}
 #splash .pan{font-size:88px;animation:spinPan 1.6s var(--ease) infinite}
 @keyframes spinPan{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(14deg) scale(1.1)}}
-#splash .ttl{font-family:Caveat;font-size:52px;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+#splash .splTitle{font-family:Caveat;font-size:52px;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 #splash .bar{width:132px;height:3px;background:rgba(232,104,58,.14);border-radius:var(--r-full);overflow:hidden}
 #splash .bar i{display:block;width:40%;height:100%;background:var(--grad);border-radius:var(--r-full);animation:slide 1.2s var(--ease) infinite}
 @keyframes slide{0%{transform:translateX(-100%)}100%{transform:translateX(300%)}}
@@ -102,13 +109,15 @@ input,textarea,select{font-family:inherit}
 .card{width:100%;max-width:400px;margin:0 auto;position:relative;z-index:3;
   background:var(--paper);border-radius:var(--r-xl);padding:24px 20px;
   border:1px solid rgba(255,255,255,.85);box-shadow:var(--sh-4)}
+[data-theme=dark] .card{border-color:var(--line-2)}
 .card::before{content:"";position:absolute;top:0;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,rgba(232,104,58,.5),transparent)}
 .cardT{font-family:Caveat;font-size:30px;text-align:center;margin-bottom:4px;font-weight:700}
 .cardS{font-size:12px;text-align:center;color:var(--muted);font-weight:700;margin-bottom:20px}
 
 .tabs{display:flex;gap:4px;background:rgba(80,50,20,.05);border-radius:var(--r-md);padding:4px;margin-bottom:20px}
+[data-theme=dark] .tabs{background:rgba(255,255,255,.05)}
 .tabs button{flex:1;font-weight:800;font-size:13px;padding:11px;border:none;border-radius:var(--r-sm);background:transparent;color:var(--muted);transition:all .25s}
-.tabs button.on{background:#fff;color:var(--accent);box-shadow:0 2px 8px rgba(80,50,20,.1)}
+.tabs button.on{background:var(--paper);color:var(--accent);box-shadow:0 2px 8px rgba(80,50,20,.1)}
 
 .fld{margin-bottom:16px}
 .fld label{display:block;font-weight:800;font-size:10px;color:var(--muted);margin-bottom:8px;letter-spacing:.8px;text-transform:uppercase}
@@ -126,7 +135,7 @@ input,textarea,select{font-family:inherit}
 .btn:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(232,104,58,.38)}
 .btn:active{transform:translateY(0) scale(.99)}
 .btn.gh{background:var(--paper);color:var(--ink);border:1.5px solid var(--line-2);box-shadow:var(--sh-1)}
-.btn.gh:hover{background:#fff;color:var(--accent);border-color:var(--accent)}
+.btn.gh:hover{background:var(--paper);color:var(--accent);border-color:var(--accent)}
 
 .divider{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:10px;margin:20px 0 8px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px}
 .divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line-2)}
@@ -159,8 +168,10 @@ input,textarea,select{font-family:inherit}
 .bk,.thbtn{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-sm);
   width:42px;height:42px;font-size:18px;color:var(--ink);
   display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:var(--sh-1);flex-shrink:0}
-.bk:hover,.thbtn:hover{background:#fff;box-shadow:var(--sh-2);transform:translateY(-1px)}
-.thbtn:hover{transform:rotate(15deg)}
+@media (hover: hover){
+  .bk:hover,.thbtn:hover{box-shadow:var(--sh-2);transform:translateY(-1px)}
+  .thbtn:hover{transform:rotate(15deg)}
+}
 
 .chip{display:flex;gap:8px;align-items:center;background:var(--paper);border:1px solid var(--line);
   border-radius:var(--r-sm);padding:8px 12px;font-size:12px;color:var(--ink-2);font-weight:800;box-shadow:var(--sh-1);flex-shrink:0}
@@ -174,8 +185,7 @@ input,textarea,select{font-family:inherit}
 }
 
 .hw{background:var(--grad);border-radius:var(--r-xl);padding:22px 24px;color:#fff;margin-bottom:16px;
-  box-shadow:var(--sh-a);display:flex;align-items:center;gap:14px;position:relative;overflow:hidden;min-height:110px;
-  animation:glowPulse 3s ease-in-out infinite}
+  box-shadow:var(--sh-a);display:flex;align-items:center;gap:14px;position:relative;overflow:hidden;min-height:110px}
 .hw::before{content:"";position:absolute;top:-70px;right:-70px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.26),transparent 70%)}
 .hw .hi{font-family:Caveat;font-size:30px;line-height:1.05;margin-bottom:4px;font-weight:700;position:relative}
 .hw .hs{font-size:13px;opacity:.94;font-weight:700;position:relative}
@@ -183,16 +193,18 @@ input,textarea,select{font-family:inherit}
 
 .dod{background:var(--paper);border-radius:var(--r-lg);padding:18px 18px;margin-bottom:16px;
   box-shadow:var(--sh-2);display:flex;gap:14px;align-items:center;cursor:pointer;
-  position:relative;overflow:hidden;border:1px solid var(--line);transition:all .25s;min-height:110px;
-  animation:newPulse 3s ease-in-out infinite, cardIn .55s cubic-bezier(.34,1.56,.64,1) backwards}
-.dod:hover{transform:translateY(-2px);box-shadow:var(--sh-3)}
+  position:relative;overflow:hidden;border:1px solid var(--line);transition:transform .25s;min-height:110px;
+  animation:cardIn .55s var(--bounce) backwards}
+@media (hover: hover){
+  .dod:hover{transform:translateY(-2px);box-shadow:var(--sh-3)}
+  .dod:hover .em,.dod:active .em{transform:scale(1.12) rotate(-6deg)}
+}
 .dod::before{content:"БЛЮДО ДНЯ";position:absolute;top:16px;right:-56px;background:var(--grad);color:#fff;
   font-size:9.5px;font-weight:900;letter-spacing:2px;padding:5px 60px;transform:rotate(38deg);white-space:nowrap;z-index:2}
 .dod .em{font-size:52px;width:78px;height:78px;background:var(--grad-2);border-radius:var(--r-md);
   display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;z-index:1;
   transition:transform .5s cubic-bezier(.34,1.56,.64,1)}
-.dod:hover .em,.dod:active .em{transform:scale(1.12) rotate(-6deg)}
-.dod .info{flex:1;min-width:0;padding-right:44px}
+.dodInfo{flex:1;min-width:0;padding-right:44px}
 .dod .nm{font-weight:800;font-size:17px;margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .dod .ds{font-size:12.5px;color:var(--muted);font-weight:600;margin-bottom:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .dodBdgs{display:flex;gap:6px;flex-wrap:nowrap;overflow:hidden}
@@ -202,7 +214,7 @@ input,textarea,select{font-family:inherit}
 @media (max-width:400px){
   .dod{padding:14px 14px;gap:12px}
   .dod .em{font-size:44px;width:66px;height:66px}
-  .dod .info{padding-right:38px}
+  .dodInfo{padding-right:38px}
   .dod .nm{font-size:15.5px}
   .dod .ds{font-size:11.5px;margin-bottom:6px}
   .dod .bdg{font-size:10px;padding:3px 8px}
@@ -213,14 +225,14 @@ input,textarea,select{font-family:inherit}
 .recent .rlbl{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
 .recent .rrow{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
 .recent .rrow::-webkit-scrollbar{display:none}
-.recent .rc{flex:0 0 auto;width:74px;cursor:pointer;text-align:center;transition:transform .2s}
-.recent .rc:hover{transform:translateY(-3px)}
+.recent .rc{flex:0 0 auto;width:74px;cursor:pointer;text-align:center;transition:transform .2s;background:none;border:none;padding:0}
+@media (hover: hover){.recent .rc:hover{transform:translateY(-3px)}}
 .recent .rc .ri{width:74px;height:74px;background:var(--grad-2);border-radius:var(--r-md);
   display:flex;align-items:center;justify-content:center;font-size:34px;box-shadow:var(--sh-1);margin-bottom:6px}
 .recent .rc .rn{font-size:10px;font-weight:800;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
 .search{position:relative;margin-bottom:12px}
-.search input{width:100%;font-weight:600;font-size:15px;padding:16px 48px;border:1.5px solid transparent;
+.search input{width:100%;font-weight:600;font-size:16px;padding:16px 48px;border:1.5px solid transparent;
   border-radius:var(--r-md);background:var(--paper);color:var(--ink);outline:none;box-shadow:var(--sh-1);transition:all .25s}
 .search input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(232,104,58,.12)}
 .search .ic{position:absolute;left:18px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px}
@@ -235,14 +247,14 @@ input,textarea,select{font-family:inherit}
 .searchHist .hdr2 button{background:none;border:none;color:var(--accent);font-size:10px;font-weight:800;padding:0;cursor:pointer}
 .searchHist .chips{display:flex;gap:6px;flex-wrap:wrap}
 .searchHist .chipH{font-size:12px;font-weight:700;padding:6px 12px;border-radius:var(--r-full);background:var(--paper);color:var(--ink-2);border:1px solid var(--line-2);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px}
-.searchHist .chipH:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
 .searchHist .chipH::before{content:"🕐";font-size:10px;opacity:.6}
+@media (hover: hover){.searchHist .chipH:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}}
 
 .luckyRow{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
 .lucky{width:100%;font-weight:800;font-size:14px;padding:14px 18px;
   border:1.5px dashed var(--line-2);border-radius:var(--r-md);
-  background:var(--paper);color:var(--accent);transition:all .25s;line-height:1.25;position:relative;overflow:hidden}
-.lucky:hover{border-color:var(--accent);border-style:solid;background:rgba(232,104,58,.05);transform:translateY(-1px)}
+  background:var(--paper);color:var(--accent);transition:all .25s;line-height:1.25}
+@media (hover: hover){.lucky:hover{border-color:var(--accent);border-style:solid;background:rgba(232,104,58,.05);transform:translateY(-1px)}}
 @media (min-width:540px){
   .luckyRow{flex-direction:row}
   .lucky{flex:1}
@@ -250,7 +262,7 @@ input,textarea,select{font-family:inherit}
 
 .filterBar{margin-bottom:16px}
 .sfbar{display:flex;gap:8px;align-items:center;margin-bottom:10px}
-.sfbar select{flex:1;font-size:13px;font-weight:700;padding:0 12px;height:46px;
+.sfbar select{flex:1;font-size:16px;font-weight:700;padding:0 12px;height:46px;
   border:1.5px solid var(--line-2);border-radius:var(--r-md);
   background:var(--paper);color:var(--ink);outline:none}
 .qfrow{display:flex;gap:6px;overflow-x:auto;overflow-y:visible;scrollbar-width:none;
@@ -259,7 +271,7 @@ input,textarea,select{font-family:inherit}
 .qf{flex:0 0 auto;font-weight:800;font-size:12px;padding:0 16px;height:38px;
   border:1.5px solid var(--line-2);border-radius:var(--r-full);
   background:var(--paper);color:var(--muted);transition:all .2s;
-  display:flex;align-items:center;white-space:nowrap;line-height:1;position:relative;overflow:hidden}
+  display:flex;align-items:center;white-space:nowrap;line-height:1}
 .qf.on{background:var(--grad);color:#fff;border-color:transparent;box-shadow:var(--sh-a)}
 
 .tbarWrap{display:flex;align-items:center;gap:8px;margin-bottom:18px}
@@ -268,11 +280,11 @@ input,textarea,select{font-family:inherit}
 .arr{flex:0 0 40px;height:40px;border:1.5px solid var(--line-2);border-radius:50%;background:var(--paper);
   color:var(--accent);font-size:18px;font-weight:900;display:flex;align-items:center;justify-content:center;
   transition:all .2s;padding:0;box-shadow:var(--sh-1)}
-.arr:hover{background:var(--grad);color:#fff;border-color:transparent;transform:scale(1.08)}
+@media (hover: hover){.arr:hover{background:var(--grad);color:#fff;border-color:transparent;transform:scale(1.08)}}
 .arr.hide{opacity:0;pointer-events:none;transform:scale(.8)}
 .pill{flex:0 0 auto;font-weight:800;font-size:13.5px;padding:13px 22px;border:1.5px solid var(--line-2);
   border-radius:var(--r-full);background:var(--paper);color:var(--muted);transition:all .25s;
-  display:flex;gap:7px;align-items:center;white-space:nowrap;position:relative;overflow:hidden;
+  display:flex;gap:7px;align-items:center;white-space:nowrap;
   animation:pillIn .35s cubic-bezier(.22,.9,.32,1) backwards}
 @keyframes pillIn{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
 .pill:nth-child(1){animation-delay:.02s}
@@ -281,16 +293,16 @@ input,textarea,select{font-family:inherit}
 .pill:nth-child(4){animation-delay:.11s}
 .pill:nth-child(5){animation-delay:.14s}
 .pill:nth-child(6){animation-delay:.17s}
-.pill:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+@media (hover: hover){.pill:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}}
 .pill.on{background:var(--grad);color:#fff;border-color:transparent;box-shadow:var(--sh-a);transform:scale(1.02)}
 .pill .cnt{background:rgba(255,255,255,.24);border-radius:8px;padding:1px 6px;font-size:10px;font-weight:900}
 .pill.on .cnt{background:rgba(255,255,255,.3)}
 
-.feed{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding-bottom:20px;scroll-behavior:smooth}
+.feed{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding-bottom:20px}
 @media (min-width:540px){.feed{grid-template-columns:1fr 1fr 1fr}}
 .dc{background:var(--paper);border-radius:var(--r-lg);overflow:hidden;cursor:pointer;
   display:flex;flex-direction:column;box-shadow:var(--sh-2);position:relative;
-  transition:all .4s var(--ease);border:1px solid var(--line);
+  transition:transform .4s var(--ease), box-shadow .4s var(--ease);border:1px solid var(--line);
   animation:cardIn .55s var(--bounce) backwards}
 .dc:nth-child(1){animation-delay:.02s}
 .dc:nth-child(2){animation-delay:.06s}
@@ -301,21 +313,18 @@ input,textarea,select{font-family:inherit}
 .dc:nth-child(7){animation-delay:.26s}
 .dc:nth-child(8){animation-delay:.3s}
 @keyframes cardIn{from{opacity:0;transform:translateY(24px) scale(.92)}to{opacity:1;transform:none}}
-.dc:hover{transform:translateY(-5px);box-shadow:var(--sh-4)}
-.dc::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,transparent 60%,rgba(232,104,58,.08));opacity:0;transition:opacity .3s;pointer-events:none;border-radius:var(--r-lg)}
-.dc:hover::after{opacity:1}
+@media (hover: hover){.dc:hover{transform:translateY(-5px);box-shadow:var(--sh-4)}}
 .dc .ph{height:150px;background:var(--grad-2);display:flex;align-items:center;justify-content:center;
   font-size:60px;position:relative;overflow:hidden;transition:background .3s}
 .dc .ph::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 72% 22%,rgba(255,255,255,.45),transparent 60%)}
 .dc .ph .emo{position:relative;transition:transform .4s var(--ease)}
-.dc:hover .ph .emo{transform:scale(1.12)}
+@media (hover: hover){.dc:hover .ph .emo{transform:scale(1.12)}}
 .dc .bd{padding:12px 14px 14px;display:flex;flex-direction:column;gap:5px;flex:1}
 .dc .nm{font-weight:800;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .dc .ds{font-size:12px;color:var(--muted);line-height:1.35;font-weight:600;flex:1;
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.7em}
 .dc .bdgs{display:flex;gap:4px;flex-wrap:wrap;margin-top:3px}
-.dc .bdg{font-size:10px;font-weight:800;padding:4px 7px;border-radius:8px;background:rgba(232,104,58,.1);color:var(--accent);transition:transform .2s}
-.dc:hover .bdg{transform:translateY(-2px)}
+.dc .bdg{font-size:10px;font-weight:800;padding:4px 7px;border-radius:8px;background:rgba(232,104,58,.1);color:var(--accent)}
 .dc .go{font-size:10px;color:var(--accent);font-weight:900;text-transform:uppercase;margin-top:5px;letter-spacing:.6px}
 .dc .fav{position:absolute;top:10px;left:10px;width:34px;height:34px;border:none;border-radius:50%;
   background:rgba(255,255,255,.94);color:#c9c0b2;font-size:15px;z-index:3;box-shadow:var(--sh-1);
@@ -332,11 +341,10 @@ input,textarea,select{font-family:inherit}
 .dc[data-cat="salads"] .ph{background:linear-gradient(160deg,#d9f0c8,#8fc77c)}
 .dc[data-cat="desserts"] .ph{background:linear-gradient(160deg,#ffd9e2,#f39bb6)}
 .dc[data-cat="baking"] .ph{background:linear-gradient(160deg,#f8e0b8,#d9a96e)}
-[data-theme=dark] .dc .ph{filter:brightness(.75) saturate(1.2)}
 
 .abtn{margin-top:8px;font-weight:800;font-size:14px;padding:16px;border:2px dashed var(--line-2);
   border-radius:var(--r-lg);background:var(--paper);color:var(--accent);transition:all .25s;width:100%}
-.abtn:hover{border-color:var(--accent);background:rgba(232,104,58,.05);border-style:solid}
+@media (hover: hover){.abtn:hover{border-color:var(--accent);background:rgba(232,104,58,.05);border-style:solid}}
 
 .empty{grid-column:1/-1;text-align:center;padding:60px 24px;color:var(--muted);font-weight:700}
 .empty .i{font-size:64px;margin-bottom:12px;opacity:.55;display:block}
@@ -360,7 +368,7 @@ input,textarea,select{font-family:inherit}
 .hero[data-cat="baking"]{background:linear-gradient(160deg,#f8e0b8,#d9a96e)}
 
 .info{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
-.info .bdg{font-size:12px;font-weight:800;padding:6px 12px;border-radius:var(--r-sm);background:rgba(232,104,58,.1);color:var(--accent);transition:transform .2s}
+.info .bdg{font-size:12px;font-weight:800;padding:6px 12px;border-radius:var(--r-sm);background:rgba(232,104,58,.1);color:var(--accent)}
 .info .bdg.ok{background:rgba(26,155,82,.12);color:var(--ok)}
 
 .nut{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;
@@ -377,16 +385,13 @@ input,textarea,select{font-family:inherit}
 .portions button{width:38px;height:38px;border:none;border-radius:50%;background:var(--grad-2);
   color:var(--accent);font-size:20px;font-weight:900;line-height:1;display:flex;align-items:center;justify-content:center;
   box-shadow:var(--sh-1);transition:all .15s}
-.portions button:hover{background:var(--grad);color:#fff;transform:scale(1.08)}
 .portions button:disabled{opacity:.35}
 
 .presets{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;justify-content:center}
 .presets button{font-size:12px;font-weight:800;padding:7px 14px;border-radius:var(--r-full);background:var(--paper);color:var(--muted);border:1.5px solid var(--line-2);transition:all .2s;cursor:pointer}
 .presets button.on{background:var(--grad);color:#fff;border-color:transparent;box-shadow:var(--sh-a)}
-.presets button:hover{border-color:var(--accent);color:var(--accent)}
-.presets button.on:hover{color:#fff}
 
-.notes{width:100%;min-height:70px;font-size:14px;font-weight:600;padding:14px;border:1.5px solid var(--line-2);
+.notes{width:100%;min-height:70px;font-size:16px;font-weight:600;padding:14px;border:1.5px solid var(--line-2);
   border-radius:var(--r-md);background:var(--paper);color:var(--ink);resize:vertical;outline:none;margin-bottom:14px;
   font-family:inherit}
 .notes:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(232,104,58,.12)}
@@ -399,15 +404,14 @@ input,textarea,select{font-family:inherit}
 .rate .lbl{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase}
 .rate .stars{display:flex;gap:2px;margin-left:auto}
 .rate .star{font-size:22px;color:rgba(80,50,20,.15);line-height:1;user-select:none;transition:color .2s, transform .3s var(--bounce)}
+[data-theme=dark] .rate .star{color:rgba(255,255,255,.2)}
 .rate .star.on{color:var(--star);text-shadow:0 0 10px rgba(240,180,41,.4);animation:starPop .5s var(--bounce)}
 @keyframes starPop{0%{transform:scale(1)}40%{transform:scale(1.5)}100%{transform:scale(1)}}
-.rate .star:hover{transform:scale(1.2)}
 
 .acts{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
 .acts button{flex:1;min-width:100px;font-weight:800;font-size:12px;padding:12px 8px;
   border:1.5px solid var(--line-2);border-radius:var(--r-md);background:var(--paper);color:var(--ink);
-  display:flex;align-items:center;justify-content:center;gap:5px;transition:all .2s;position:relative;overflow:hidden}
-.acts button:hover{border-color:var(--accent);color:var(--accent)}
+  display:flex;align-items:center;justify-content:center;gap:5px;transition:all .2s}
 .acts button.on{background:var(--grad);color:#fff;border-color:transparent;box-shadow:var(--sh-a)}
 
 .desc{color:var(--ink-2);font-size:15px;margin-bottom:16px;line-height:1.55;font-weight:600}
@@ -430,6 +434,7 @@ input,textarea,select{font-family:inherit}
 .ing .gr{color:var(--accent);font-weight:900;font-size:14px}
 
 .prog{height:5px;background:rgba(80,50,20,.07);border-radius:var(--r-full);overflow:hidden;margin-bottom:16px}
+[data-theme=dark] .prog{background:rgba(255,255,255,.07)}
 .prog i{display:block;height:100%;background:var(--grad);border-radius:var(--r-full);transition:width .55s var(--ease);position:relative;overflow:hidden}
 .prog i::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);animation:liquid 1.5s linear infinite}
 @keyframes liquid{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
@@ -446,26 +451,23 @@ input,textarea,select{font-family:inherit}
 .timer button{flex:1;font-weight:800;font-size:14px;padding:13px;border:1.5px solid var(--line-2);
   border-radius:var(--r-md);background:var(--paper);color:var(--ink);transition:all .25s;
   display:flex;align-items:center;justify-content:center;gap:6px}
-.timer button:hover{border-color:var(--accent);color:var(--accent)}
 .timer button.on{background:var(--grad);color:#fff;border-color:transparent;box-shadow:var(--sh-a)}
 
 .stnav{display:flex;gap:12px}
 .stnav button{font-weight:800;border:none;border-radius:var(--r-md);padding:14px 22px;
   background:var(--grad);color:#fff;font-size:15px;flex:1;box-shadow:var(--sh-a);transition:all .2s}
-.stnav button:hover:not(:disabled){transform:translateY(-2px)}
 .stnav button:disabled{opacity:.35;box-shadow:none}
 .stnav button.gh{background:var(--paper);color:var(--ink);border:1.5px solid var(--line-2);
   box-shadow:var(--sh-1);flex:0 0 auto;padding:14px 20px}
 
 .fr{display:flex;gap:8px;align-items:flex-start;background:var(--paper);border:1px solid var(--line);
-  border-radius:var(--r-md);padding:12px;margin-bottom:8px}
+  border-radius:var(--r-md);padding:12px;margin-bottom:8px;flex-wrap:wrap}
 .fr select{flex:0 0 110px;font-size:14px;font-weight:600;padding:11px;border-radius:var(--r-sm);
   border:1px solid var(--line-2);background:var(--paper);color:var(--ink);outline:none}
-.fr input,.fr textarea{flex:1;font-size:15px;font-weight:600;padding:11px;border-radius:var(--r-sm);
+.fr input,.fr textarea{flex:1 1 120px;font-size:16px;font-weight:600;padding:11px;border-radius:var(--r-sm);
   border:1px solid var(--line-2);background:var(--paper);color:var(--ink);min-width:0;outline:none}
 .fr textarea{resize:none;min-height:64px}
 .rm{flex:0 0 28px;height:28px;border:none;border-radius:50%;background:transparent;color:var(--muted);font-size:19px}
-.rm:hover{color:var(--err)}
 
 .avatar{width:88px;height:88px;border-radius:50%;background:var(--grad);color:#fff;
   display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:900;
@@ -474,17 +476,7 @@ input,textarea,select{font-family:inherit}
 .pemail{text-align:center;color:var(--muted);font-size:13px;font-weight:700;margin-bottom:20px}
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
 .stat{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md);padding:22px 18px;text-align:center;box-shadow:var(--sh-1)}
-.stat .n{font-family:Caveat;font-size:44px;line-height:1;color:var(--accent);font-weight:700;position:relative;
-  animation:numUp .55s cubic-bezier(.34,1.56,.64,1) backwards}
-.stat:nth-child(1) .n{animation-delay:.05s}
-.stat:nth-child(2) .n{animation-delay:.1s}
-.stat:nth-child(3) .n{animation-delay:.15s}
-.stat:nth-child(4) .n{animation-delay:.2s}
-@keyframes numUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
-.stat .n::after{content:"";position:absolute;left:20%;right:20%;bottom:-4px;height:2px;
-  background:var(--grad);border-radius:2px;transform:scaleX(0);
-  animation:statLine 1s cubic-bezier(.34,1.56,.64,1) forwards}
-@keyframes statLine{to{transform:scaleX(1)}}
+.stat .n{font-family:Caveat;font-size:44px;line-height:1;color:var(--accent);font-weight:700;position:relative}
 .stat .l{font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase;margin-top:8px}
 
 .shop-i{display:flex;align-items:center;gap:12px;background:var(--paper);border:1px solid var(--line);
@@ -500,7 +492,6 @@ input,textarea,select{font-family:inherit}
 
 .match{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md);padding:14px 16px;
   box-shadow:var(--sh-1);display:flex;gap:14px;align-items:center;cursor:pointer;transition:transform .2s;margin-bottom:10px}
-.match:hover{transform:translateX(3px)}
 .match .mi{font-size:38px;width:54px;height:54px;background:var(--grad-2);border-radius:var(--r-sm);
   display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .match .mt{flex:1}
@@ -509,28 +500,20 @@ input,textarea,select{font-family:inherit}
 .match .mp{font-family:Caveat;font-size:22px;color:var(--accent);font-weight:700}
 
 .bnav{position:fixed;left:50%;transform:translateX(-50%);
-  bottom:100px;
+  bottom:var(--nav-h);
   width:calc(100% - 28px);max-width:580px;
   height:64px;z-index:50;
   background:var(--paper);border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--sh-4);
-  display:flex;align-items:center;justify-content:space-around;padding:0 6px}
+  display:flex;align-items:center;justify-content:space-around;padding:0 6px;
+  padding-bottom:var(--sab)}
 .ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;background:none;border:none;
   padding:6px 2px;color:var(--muted);font-weight:800;font-size:9.5px;transition:all .2s;position:relative}
-.ni .em{font-size:19px;transition:all .2s var(--bounce)}
+.ni .em{font-size:19px;transition:transform .2s var(--bounce)}
 .ni.on{color:var(--accent)}
-.ni.on .em{animation:tabPop .4s cubic-bezier(.34,1.56,.64,1);transform:translateY(-2px) scale(1.15)}
-@keyframes tabPop{0%{transform:scale(1)}50%{transform:scale(1.25) translateY(-3px)}100%{transform:scale(1.15) translateY(-2px)}}
+.ni.on .em{transform:translateY(-2px) scale(1.15)}
 .ni.on::before{content:"";position:absolute;top:0;width:22px;height:3px;border-radius:var(--r-full);background:var(--grad)}
 .ni.add .em{background:var(--grad);color:#fff;width:42px;height:42px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;box-shadow:var(--sh-a);
-  animation:glowPulse 3s ease-in-out infinite}
-@keyframes glowPulse{0%,100%{box-shadow:0 8px 24px rgba(232,104,58,.3)}50%{box-shadow:0 8px 40px rgba(232,104,58,.55), 0 0 0 6px rgba(232,104,58,.12)}}
-
-@media (hover: hover) and (pointer: fine) and (min-width: 700px){
-  .bnav{bottom:16px}
-  .scr{padding-bottom:32px}
-  #main{padding-bottom:100px}
-}
+  display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;box-shadow:var(--sh-a)}
 
 #toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:10000;display:flex;flex-direction:column;gap:8px;pointer-events:none;max-width:88vw}
 .tst{background:rgba(24,22,15,.96);color:#fff;padding:13px 20px;border-radius:var(--r-md);
@@ -557,7 +540,7 @@ input,textarea,select{font-family:inherit}
 
 @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
 .shake{animation:shake .45s cubic-bezier(.36,.07,.19,.97)}
-.msg.err{animation:shake .45s cubic-bezier(.36,.07,.19,.97)}
+.msg.err.shake{animation:shake .45s cubic-bezier(.36,.07,.19,.97)}
 
 .modalBg{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   z-index:5000;display:none;align-items:center;justify-content:center;padding:24px;opacity:0;transition:opacity .3s}
@@ -579,7 +562,6 @@ input,textarea,select{font-family:inherit}
 .rouActions button{flex:1;font-weight:800;font-size:14px;padding:14px;border:none;border-radius:var(--r-md);cursor:pointer;transition:all .25s}
 .rouActions .go{background:var(--grad);color:#fff;box-shadow:var(--sh-a)}
 .rouActions .again{background:var(--paper);color:var(--ink);border:1.5px solid var(--line-2)}
-.rouActions .again:hover{border-color:var(--accent);color:var(--accent)}
 .rouActions button:disabled{opacity:.4;pointer-events:none}
 .rouMode{display:flex;gap:6px;justify-content:center;margin-bottom:10px;flex-wrap:wrap}
 .rouMode button{font-size:11px;font-weight:800;padding:8px 12px;border:1.5px solid var(--line-2);
@@ -588,13 +570,17 @@ input,textarea,select{font-family:inherit}
 .dots{display:flex;gap:6px;justify-content:center;margin-bottom:10px}
 .dots i{width:6px;height:6px;border-radius:50%;background:var(--line-2);transition:all .3s}
 .dots i.on{background:var(--accent);transform:scale(1.4)}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
 </style>
 </head>
 <body>
 
 <div id="splash">
   <div class="pan">🍳</div>
-  <div class="ttl">Let's cook!</div>
+  <div class="splTitle">Let's cook!</div>
   <div class="bar"><i></i></div>
 </div>
 
@@ -616,7 +602,7 @@ input,textarea,select{font-family:inherit}
     <div class="cbox" id="cbox"></div>
     <div id="s1">
       <div class="fld">
-        <label>Email</label>
+        <label for="em">Email</label>
         <div style="display:flex;gap:8px">
           <input id="em" type="email" placeholder="you@mail.ru" style="flex:1">
           <button id="sendB" class="codeBtn" type="button">Код</button>
@@ -627,23 +613,23 @@ input,textarea,select{font-family:inherit}
       </div>
     </div>
     <div id="s2" style="display:none">
-      <div class="fld"><label>Код</label><input id="cd" maxlength="6" placeholder="000000"></div>
-      <div class="fld" id="nf" style="display:none"><label>Имя</label><input id="nm" maxlength="30" placeholder="Как тебя зовут?"></div>
-      <div class="fld"><label id="pwLbl">Пароль</label><input id="pw" type="password" placeholder="Минимум 4 символа"></div>
+      <div class="fld"><label for="cd">Код</label><input id="cd" maxlength="6" placeholder="000000" inputmode="numeric"></div>
+      <div class="fld" id="nf" style="display:none"><label for="nm">Имя</label><input id="nm" maxlength="30" placeholder="Как тебя зовут?"></div>
+      <div class="fld"><label id="pwLbl" for="pw">Пароль</label><input id="pw" type="password" placeholder="Минимум 4 символа"></div>
       <button class="btn" id="verB" type="button">Подтвердить</button>
       <button class="btn gh" id="backB" type="button" style="margin-top:10px">← Другой email</button>
     </div>
-    <div class="msg" id="msg"></div>
+    <div class="msg" id="msg" role="alert" aria-live="polite"></div>
     <div class="divider">или</div>
     <button class="btn gh" id="guestB" type="button">Войти как гость →</button>
   </div>
   <div class="foot">Твой личный кулинарный помощник 🍳</div>
 </div>
 
-<div class="scr" id="main" style="padding-bottom:200px">
+<div class="scr" id="main">
   <div class="hdr">
     <div class="ttl">Let's cook!</div>
-    <button class="thbtn" id="thB" type="button">🌙</button>
+    <button class="thbtn" id="thB" type="button" aria-label="Тема">🌙</button>
     <div class="chip"><span id="chip"></span><button id="outB" type="button">Выйти</button></div>
   </div>
   <div class="hw">
@@ -656,16 +642,16 @@ input,textarea,select{font-family:inherit}
   </div>
   <div class="dod" id="dod" style="display:none">
     <div class="em" id="dodEm">🍽</div>
-    <div class="info">
+    <div class="dodInfo">
       <div class="nm" id="dodNm"></div>
       <div class="ds" id="dodDs"></div>
       <div class="dodBdgs"><span class="bdg" id="dodTm"></span><span class="bdg" id="dodDf"></span></div>
     </div>
   </div>
   <div class="search">
-    <span class="ic">🔍</span>
-    <input id="srch" placeholder="Найти блюдо...">
-    <button class="clr" id="clrS" type="button">✕</button>
+    <span class="ic" aria-hidden="true">🔍</span>
+    <input id="srch" placeholder="Найти блюдо..." aria-label="Поиск блюд">
+    <button class="clr" id="clrS" type="button" aria-label="Очистить">✕</button>
   </div>
   <div class="searchHist" id="searchHist">
     <div class="hdr2"><span>🕐 Недавние запросы</span><button type="button" id="clrHist">Очистить</button></div>
@@ -679,7 +665,7 @@ input,textarea,select{font-family:inherit}
 
   <div class="filterBar">
     <div class="sfbar">
-      <select id="sortSel">
+      <select id="sortSel" aria-label="Сортировка">
         <option value="default">↕ По умолчанию</option>
         <option value="time-asc">⏱ Сначала быстрые</option>
         <option value="time-desc">⏱ Сначала долгие</option>
@@ -698,16 +684,16 @@ input,textarea,select{font-family:inherit}
   </div>
 
   <div class="tbarWrap">
-    <button class="arr" id="arrL" type="button">‹</button>
+    <button class="arr" id="arrL" type="button" aria-label="Влево">‹</button>
     <div class="tbar" id="tbar"></div>
-    <button class="arr" id="arrR" type="button">›</button>
+    <button class="arr" id="arrR" type="button" aria-label="Вправо">›</button>
   </div>
   <div class="feed" id="feed"></div>
   <button class="abtn" id="addB" type="button">+ Добавить блюдо</button>
 </div>
 
 <div class="scr" id="recipe">
-  <div class="hdr"><button class="bk" id="bk1" type="button">←</button><div class="ttl" id="rT">Рецепт</div></div>
+  <div class="hdr"><button class="bk" id="bk1" type="button" aria-label="Назад">←</button><div class="ttl" id="rT">Рецепт</div></div>
   <div class="hero" id="rHero"><div class="emo" id="rH"></div></div>
   <div class="info" id="rI"></div>
   <div id="rTags"></div>
@@ -717,9 +703,9 @@ input,textarea,select{font-family:inherit}
 
   <div class="portions">
     <span class="lbl">🍽 Порции</span>
-    <button id="pMinus" type="button">−</button>
+    <button id="pMinus" type="button" aria-label="Меньше">−</button>
     <span class="qty" id="pQty">2</span>
-    <button id="pPlus" type="button">+</button>
+    <button id="pPlus" type="button" aria-label="Больше">+</button>
   </div>
   <div class="presets" id="presets">
     <button type="button" data-p="1">1</button>
@@ -745,24 +731,28 @@ input,textarea,select{font-family:inherit}
 </div>
 
 <div class="scr" id="steps">
-  <div class="hdr"><button class="bk" id="bk2" type="button">←</button><div class="ttl" id="sT">Готовим</div></div>
+  <div class="hdr"><button class="bk" id="bk2" type="button" aria-label="Назад">←</button><div class="ttl" id="sT">Готовим</div></div>
   <div class="prog"><i id="prg" style="width:0%"></i></div>
   <div class="stage">
     <svg id="stg" viewBox="0 0 200 150"></svg>
     <div class="step-t"><span class="step-n" id="sN">Шаг 1</span><span id="sTxt"></span></div>
   </div>
   <div class="timer" id="tmRow" style="display:none"><button id="tmB" type="button">⏱ Таймер</button></div>
-  <div class="stnav"><button class="gh" id="prevB" type="button">←</button><button id="nextB" type="button">Далее →</button></div>
+  <div class="stnav">
+    <button class="gh" id="prevB" type="button" aria-label="Предыдущий шаг">←</button>
+    <button id="nextB" type="button">Далее →</button>
+  </div>
 </div>
 
 <div class="scr" id="addD">
-  <div class="hdr"><button class="bk" id="bk3" type="button">←</button><div class="ttl">Новое блюдо</div></div>
-  <div class="fld"><label>Категория</label><select id="nC"></select></div>
-  <div class="fld"><label>Название</label><input id="nN" maxlength="40" placeholder="Сырники"></div>
-  <div class="fld"><label>Эмодзи</label><input id="nE" maxlength="4" placeholder="🥞"></div>
-  <div class="fld"><label>Описание</label><input id="nD" maxlength="80" placeholder="Нежные сырники"></div>
-  <div class="fld"><label>Время</label><input id="nT" placeholder="30 мин"></div>
-  <div class="fld"><label>Сложность</label><select id="nF"><option>Легко</option><option>Средне</option><option>Сложно</option></select></div>
+  <div class="hdr"><button class="bk" id="bk3" type="button" aria-label="Назад">←</button><div class="ttl">Новое блюдо</div></div>
+  <div class="fld"><label for="nC">Категория</label><select id="nC"></select></div>
+  <div class="fld"><label for="nN">Название</label><input id="nN" maxlength="40" placeholder="Сырники"></div>
+  <div class="fld"><label for="nE">Эмодзи</label><input id="nE" maxlength="4" placeholder="🥞"></div>
+  <div class="fld"><label for="nD">Описание</label><input id="nD" maxlength="80" placeholder="Нежные сырники"></div>
+  <div class="fld"><label for="nT">Время (минут)</label><input id="nT" type="number" min="1" max="600" placeholder="30"></div>
+  <div class="fld"><label for="nF">Сложность</label><select id="nF"><option>Легко</option><option>Средне</option><option>Сложно</option></select></div>
+  <div class="fld"><label for="nB">Базовое число порций</label><input id="nB" type="number" min="1" max="12" value="2"></div>
   <div class="fld"><label>Ингредиенты</label><div id="if"></div></div>
   <button class="abtn" id="aI" type="button" style="width:auto;padding:10px 16px;font-size:13px">+ Ингредиент</button>
   <div class="fld" style="margin-top:14px"><label>Шаги</label><div id="sf"></div></div>
@@ -771,7 +761,7 @@ input,textarea,select{font-family:inherit}
 </div>
 
 <div class="scr" id="profile">
-  <div class="hdr"><div class="ttl">Профиль</div><button class="thbtn" id="thB2" type="button">🌙</button></div>
+  <div class="hdr"><div class="ttl">Профиль</div><button class="thbtn" id="thB2" type="button" aria-label="Тема">🌙</button></div>
   <div class="avatar" id="av">👤</div>
   <div class="pname" id="pN">Гость</div>
   <div class="pemail" id="pE">guest@local</div>
@@ -791,14 +781,14 @@ input,textarea,select{font-family:inherit}
 </div>
 
 <div class="scr" id="shopping">
-  <div class="hdr"><button class="bk" id="bk4" type="button">←</button><div class="ttl">Список покупок</div><button class="bk" id="clrB" type="button">🗑</button></div>
+  <div class="hdr"><button class="bk" id="bk4" type="button" aria-label="Назад">←</button><div class="ttl">Список покупок</div><button class="bk" id="clrB" type="button" aria-label="Очистить">🗑</button></div>
   <div id="shopL"></div>
   <button class="btn gh" id="shopShareB" type="button" style="margin-top:14px">📤 Поделиться списком</button>
 </div>
 
 <div class="scr" id="fridge">
-  <div class="hdr"><button class="bk" id="bk5" type="button">←</button><div class="ttl">Что в холодильнике?</div></div>
-  <div class="fld"><label>Что у вас есть?</label><input id="fridgeQ" placeholder="молоко, яйца, мука..."></div>
+  <div class="hdr"><button class="bk" id="bk5" type="button" aria-label="Назад">←</button><div class="ttl">Что в холодильнике?</div></div>
+  <div class="fld"><label for="fridgeQ">Что у вас есть?</label><input id="fridgeQ" placeholder="молоко, яйца, мука..."></div>
   <button class="btn" id="fridgeB" type="button" style="margin-bottom:14px">Найти блюда 🍳</button>
   <div id="matches"></div>
 </div>
@@ -806,7 +796,7 @@ input,textarea,select{font-family:inherit}
 <div class="bnav" id="bnav" style="display:none">
   <button class="ni on" data-n="feed" type="button"><span class="em">🍽</span><span>Все</span></button>
   <button class="ni" data-n="fav" type="button"><span class="em">❤️</span><span>Избранное</span></button>
-  <button class="ni add" data-n="add" type="button"><span class="em">+</span></button>
+  <button class="ni add" data-n="add" type="button" aria-label="Добавить"><span class="em">+</span></button>
   <button class="ni" data-n="shop" type="button"><span class="em">🛒</span><span>Список</span></button>
   <button class="ni" data-n="prof" type="button"><span class="em">👤</span><span>Профиль</span></button>
 </div>
@@ -832,13 +822,13 @@ input,textarea,select{font-family:inherit}
   </div>
 </div>
 
-<div id="toast"></div>
+<div id="toast" role="status" aria-live="polite"></div>
 <div id="conf"></div>
 
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function(){
-    navigator.serviceWorker.register('sw.js').catch(function(){});
+    navigator.serviceWorker.register('sw.js').catch(function(e){ console.warn('SW error:', e); });
   });
 }
 </script>
@@ -893,6 +883,14 @@ var MET = {
 
 var TIMER = {borsch:2, shchi:2, kharcho:3, "pea-soup":3, "pumpkin-soup":2, solyanka:2, pilaf:3, "fish-baked":2, bolognese:2, lasagna:3, risotto:2, tiramisu:3, panna:3, mousse:3, cheesecake:3, icecream:3, medovik:3, bread:3, pizza:2, croissants:3, "cinnamon-rolls":3, donuts:3};
 
+// Вес штучных продуктов в граммах (для расчёта КБЖУ)
+var PIECEW = {
+  egg:55, onion:100, tomato:120, potato:150, carrot:80, cucumber:100,
+  avocado:200, olive:4, berry:5, pea:1,
+  steak:200, beet:150, cabbage:200, "pie-meat":200, lasagna:50
+};
+var LIQ = {milk:1,cream:1,coffee:1,oil:.92,honey:1.4};
+
 var IC = {
   milk:'<path d="M20 10h20l4 8v34H16V18z"/>', flour:'<path d="M14 14h32l-4 34H18z"/>',
   egg:'<ellipse cx="30" cy="30" rx="15" ry="19"/>', sugar:'<path d="M12 44l8-26h20l8 26z"/>',
@@ -924,55 +922,97 @@ var IL = {milk:"Молоко",flour:"Мука",egg:"Яйцо",sugar:"Сахар"
   honey:"Мёд",yeast:"Дрожжи",cottage:"Творог",pea:"Горох",noodle:"Лапша",pumpkin:"Тыква",
   mayonnaise:"Майонез",avocado:"Авокадо",fish:"Рыба"};
 
+// Блюда, у которых есть полный рецепт (R).
+// Для остальных в базе оставлены только метаданные — они не показываются в ленте.
 var R = {
-  pancakes:{i:[["milk","Молоко","500 мл"],["flour","Мука","300 г"],["egg","Яйца","2 шт"],["sugar","Сахар","30 г"],["oil","Масло","20 г"]],s:[["Разбей яйца в миску","egg"],["Всыпь муку и сахар","whisk"],["Разогрей сковороду","flame"],["Вылей тесто","ladle"],["Переверни лопаткой","spatula"],["Подавай тёплыми","plate"]]},
-  omelette:{i:[["egg","Яйца","3 шт"],["milk","Молоко","50 мл"],["salt","Соль","2 г"],["oil","Масло","15 г"]],s:[["Разбей яйца","egg"],["Взбей венчиком","whisk"],["Растопи масло","flame"],["Вылей смесь","ladle"],["Сложи пополам","fold"]]},
-  syrniki:{i:[["cottage","Творог","500 г"],["egg","Яйцо","1 шт"],["flour","Мука","100 г"],["sugar","Сахар","50 г"]],s:[["Разомни творог","pour"],["Добавь муку","mix"],["Сформируй сырники","mix"],["Обжарь","sizzle"],["Подавай","plate"]]},
-  oatmeal:{i:[["milk","Молоко","400 мл"],["honey","Мёд","2 ст.л."],["sugar","Сахар","20 г"],["salt","Соль","1 г"]],s:[["Залей молоко","pour"],["Доведи до кипения","boil"],["Всыпь хлопья","mix"],["Вари 5 минут","whisk"],["Добавь мёд","plate"]]},
-  "avocado-toast":{i:[["flour","Хлеб","2 ломтика"],["avocado","Авокадо","1 шт"],["egg","Яйцо","1 шт"],["oil","Масло","1 ч.л."]],s:[["Подсуши хлеб","bake"],["Разомни авокадо","mix"],["Обжарь яйцо","sizzle"],["Намажь на тост","pour"],["Сверху яйцо","plate"]]},
-  waffles:{i:[["flour","Мука","250 г"],["milk","Молоко","300 мл"],["egg","Яйца","2 шт"],["sugar","Сахар","50 г"],["oil","Масло","50 г"]],s:[["Смешай сухие","mix"],["Добавь яйца и молоко","pour"],["Взбей","whisk"],["Вылей в вафельницу","ladle"],["Выпекай 5 минут","bake"]]},
-  "french-toast":{i:[["flour","Хлеб","4 ломтика"],["egg","Яйца","2 шт"],["milk","Молоко","100 мл"],["sugar","Сахар","20 г"]],s:[["Взбей яйца с молоком","whisk"],["Обмакни хлеб","pour"],["Разогрей масло","flame"],["Обжарь","sizzle"],["Подавай с пудрой","plate"]]},
-  shakshuka:{i:[["egg","Яйца","4 шт"],["tomato","Помидоры","4 шт"],["onion","Лук","1 шт"],["oil","Масло","2 ст.л."]],s:[["Обжарь лук","flame"],["Добавь помидоры","mix"],["Разбей яйца","egg"],["Накрой крышкой","steam"],["Подавай","plate"]]},
-  borsch:{i:[["meat","Говядина","400 г"],["beet","Свекла","2 шт"],["cabbage","Капуста","300 г"],["potato","Картофель","3 шт"],["carrot","Морковь","1 шт"]],s:[["Свари бульон","boil"],["Обжарь овощи","flame"],["Добавь картофель","pour"],["Добавь капусту","mix"],["Вари 10 минут","steam"],["Подавай","plate"]]},
-  shchi:{i:[["meat","Говядина","300 г"],["cabbage","Капуста","300 г"],["potato","Картофель","2 шт"],["carrot","Морковь","1 шт"]],s:[["Свари бульон","boil"],["Обжарь лук","flame"],["Добавь картофель","pour"],["Добавь капусту","mix"],["Вари","steam"]]},
-  kharcho:{i:[["meat","Говядина","500 г"],["rice","Рис","100 г"],["onion","Лук","2 шт"],["tomato","Томат","3 ст.л."]],s:[["Обжарь мясо","sizzle"],["Добавь томат","flame"],["Всыпь рис","mix"],["Вари 30 минут","steam"],["Подавай","plate"]]},
-  "pea-soup":{i:[["pea","Горох","300 г"],["meat","Копчёности","300 г"],["potato","Картофель","2 шт"],["onion","Лук","1 шт"]],s:[["Замочи горох","cool"],["Свари бульон","boil"],["Добавь горох","boil"],["Обжарь лук","flame"],["Подавай","plate"]]},
-  "sorrel-soup":{i:[["lettuce","Щавель","200 г"],["meat","Говядина","300 г"],["potato","Картофель","3 шт"],["egg","Яйца","2 шт"]],s:[["Свари бульон","boil"],["Добавь картофель","pour"],["Добавь щавель","mix"],["Отвари яйца","cool"],["Подавай","plate"]]},
-  "chicken-noodle":{i:[["chicken","Курица","500 г"],["noodle","Лапша","150 г"],["carrot","Морковь","1 шт"],["potato","Картофель","2 шт"]],s:[["Свари бульон","boil"],["Добавь картофель","pour"],["Добавь лапшу","mix"],["Вари 7 минут","steam"],["Подавай","plate"]]},
-  "pumpkin-soup":{i:[["pumpkin","Тыква","800 г"],["onion","Лук","1 шт"],["cream","Сливки","200 мл"],["oil","Масло","2 ст.л."]],s:[["Обжарь лук","flame"],["Добавь тыкву","pour"],["Вари 20 минут","boil"],["Пробей блендером","mix"],["Влей сливки","plate"]]},
-  solyanka:{i:[["meat","Мясной набор","400 г"],["olive","Оливки","100 г"],["onion","Лук","1 шт"],["tomato","Томат","2 ст.л."]],s:[["Свари бульон","boil"],["Обжарь лук с томатом","flame"],["Добавь оливки","mix"],["Вари 15 минут","steam"],["Подавай","plate"]]},
-  carbonara:{i:[["pasta","Спагетти","300 г"],["bacon","Бекон","150 г"],["egg","Яйца","2 шт"],["parmesan","Пармезан","50 г"]],s:[["Отвари спагетти","boil"],["Обжарь бекон","sizzle"],["Смешай с яйцом","whisk"],["Соедини всё","mix"],["Подавай","plate"]]},
-  pilaf:{i:[["rice","Рис","400 г"],["meat","Баранина","500 г"],["carrot","Морковь","2 шт"],["onion","Лук","2 шт"]],s:[["Обжарь мясо","sizzle"],["Добавь лук и морковь","flame"],["Всыпь рис","mix"],["Туши","steam"],["Дай настояться","plate"]]},
-  cutlets:{i:[["cutlet","Фарш","500 г"],["onion","Лук","1 шт"],["egg","Яйцо","1 шт"],["flour","Мука","50 г"]],s:[["Смешай фарш","mix"],["Сформируй котлеты","mix"],["Разогрей масло","flame"],["Обжарь","sizzle"],["Подавай","plate"]]},
-  steak:{i:[["meat","Стейк","1 шт"],["oil","Масло","20 г"],["salt","Соль","по вкусу"]],s:[["Обсуши стейк","cool"],["Разогрей сковороду","flame"],["Обжарь по 3 мин","sizzle"],["Дай отдохнуть","cool"],["Подавай","plate"]]},
-  "fish-baked":{i:[["fish","Рыба","600 г"],["oil","Масло","30 г"],["onion","Лук","1 шт"],["tomato","Помидоры","2 шт"]],s:[["Посоли рыбу","cool"],["Нарежь лук","mix"],["Выложи рыбу","pour"],["Запекай 25 мин","bake"],["Подавай","plate"]]},
-  bolognese:{i:[["pasta","Паста","300 г"],["cutlet","Фарш","400 г"],["tomato","Томаты","400 г"],["onion","Лук","1 шт"]],s:[["Обжарь лук","flame"],["Добавь фарш","sizzle"],["Влей томаты","boil"],["Отвари пасту","boil"],["Смешай","mix"]]},
-  lasagna:{i:[["pasta","Листы лазаньи","12 шт"],["cutlet","Фарш","500 г"],["tomato","Томатный соус","500 мл"],["parmesan","Пармезан","200 г"]],s:[["Обжарь фарш","sizzle"],["Влей соус","boil"],["Выложи слоями","mix"],["Запекай 40 мин","bake"],["Нарежь","plate"]]},
-  risotto:{i:[["rice","Рис","300 г"],["cream","Сливки","100 мл"],["parmesan","Пармезан","80 г"],["onion","Лук","1 шт"]],s:[["Обжарь лук","flame"],["Добавь рис","sizzle"],["Вливай бульон","pour"],["Готовь 20 мин","boil"],["Добавь пармезан","mix"]]},
-  caesar:{i:[["chicken","Курица","200 г"],["lettuce","Листья","100 г"],["croutons","Сухарики","50 г"],["parmesan","Пармезан","30 г"]],s:[["Обжарь курицу","sizzle"],["Нарви листья","leaf"],["Смешай","mix"],["Полей соусом","pour"],["Посыпь сыром","grater"]]},
-  olivier:{i:[["potato","Картофель","4 шт"],["carrot","Морковь","2 шт"],["egg","Яйца","4 шт"],["cucumber","Огурцы","3 шт"],["mayonnaise","Майонез","200 г"]],s:[["Отвари овощи","boil"],["Нарежь кубиками","mix"],["Добавь горошек","pour"],["Заправь майонезом","mix"],["Подавай","cool"]]},
-  greek:{i:[["tomato","Помидоры","4 шт"],["cucumber","Огурцы","2 шт"],["olive","Оливки","100 г"],["cheese","Фета","150 г"],["oil","Масло","2 ст.л."]],s:[["Нарежь овощи","pour"],["Добавь оливки","mix"],["Сверху фета","mix"],["Полей маслом","pour"],["Подавай","cool"]]},
-  vinegret:{i:[["beet","Свекла","2 шт"],["potato","Картофель","3 шт"],["carrot","Морковь","2 шт"],["cucumber","Огурцы","2 шт"],["oil","Масло","3 ст.л."]],s:[["Отвари овощи","boil"],["Нарежь кубиками","cool"],["Смешай","mix"],["Заправь маслом","pour"],["Подавай","plate"]]},
-  "shrimp-salad":{i:[["fish","Креветки","300 г"],["lettuce","Листья","100 г"],["avocado","Авокадо","1 шт"],["tomato","Черри","150 г"]],s:[["Отвари креветки","boil"],["Нарви листья","leaf"],["Нарежь авокадо","mix"],["Выложи креветки","pour"],["Полей маслом","plate"]]},
-  veggie:{i:[["tomato","Помидоры","3 шт"],["cucumber","Огурцы","2 шт"],["onion","Лук","1 шт"],["oil","Масло","30 г"]],s:[["Нарежь овощи","mix"],["Добавь лук","pour"],["Посоли","cool"],["Полей маслом","pour"],["Подавай","plate"]]},
-  mimosa:{i:[["fish","Рыба консерв.","1 банка"],["potato","Картофель","3 шт"],["carrot","Морковь","2 шт"],["egg","Яйца","3 шт"],["mayonnaise","Майонез","200 г"]],s:[["Отвари овощи","boil"],["Натри на тёрке","grater"],["Слоями с майонезом","pour"],["Сверху рыбу","plate"],["Охлади","cool"]]},
-  caprese:{i:[["tomato","Помидоры","3 шт"],["cheese","Моцарелла","200 г"],["oil","Масло","2 ст.л."],["salt","Соль","по вкусу"]],s:[["Нарежь кружочками","mix"],["Выложи слоями","pour"],["Полей маслом","pour"],["Посоли","cool"],["Укрась базиликом","plate"]]},
-  tiramisu:{i:[["cream","Маскарпоне","500 г"],["coffee","Кофе","200 мл"],["egg","Яйца","4 шт"],["chocolate","Какао","20 г"]],s:[["Свари кофе","boil"],["Взбей яйца","whisk"],["Обмакни печенье","pour"],["Уложи слоями","mix"],["Посыпь какао","grater"]]},
-  panna:{i:[["cream","Сливки","500 мл"],["sugar","Сахар","80 г"],["honey","Ваниль","1 ч.л."],["berry","Ягоды","100 г"]],s:[["Прогрей сливки","boil"],["Добавь желатин","mix"],["Разлей","pour"],["Охлади 4 ч","cool"],["Полей соусом","plate"]]},
-  mousse:{i:[["chocolate","Шоколад","200 г"],["cream","Сливки","300 мл"],["egg","Яйца","3 шт"]],s:[["Растопи шоколад","flame"],["Взбей желтки","whisk"],["Взбей сливки","whisk"],["Соедини","mix"],["Разложи","cool"]]},
-  cheesecake:{i:[["cottage","Сливочный сыр","600 г"],["croutons","Печенье","200 г"],["oil","Масло","100 г"],["sugar","Сахар","150 г"],["egg","Яйца","3 шт"]],s:[["Измельчи печенье","mix"],["Утрамбуй основу","pour"],["Взбей сыр","whisk"],["Запекай 50 мин","bake"],["Охлади","cool"]]},
-  icecream:{i:[["milk","Молоко","500 мл"],["cream","Сливки","200 мл"],["sugar","Сахар","120 г"],["egg","Желтки","4 шт"]],s:[["Прогрей молоко","boil"],["Взбей желтки","whisk"],["Прогрей до загустения","boil"],["Заморозь","cool"],["Подавай","plate"]]},
-  "choco-pancakes":{i:[["milk","Молоко","500 мл"],["flour","Мука","300 г"],["egg","Яйца","2 шт"],["chocolate","Шоколад","100 г"]],s:[["Замеси тесто","whisk"],["Выпеки блины","spatula"],["Растопи шоколад","flame"],["Смажь блины","pour"],["Сверни","plate"]]},
-  medovik:{i:[["honey","Мёд","100 г"],["flour","Мука","400 г"],["egg","Яйца","3 шт"],["cream","Сметана","500 г"],["sugar","Сахар","150 г"]],s:[["Растопи мёд","flame"],["Замеси тесто","mix"],["Испеки 6 коржей","bake"],["Взбей сметану","whisk"],["Промажь","cool"]]},
-  "creme-brulee":{i:[["cream","Сливки","500 мл"],["egg","Желтки","5 шт"],["sugar","Сахар","100 г"],["honey","Ваниль","1 ч.л."]],s:[["Прогрей сливки","boil"],["Взбей желтки","whisk"],["Соедини","mix"],["Разлей","pour"],["Запекай","bake"]]},
-  bread:{i:[["flour","Мука","500 г"],["yeast","Дрожжи","10 г"],["salt","Соль","10 г"],["sugar","Сахар","10 г"],["oil","Масло","20 г"]],s:[["Разведи дрожжи","pour"],["Замеси тесто","mix"],["Оставь подходить","cool"],["Сформируй буханку","mix"],["Выпекай 40 мин","bake"]]},
-  cookies:{i:[["flour","Мука","300 г"],["oil","Масло","150 г"],["sugar","Сахар","150 г"],["egg","Яйцо","1 шт"],["chocolate","Шоколад","100 г"]],s:[["Взбей масло","whisk"],["Добавь яйцо и муку","mix"],["Добавь шоколад","mix"],["Скатай шарики","pour"],["Выпекай 12 мин","bake"]]},
-  pizza:{i:[["flour","Мука","400 г"],["yeast","Дрожжи","7 г"],["tomato","Соус","150 г"],["cheese","Моцарелла","200 г"]],s:[["Замеси тесто","mix"],["Раскатай основу","mix"],["Смажь соусом","pour"],["Выложи начинку","mix"],["Выпекай 15 мин","bake"]]},
-  muffins:{i:[["flour","Мука","250 г"],["sugar","Сахар","150 г"],["egg","Яйца","2 шт"],["milk","Молоко","150 мл"],["chocolate","Шоколад","100 г"]],s:[["Смешай сухие","mix"],["Добавь яйца и молоко","pour"],["Добавь шоколад","mix"],["Разложи","pour"],["Выпекай 20 мин","bake"]]},
-  croissants:{i:[["flour","Мука","500 г"],["oil","Масло","250 г"],["yeast","Дрожжи","10 г"],["milk","Молоко","200 мл"]],s:[["Замеси тесто","mix"],["Раскатай с маслом","cool"],["Нарежь и сверни","mix"],["Дай подойти","cool"],["Выпекай 20 мин","bake"]]},
-  pie:{i:[["flour","Мука","200 г"],["egg","Яйца","4 шт"],["sugar","Сахар","180 г"],["oil","Масло","20 г"]],s:[["Нарежь яблоки","pour"],["Взбей яйца","whisk"],["Вмешай муку","mix"],["Залей яблоки","pour"],["Выпекай 40 мин","bake"]]},
-  "cinnamon-rolls":{i:[["flour","Мука","500 г"],["yeast","Дрожжи","10 г"],["sugar","Сахар","150 г"],["oil","Масло","100 г"],["milk","Молоко","250 мл"]],s:[["Замеси тесто","mix"],["Раскатай","cool"],["Посыпь корицей","pour"],["Сверни рулет","mix"],["Выпекай 25 мин","bake"]]},
-  donuts:{i:[["flour","Мука","500 г"],["yeast","Дрожжи","10 г"],["egg","Яйца","2 шт"],["sugar","Сахар","100 г"],["oil","Масло","для фритюра"]],s:[["Замеси тесто","mix"],["Дай подойти","cool"],["Сформируй кольца","mix"],["Обжарь","sizzle"],["Покрой глазурью","pour"]]}
+  pancakes:{base:4,i:[["milk","Молоко","500 мл"],["flour","Мука","300 г"],["egg","Яйца","2 шт"],["sugar","Сахар","30 г"],["oil","Масло","20 г"]],s:[["Разбей яйца в миску","egg"],["Всыпь муку и сахар","whisk"],["Разогрей сковороду","flame"],["Вылей тесто","ladle"],["Переверни лопаткой","spatula"],["Подавай тёплыми","plate"]]},
+  omelette:{base:2,i:[["egg","Яйца","3 шт"],["milk","Молоко","50 мл"],["salt","Соль","2 г"],["oil","Масло","15 г"]],s:[["Разбей яйца","egg"],["Взбей венчиком","whisk"],["Растопи масло","flame"],["Вылей смесь","ladle"],["Сложи пополам","fold"]]},
+  syrniki:{base:4,i:[["cottage","Творог","500 г"],["egg","Яйцо","1 шт"],["flour","Мука","100 г"],["sugar","Сахар","50 г"]],s:[["Разомни творог","pour"],["Добавь муку","mix"],["Сформируй сырники","mix"],["Обжарь","sizzle"],["Подавай","plate"]]},
+  oatmeal:{base:2,i:[["milk","Молоко","400 мл"],["honey","Мёд","2 ст.л."],["sugar","Сахар","20 г"],["salt","Соль","1 г"]],s:[["Залей молоко","pour"],["Доведи до кипения","boil"],["Всыпь хлопья","mix"],["Вари 5 минут","whisk"],["Добавь мёд","plate"]]},
+  "avocado-toast":{base:1,i:[["flour","Хлеб","2 ломтика"],["avocado","Авокадо","1 шт"],["egg","Яйцо","1 шт"],["oil","Масло","1 ч.л."]],s:[["Подсуши хлеб","bake"],["Разомни авокадо","mix"],["Обжарь яйцо","sizzle"],["Намажь на тост","pour"],["Сверху яйцо","plate"]]},
+  waffles:{base:4,i:[["flour","Мука","250 г"],["milk","Молоко","300 мл"],["egg","Яйца","2 шт"],["sugar","Сахар","50 г"],["oil","Масло","50 г"]],s:[["Смешай сухие","mix"],["Добавь яйца и молоко","pour"],["Взбей","whisk"],["Вылей в вафельницу","ladle"],["Выпекай 5 минут","bake"]]},
+  "french-toast":{base:2,i:[["flour","Хлеб","4 ломтика"],["egg","Яйца","2 шт"],["milk","Молоко","100 мл"],["sugar","Сахар","20 г"]],s:[["Взбей яйца с молоком","whisk"],["Обмакни хлеб","pour"],["Разогрей масло","flame"],["Обжарь","sizzle"],["Подавай с пудрой","plate"]]},
+  shakshuka:{base:2,i:[["egg","Яйца","4 шт"],["tomato","Помидоры","4 шт"],["onion","Лук","1 шт"],["oil","Масло","2 ст.л."]],s:[["Обжарь лук","flame"],["Добавь помидоры","mix"],["Разбей яйца","egg"],["Накрой крышкой","steam"],["Подавай","plate"]]},
+  borsch:{base:6,i:[["meat","Говядина","400 г"],["beet","Свекла","2 шт"],["cabbage","Капуста","300 г"],["potato","Картофель","3 шт"],["carrot","Морковь","1 шт"]],s:[["Свари бульон","boil"],["Обжарь овощи","flame"],["Добавь картофель","pour"],["Добавь капусту","mix"],["Вари 10 минут","steam"],["Подавай","plate"]]},
+  shchi:{base:6,i:[["meat","Говядина","300 г"],["cabbage","Капуста","300 г"],["potato","Картофель","2 шт"],["carrot","Морковь","1 шт"]],s:[["Свари бульон","boil"],["Обжарь лук","flame"],["Добавь картофель","pour"],["Добавь капусту","mix"],["Вари","steam"]]},
+  kharcho:{base:6,i:[["meat","Говядина","500 г"],["rice","Рис","100 г"],["onion","Лук","2 шт"],["tomato","Томат","3 ст.л."]],s:[["Обжарь мясо","sizzle"],["Добавь томат","flame"],["Всыпь рис","mix"],["Вари 30 минут","steam"],["Подавай","plate"]]},
+  "pea-soup":{base:6,i:[["pea","Горох","300 г"],["meat","Копчёности","300 г"],["potato","Картофель","2 шт"],["onion","Лук","1 шт"]],s:[["Замочи горох","cool"],["Свари бульон","boil"],["Добавь горох","boil"],["Обжарь лук","flame"],["Подавай","plate"]]},
+  "sorrel-soup":{base:6,i:[["lettuce","Щавель","200 г"],["meat","Говядина","300 г"],["potato","Картофель","3 шт"],["egg","Яйца","2 шт"]],s:[["Свари бульон","boil"],["Добавь картофель","pour"],["Добавь щавель","mix"],["Отвари яйца","cool"],["Подавай","plate"]]},
+  "chicken-noodle":{base:4,i:[["chicken","Курица","500 г"],["noodle","Лапша","150 г"],["carrot","Морковь","1 шт"],["potato","Картофель","2 шт"]],s:[["Свари бульон","boil"],["Добавь картофель","pour"],["Добавь лапшу","mix"],["Вари 7 минут","steam"],["Подавай","plate"]]},
+  "pumpkin-soup":{base:4,i:[["pumpkin","Тыква","800 г"],["onion","Лук","1 шт"],["cream","Сливки","200 мл"],["oil","Масло","2 ст.л."]],s:[["Обжарь лук","flame"],["Добавь тыкву","pour"],["Вари 20 минут","boil"],["Пробей блендером","mix"],["Влей сливки","plate"]]},
+  solyanka:{base:6,i:[["meat","Мясной набор","400 г"],["olive","Оливки","100 г"],["onion","Лук","1 шт"],["tomato","Томат","2 ст.л."]],s:[["Свари бульон","boil"],["Обжарь лук с томатом","flame"],["Добавь оливки","mix"],["Вари 15 минут","steam"],["Подавай","plate"]]},
+  "mushroom-soup":{base:4,i:[["onion","Лук","1 шт"],["potato","Картофель","4 шт"],["cream","Сливки","200 мл"],["oil","Масло","2 ст.л."]],s:[["Обжарь лук","flame"],["Добавь картофель","pour"],["Вари 20 минут","boil"],["Пробей блендером","mix"],["Влей сливки","plate"]]},
+  "tom-yum":{base:4,i:[["fish","Креветки","300 г"],["tomato","Помидоры","3 шт"],["cream","Сливки","150 мл"],["onion","Лук","1 шт"]],s:[["Обжарь лук","flame"],["Добавь помидоры","pour"],["Вари 10 минут","boil"],["Добавь креветки","boil"],["Влей сливки","plate"]]},
+  minestrone:{base:4,i:[["tomato","Помидоры","3 шт"],["potato","Картофель","2 шт"],["cucumber","Кабачок","1 шт"],["pasta","Паста","100 г"]],s:[["Обжарь лук","flame"],["Добавь овощи","pour"],["Вари 15 минут","boil"],["Добавь пасту","boil"],["Подавай","plate"]]},
+  okroshka:{base:4,i:[["potato","Картофель","3 шт"],["cucumber","Огурцы","2 шт"],["egg","Яйца","3 шт"],["cream","Кефир","500 мл"]],s:[["Отвари овощи","boil"],["Нарежь кубиками","mix"],["Добавь кефир","pour"],["Посоли","cool"],["Охлади","cool"]]},
+  ramen:{base:2,i:[["chicken","Курица","300 г"],["noodle","Лапша","150 г"],["egg","Яйцо","2 шт"],["onion","Лук","1 шт"]],s:[["Свари бульон","boil"],["Добавь лапшу","boil"],["Отвари яйца","cool"],["Собери рамен","pour"],["Подавай","plate"]]},
+  gazpacho:{base:4,i:[["tomato","Помидоры","6 шт"],["cucumber","Огурцы","2 шт"],["onion","Лук","1 шт"],["oil","Масло","2 ст.л."]],s:[["Нарежь овощи","mix"],["Пробей блендером","mix"],["Посоли","cool"],["Охлади 2 ч","cool"],["Подавай","plate"]]},
+  carbonara:{base:4,i:[["pasta","Спагетти","300 г"],["bacon","Бекон","150 г"],["egg","Яйца","2 шт"],["parmesan","Пармезан","50 г"]],s:[["Отвари спагетти","boil"],["Обжарь бекон","sizzle"],["Смешай с яйцом","whisk"],["Соедини всё","mix"],["Подавай","plate"]]},
+  pilaf:{base:6,i:[["rice","Рис","400 г"],["meat","Баранина","500 г"],["carrot","Морковь","2 шт"],["onion","Лук","2 шт"]],s:[["Обжарь мясо","sizzle"],["Добавь лук и морковь","flame"],["Всыпь рис","mix"],["Туши","steam"],["Дай настояться","plate"]]},
+  cutlets:{base:4,i:[["cutlet","Фарш","500 г"],["onion","Лук","1 шт"],["egg","Яйцо","1 шт"],["flour","Мука","50 г"]],s:[["Смешай фарш","mix"],["Сформируй котлеты","mix"],["Разогрей масло","flame"],["Обжарь","sizzle"],["Подавай","plate"]]},
+  steak:{base:1,i:[["meat","Стейк","1 шт"],["oil","Масло","20 г"],["salt","Соль","по вкусу"]],s:[["Обсуши стейк","cool"],["Разогрей сковороду","flame"],["Обжарь по 3 мин","sizzle"],["Дай отдохнуть","cool"],["Подавай","plate"]]},
+  "fish-baked":{base:4,i:[["fish","Рыба","600 г"],["oil","Масло","30 г"],["onion","Лук","1 шт"],["tomato","Помидоры","2 шт"]],s:[["Посоли рыбу","cool"],["Нарежь лук","mix"],["Выложи рыбу","pour"],["Запекай 25 мин","bake"],["Подавай","plate"]]},
+  bolognese:{base:4,i:[["pasta","Паста","300 г"],["cutlet","Фарш","400 г"],["tomato","Томаты","400 г"],["onion","Лук","1 шт"]],s:[["Обжарь лук","flame"],["Добавь фарш","sizzle"],["Влей томаты","boil"],["Отвари пасту","boil"],["Смешай","mix"]]},
+  lasagna:{base:6,i:[["pasta","Листы лазаньи","12 шт"],["cutlet","Фарш","500 г"],["tomato","Томатный соус","500 мл"],["parmesan","Пармезан","200 г"]],s:[["Обжарь фарш","sizzle"],["Влей соус","boil"],["Выложи слоями","mix"],["Запекай 40 мин","bake"],["Нарежь","plate"]]},
+  risotto:{base:4,i:[["rice","Рис","300 г"],["cream","Сливки","100 мл"],["parmesan","Пармезан","80 г"],["onion","Лук","1 шт"]],s:[["Обжарь лук","flame"],["Добавь рис","sizzle"],["Вливай бульон","pour"],["Готовь 20 мин","boil"],["Добавь пармезан","mix"]]},
+  teriyaki:{base:2,i:[["chicken","Курица","500 г"],["tomato","Соевый соус","4 ст.л."],["honey","Мёд","2 ст.л."],["rice","Рис","200 г"]],s:[["Нарежь курицу","mix"],["Обжарь","sizzle"],["Добавь соус","flame"],["Туши 5 мин","steam"],["Подавай с рисом","plate"]]},
+  curry:{base:4,i:[["chicken","Курица","500 г"],["onion","Лук","1 шт"],["cream","Сливки","200 мл"],["rice","Рис","300 г"]],s:[["Обжарь лук","flame"],["Добавь курицу","sizzle"],["Влей сливки","boil"],["Туши 20 мин","steam"],["Подавай с рисом","plate"]]},
+  goulash:{base:6,i:[["meat","Говядина","600 г"],["onion","Лук","2 шт"],["tomato","Томат","3 ст.л."],["flour","Мука","2 ст.л."]],s:[["Обжарь мясо","sizzle"],["Добавь лук","flame"],["Добавь томат","boil"],["Туши 1.5 ч","steam"],["Подавай","plate"]]},
+  befstroganoff:{base:4,i:[["meat","Говядина","500 г"],["onion","Лук","1 шт"],["cream","Сметана","200 г"],["flour","Мука","1 ст.л."]],s:[["Нарежь мясо","mix"],["Обжарь","sizzle"],["Добавь лук","flame"],["Влей сметану","boil"],["Туши 15 мин","steam"]]},
+  dolma:{base:6,i:[["cutlet","Фарш","500 г"],["rice","Рис","100 г"],["onion","Лук","2 шт"],["oil","Масло","3 ст.л."]],s:[["Смешай фарш с рисом","mix"],["Заверни в листья","mix"],["Уложи в кастрюлю","pour"],["Туши 1 ч","steam"],["Подавай","plate"]]},
+  kebab:{base:4,i:[["meat","Баранина","600 г"],["onion","Лук","2 шт"],["salt","Соль","по вкусу"],["oil","Масло","2 ст.л."]],s:[["Нарежь мясо","mix"],["Замаринуй 2 ч","cool"],["Нанижи на шампур","mix"],["Обжарь на гриле","sizzle"],["Подавай","plate"]]},
+  paella:{base:4,i:[["rice","Рис","300 г"],["fish","Креветки","200 г"],["chicken","Курица","300 г"],["tomato","Помидоры","2 шт"]],s:[["Обжарь курицу","sizzle"],["Добавь рис","mix"],["Влей бульон","pour"],["Добавь креветки","boil"],["Подавай","plate"]]},
+  "risotto-mush":{base:4,i:[["rice","Рис","300 г"],["cream","Сливки","100 мл"],["parmesan","Пармезан","80 г"],["onion","Лук","1 шт"]],s:[["Обжарь лук","flame"],["Добавь рис","sizzle"],["Вливай бульон","pour"],["Готовь 20 мин","boil"],["Добавь пармезан","mix"]]},
+  schnitzel:{base:2,i:[["meat","Свинина","400 г"],["egg","Яйцо","1 шт"],["flour","Мука","100 г"],["oil","Масло","50 г"]],s:[["Отбей мясо","mix"],["Обваляй в муке","mix"],["Обмакни в яйцо","pour"],["Обжарь","sizzle"],["Подавай","plate"]]},
+  moussaka:{base:6,i:[["cutlet","Фарш","500 г"],["egg","Яйца","2 шт"],["cream","Сливки","200 мл"],["oil","Масло","3 ст.л."]],s:[["Обжарь фарш","sizzle"],["Собери слоями","mix"],["Залей соусом","pour"],["Запекай 40 мин","bake"],["Подавай","plate"]]},
+  caesar:{base:2,i:[["chicken","Курица","200 г"],["lettuce","Листья","100 г"],["croutons","Сухарики","50 г"],["parmesan","Пармезан","30 г"]],s:[["Обжарь курицу","sizzle"],["Нарви листья","leaf"],["Смешай","mix"],["Полей соусом","pour"],["Посыпь сыром","grater"]]},
+  olivier:{base:4,i:[["potato","Картофель","4 шт"],["carrot","Морковь","2 шт"],["egg","Яйца","4 шт"],["cucumber","Огурцы","3 шт"],["mayonnaise","Майонез","200 г"]],s:[["Отвари овощи","boil"],["Нарежь кубиками","mix"],["Добавь горошек","pour"],["Заправь майонезом","mix"],["Подавай","cool"]]},
+  greek:{base:4,i:[["tomato","Помидоры","4 шт"],["cucumber","Огурцы","2 шт"],["olive","Оливки","100 г"],["cheese","Фета","150 г"],["oil","Масло","2 ст.л."]],s:[["Нарежь овощи","pour"],["Добавь оливки","mix"],["Сверху фета","mix"],["Полей маслом","pour"],["Подавай","cool"]]},
+  vinegret:{base:4,i:[["beet","Свекла","2 шт"],["potato","Картофель","3 шт"],["carrot","Морковь","2 шт"],["cucumber","Огурцы","2 шт"],["oil","Масло","3 ст.л."]],s:[["Отвари овощи","boil"],["Нарежь кубиками","cool"],["Смешай","mix"],["Заправь маслом","pour"],["Подавай","plate"]]},
+  "shrimp-salad":{base:2,i:[["fish","Креветки","300 г"],["lettuce","Листья","100 г"],["avocado","Авокадо","1 шт"],["tomato","Черри","150 г"]],s:[["Отвари креветки","boil"],["Нарви листья","leaf"],["Нарежь авокадо","mix"],["Выложи креветки","pour"],["Полей маслом","plate"]]},
+  veggie:{base:2,i:[["tomato","Помидоры","3 шт"],["cucumber","Огурцы","2 шт"],["onion","Лук","1 шт"],["oil","Масло","30 г"]],s:[["Нарежь овощи","mix"],["Добавь лук","pour"],["Посоли","cool"],["Полей маслом","pour"],["Подавай","plate"]]},
+  mimosa:{base:4,i:[["fish","Рыба консерв.","1 банка"],["potato","Картофель","3 шт"],["carrot","Морковь","2 шт"],["egg","Яйца","3 шт"],["mayonnaise","Майонез","200 г"]],s:[["Отвари овощи","boil"],["Натри на тёрке","grater"],["Слоями с майонезом","pour"],["Сверху рыбу","plate"],["Охлади","cool"]]},
+  caprese:{base:2,i:[["tomato","Помидоры","3 шт"],["cheese","Моцарелла","200 г"],["oil","Масло","2 ст.л."],["salt","Соль","по вкусу"]],s:[["Нарежь кружочками","mix"],["Выложи слоями","pour"],["Полей маслом","pour"],["Посоли","cool"],["Укрась базиликом","plate"]]},
+  tiramisu:{base:6,i:[["cream","Маскарпоне","500 г"],["coffee","Кофе","200 мл"],["egg","Яйца","4 шт"],["chocolate","Какао","20 г"]],s:[["Свари кофе","boil"],["Взбей яйца","whisk"],["Обмакни печенье","pour"],["Уложи слоями","mix"],["Посыпь какао","grater"]]},
+  panna:{base:4,i:[["cream","Сливки","500 мл"],["sugar","Сахар","80 г"],["honey","Ваниль","1 ч.л."],["berry","Ягоды","100 г"]],s:[["Прогрей сливки","boil"],["Добавь желатин","mix"],["Разлей","pour"],["Охлади 4 ч","cool"],["Полей соусом","plate"]]},
+  mousse:{base:4,i:[["chocolate","Шоколад","200 г"],["cream","Сливки","300 мл"],["egg","Яйца","3 шт"]],s:[["Растопи шоколад","flame"],["Взбей желтки","whisk"],["Взбей сливки","whisk"],["Соедини","mix"],["Разложи","cool"]]},
+  cheesecake:{base:8,i:[["cottage","Сливочный сыр","600 г"],["croutons","Печенье","200 г"],["oil","Масло","100 г"],["sugar","Сахар","150 г"],["egg","Яйца","3 шт"]],s:[["Измельчи печенье","mix"],["Утрамбуй основу","pour"],["Взбей сыр","whisk"],["Запекай 50 мин","bake"],["Охлади","cool"]]},
+  icecream:{base:4,i:[["milk","Молоко","500 мл"],["cream","Сливки","200 мл"],["sugar","Сахар","120 г"],["egg","Желтки","4 шт"]],s:[["Прогрей молоко","boil"],["Взбей желтки","whisk"],["Прогрей до загустения","boil"],["Заморозь","cool"],["Подавай","plate"]]},
+  "choco-pancakes":{base:4,i:[["milk","Молоко","500 мл"],["flour","Мука","300 г"],["egg","Яйца","2 шт"],["chocolate","Шоколад","100 г"]],s:[["Замеси тесто","whisk"],["Выпеки блины","spatula"],["Растопи шоколад","flame"],["Смажь блины","pour"],["Сверни","plate"]]},
+  medovik:{base:8,i:[["honey","Мёд","100 г"],["flour","Мука","400 г"],["egg","Яйца","3 шт"],["cream","Сметана","500 г"],["sugar","Сахар","150 г"]],s:[["Растопи мёд","flame"],["Замеси тесто","mix"],["Испеки 6 коржей","bake"],["Взбей сметану","whisk"],["Промажь","cool"]]},
+  "creme-brulee":{base:4,i:[["cream","Сливки","500 мл"],["egg","Желтки","5 шт"],["sugar","Сахар","100 г"],["honey","Ваниль","1 ч.л."]],s:[["Прогрей сливки","boil"],["Взбей желтки","whisk"],["Соедини","mix"],["Разлей","pour"],["Запекай","bake"]]},
+  bread:{base:8,i:[["flour","Мука","500 г"],["yeast","Дрожжи","10 г"],["salt","Соль","10 г"],["sugar","Сахар","10 г"],["oil","Масло","20 г"]],s:[["Разведи дрожжи","pour"],["Замеси тесто","mix"],["Оставь подходить","cool"],["Сформируй буханку","mix"],["Выпекай 40 мин","bake"]]},
+  cookies:{base:8,i:[["flour","Мука","300 г"],["oil","Масло","150 г"],["sugar","Сахар","150 г"],["egg","Яйцо","1 шт"],["chocolate","Шоколад","100 г"]],s:[["Взбей масло","whisk"],["Добавь яйцо и муку","mix"],["Добавь шоколад","mix"],["Скатай шарики","pour"],["Выпекай 12 мин","bake"]]},
+  pizza:{base:4,i:[["flour","Мука","400 г"],["yeast","Дрожжи","7 г"],["tomato","Соус","150 г"],["cheese","Моцарелла","200 г"]],s:[["Замеси тесто","mix"],["Раскатай основу","mix"],["Смажь соусом","pour"],["Выложи начинку","mix"],["Выпекай 15 мин","bake"]]},
+  muffins:{base:6,i:[["flour","Мука","250 г"],["sugar","Сахар","150 г"],["egg","Яйца","2 шт"],["milk","Молоко","150 мл"],["chocolate","Шоколад","100 г"]],s:[["Смешай сухие","mix"],["Добавь яйца и молоко","pour"],["Добавь шоколад","mix"],["Разложи","pour"],["Выпекай 20 мин","bake"]]},
+  croissants:{base:8,i:[["flour","Мука","500 г"],["oil","Масло","250 г"],["yeast","Дрожжи","10 г"],["milk","Молоко","200 мл"]],s:[["Замеси тесто","mix"],["Раскатай с маслом","cool"],["Нарежь и сверни","mix"],["Дай подойти","cool"],["Выпекай 20 мин","bake"]]},
+  pie:{base:6,i:[["flour","Мука","200 г"],["egg","Яйца","4 шт"],["sugar","Сахар","180 г"],["oil","Масло","20 г"]],s:[["Нарежь яблоки","pour"],["Взбей яйца","whisk"],["Вмешай муку","mix"],["Залей яблоки","pour"],["Выпекай 40 мин","bake"]]},
+  "cinnamon-rolls":{base:8,i:[["flour","Мука","500 г"],["yeast","Дрожжи","10 г"],["sugar","Сахар","150 г"],["oil","Масло","100 г"],["milk","Молоко","250 мл"]],s:[["Замеси тесто","mix"],["Раскатай","cool"],["Посыпь корицей","pour"],["Сверни рулет","mix"],["Выпекай 25 мин","bake"]]},
+  donuts:{base:8,i:[["flour","Мука","500 г"],["yeast","Дрожжи","10 г"],["egg","Яйца","2 шт"],["sugar","Сахар","100 г"],["oil","Масло","для фритюра"]],s:[["Замеси тесто","mix"],["Дай подойти","cool"],["Сформируй кольца","mix"],["Обжарь","sizzle"],["Покрой глазурью","pour"]]},
+  focaccia:{base:8,i:[["flour","Мука","500 г"],["yeast","Дрожжи","10 г"],["oil","Масло","50 г"],["salt","Соль","10 г"]],s:[["Замеси тесто","mix"],["Раскатай","mix"],["Полей маслом","pour"],["Выпекай 20 мин","bake"],["Подавай","plate"]]},
+  baguette:{base:6,i:[["flour","Мука","500 г"],["yeast","Дрожжи","7 г"],["salt","Соль","10 г"],["sugar","Сахар","5 г"]],s:[["Замеси тесто","mix"],["Дай подойти","cool"],["Сформируй багеты","mix"],["Надрежь","cool"],["Выпекай 25 мин","bake"]]},
+  "pie-meat":{base:6,i:[["flour","Мука","400 г"],["oil","Масло","200 г"],["cutlet","Фарш","500 г"],["onion","Лук","2 шт"]],s:[["Замеси тесто","mix"],["Обжарь фарш","sizzle"],["Собери пирог","mix"],["Смажь яйцом","pour"],["Выпекай 40 мин","bake"]]},
+  "cheese-bread":{base:4,i:[["flour","Мука","400 г"],["milk","Молоко","200 мл"],["cheese","Сулугуни","300 г"],["egg","Яйцо","1 шт"]],s:[["Замеси тесто","mix"],["Раскатай","mix"],["Выложи сыр","pour"],["Защипни края","mix"],["Выпекай 20 мин","bake"]]},
+  cupcake:{base:12,i:[["flour","Мука","300 г"],["sugar","Сахар","200 г"],["egg","Яйца","3 шт"],["oil","Масло","150 г"]],s:[["Смешай сухие","mix"],["Добавь яйца и масло","pour"],["Разложи","pour"],["Выпекай 20 мин","bake"],["Укрась кремом","plate"]]},
+  biscotti:{base:12,i:[["flour","Мука","300 г"],["sugar","Сахар","150 г"],["egg","Яйца","3 шт"],["honey","Орехи","100 г"]],s:[["Смешай тесто","mix"],["Сформируй батон","mix"],["Выпекай 25 мин","bake"],["Нарежь","cool"],["Подсуши 10 мин","bake"]]},
+  granola:{base:8,i:[["honey","Мёд","100 г"],["oil","Масло","50 г"],["chocolate","Орехи","150 г"]],s:[["Смешай всё","mix"],["Выложи на противень","pour"],["Выпекай 20 мин","bake"],["Остуди","cool"],["Подавай с йогуртом","plate"]]},
+  smoothie:{base:2,i:[["milk","Молоко","300 мл"],["berry","Ягоды","200 г"],["sugar","Банан","1 шт"]],s:[["Загрузи всё в блендер","mix"],["Пробей до однородности","whisk"],["Подавай холодным","plate"]]},
+  "eggs-benedict":{base:2,i:[["egg","Яйца","2 шт"],["flour","Хлеб","2 ломтика"],["bacon","Бекон","60 г"],["cream","Сливки","100 мл"]],s:[["Подсуши хлеб","bake"],["Обжарь бекон","sizzle"],["Свари яйца-пашот","boil"],["Собери","plate"],["Полей соусом","pour"]]},
+  porridge:{base:2,i:[["milk","Молоко","500 мл"],["sugar","Сахар","30 г"],["salt","Соль","1 г"],["honey","Масло","20 г"]],s:[["Залей молоко","pour"],["Доведи до кипения","boil"],["Всыпь крупу","mix"],["Вари 7 минут","whisk"],["Добавь масло","plate"]]},
+  "blini-caviar":{base:6,i:[["milk","Молоко","500 мл"],["flour","Мука","300 г"],["egg","Яйца","2 шт"],["fish","Икра","100 г"]],s:[["Замеси тесто","whisk"],["Выпеки блины","spatula"],["Смажь маслом","pour"],["Выложи икру","plate"],["Сверни треугольником","plate"]]},
+  waldorf:{base:4,i:[["cucumber","Сельдерей","200 г"],["cheese","Сыр","100 г"],["honey","Грецкие орехи","80 г"],["mayonnaise","Майонез","150 г"]],s:[["Нарежь сельдерей","mix"],["Нарежь сыр","mix"],["Добавь орехи","mix"],["Заправь майонезом","mix"],["Охлади","cool"]]},
+  nicoise:{base:2,i:[["fish","Тунец","200 г"],["potato","Картофель","3 шт"],["egg","Яйца","2 шт"],["olive","Оливки","80 г"]],s:[["Отвари картофель","boil"],["Отвари яйца","cool"],["Собери салат","mix"],["Добавь тунец","pour"],["Полей маслом","pour"]]},
+  cobb:{base:2,i:[["chicken","Курица","200 г"],["bacon","Бекон","80 г"],["egg","Яйца","2 шт"],["cheese","Сыр","80 г"]],s:[["Отвари яйца","cool"],["Обжарь курицу","sizzle"],["Обжарь бекон","sizzle"],["Нарежь всё","mix"],["Собери салат","plate"]]},
+  tabbouleh:{base:4,i:[["lettuce","Петрушка","200 г"],["tomato","Помидоры","3 шт"],["cucumber","Огурцы","2 шт"],["rice","Булгур","150 г"]],s:[["Замочи булгур","cool"],["Нарежь овощи","mix"],["Смешай","mix"],["Полей лимоном","pour"],["Охлади","cool"]]},
+  "crab-salad":{base:4,i:[["fish","Крабовые палочки","200 г"],["egg","Яйца","4 шт"],["rice","Кукуруза","200 г"],["mayonnaise","Майонез","150 г"]],s:[["Нарежь палочки","mix"],["Отвари яйца","cool"],["Добавь кукурузу","pour"],["Заправь майонезом","mix"],["Охлади","cool"]]},
+  "beet-salad":{base:4,i:[["beet","Свекла","3 шт"],["cheese","Сыр","150 г"],["honey","Орехи","80 г"],["mayonnaise","Майонез","100 г"]],s:[["Отвари свёклу","boil"],["Натри на тёрке","grater"],["Смешай с сыром","mix"],["Добавь орехи","mix"],["Заправь майонезом","mix"]]},
+  eclairs:{base:12,i:[["flour","Мука","150 г"],["oil","Масло","100 г"],["egg","Яйца","4 шт"],["milk","Молоко","500 мл"]],s:[["Завари тесто","boil"],["Вмешай яйца","mix"],["Отсади эклеры","pour"],["Выпекай 30 мин","bake"],["Наполни кремом","plate"]]},
+  napoleon:{base:10,i:[["flour","Мука","500 г"],["oil","Масло","300 г"],["egg","Яйца","2 шт"],["milk","Молоко","700 мл"]],s:[["Замеси тесто","mix"],["Раскатай слоями","cool"],["Испеки коржи","bake"],["Свари крем","boil"],["Промажь","cool"]]},
+  brownie:{base:8,i:[["chocolate","Шоколад","200 г"],["oil","Масло","150 г"],["egg","Яйца","3 шт"],["sugar","Сахар","150 г"]],s:[["Растопи шоколад","flame"],["Взбей яйца с сахаром","whisk"],["Смешай","mix"],["Вылей в форму","pour"],["Выпекай 25 мин","bake"]]},
+  macarons:{base:12,i:[["flour","Миндальная мука","150 г"],["sugar","Сахар","150 г"],["egg","Яичные белки","3 шт"],["cream","Сливки","150 мл"]],s:[["Взбей белки","whisk"],["Вмешай муку","mix"],["Отсади","pour"],["Выпекай 15 мин","bake"],["Собери с кремом","plate"]]},
+  profiteroles:{base:12,i:[["flour","Мука","150 г"],["oil","Масло","100 г"],["egg","Яйца","4 шт"],["chocolate","Шоколад","150 г"]],s:[["Завари тесто","boil"],["Вмешай яйца","mix"],["Отсади","pour"],["Выпекай 25 мин","bake"],["Полей шоколадом","plate"]]},
+  souffle:{base:4,i:[["milk","Молоко","300 мл"],["egg","Яйца","4 шт"],["sugar","Сахар","80 г"],["flour","Мука","40 г"]],s:[["Свари основу","boil"],["Взбей белки","whisk"],["Соедини","mix"],["Разлей","pour"],["Запекай 20 мин","bake"]]},
+  pavlova:{base:6,i:[["egg","Яичные белки","4 шт"],["sugar","Сахар","200 г"],["cream","Сливки","300 мл"],["berry","Ягоды","200 г"]],s:[["Взбей белки с сахаром","whisk"],["Сформируй основу","pour"],["Выпекай 1.5 ч","bake"],["Взбей сливки","whisk"],["Укрась ягодами","plate"]]}
 };
 
 /* ============ НУТРИЦИОЛОГИЯ ============ */
@@ -991,8 +1031,6 @@ var NUT = {
   pumpkin:{k:26,p:1,f:0.1,c:6.5}, mayonnaise:{k:700,p:1,f:78,c:2.5}, avocado:{k:160,p:2,f:15,c:9},
   fish:{k:130,p:22,f:5,c:0}
 };
-var PIECEW = {egg:55,onion:100,tomato:120,potato:150,carrot:80,cucumber:100,avocado:200,olive:4,berry:5,pea:1};
-var LIQ = {milk:1,cream:1,coffee:1,oil:.92,honey:1.4};
 
 var MEAT_ING = ['meat','chicken','bacon','cutlet','fish'];
 var ANIMAL_ING = MEAT_ING.concat(['milk','egg','cream','cheese','cottage','parmesan','mayonnaise','honey']);
@@ -1004,6 +1042,8 @@ function parseQty(s, ing){
   var m = String(s).replace(',','.').match(/([\d.]+)/);
   if(!m) return 0;
   var n = parseFloat(m[1]); if(!isFinite(n) || n<=0) return 0;
+  if(/кг/i.test(s)) return n * 1000;
+  if(/л\b/i.test(s) && !/мл/i.test(s)) return n * 1000 * (LIQ[ing] || 1);
   if(/шт|зуб|ломт|банк|пучок/i.test(s)) return n * (PIECEW[ing] || 50);
   if(/ст\.?\s*л/i.test(s)) return n * 15;
   if(/ч\.?\s*л/i.test(s)) return n * 5;
@@ -1012,6 +1052,7 @@ function parseQty(s, ing){
 }
 
 function calcNutrition(rec, servings){
+  var base = rec.base || 2;
   var t = {k:0,p:0,f:0,c:0};
   rec.i.forEach(function(g){
     var per = NUT[g[0]]; if(!per) return;
@@ -1021,7 +1062,7 @@ function calcNutrition(rec, servings){
     t.f += per.f * gr/100;
     t.c += per.c * gr/100;
   });
-  var factor = (servings || 2) / 2;
+  var factor = (servings || base) / base;
   return {
     k: Math.round(t.k * factor),
     p: Math.round(t.p * factor),
@@ -1063,12 +1104,22 @@ function timeToMin(str){
   return n;
 }
 function diffRank(d){ return d==='Легко'?1:d==='Средне'?2:3; }
+function plural(n, one, few, many){
+  var n10 = n % 10, n100 = n % 100;
+  if(n10 === 1 && n100 !== 11) return one;
+  if(n10 >= 2 && n10 <= 4 && (n100 < 10 || n100 >= 20)) return few;
+  return many;
+}
 
 /* ============ БЕЗОПАСНОСТЬ ============ */
 function esc(s){
   return String(s==null?'':s)
     .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
     .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function hashPw(p, email){
+  // Простой "хеш" (btoa + соль). Не защита от брутфорса, но пароли не в plain text.
+  try{ return btoa(unescape(encodeURIComponent(p + '::' + email + '::lc'))); }catch(e){ return p; }
 }
 var RLK = 'ck_rl_';
 function rlCheck(action, max, ms){
@@ -1125,11 +1176,14 @@ function pwStartCountdown(email){
 
 /* ============ ХРАНИЛИЩЕ ============ */
 function G(k,f){try{var v=localStorage.getItem(k);return v?JSON.parse(v):f}catch(e){return f}}
-function S(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function S(k,v){
+  try{ localStorage.setItem(k,JSON.stringify(v)); return true; }
+  catch(e){ console.warn('Save error', k, e); return false; }
+}
 function DL(k){try{localStorage.removeItem(k)}catch(e){}}
 
 var RK='ck_r9',UK='ck_u9',SK='ck_s9',FK='ck_f9',THK='ck_th9',RTK='ck_rt9',SHK='ck_sh9',COK='ck_c9',HIK='ck_h9',NTK='ck_nt9',SRTK='ck_sort9',QFK='ck_qf9',SEAK='ck_sea9';
-var uR=G(RK,{})||{}, fav=G(FK,[])||[], ratings=G(RTK,{})||{}, shopping=G(SHK,[])||[], cooked=G(COK,[])||[], history=G(HIK,[])||{}, notes=G(NTK,{})||{}, sortBy=G(SRTK,'default')||'default', qfs=G(QFK,[])||[], seach=G(SEAK,[])||[];
+var uR=G(RK,{})||{}, fav=G(FK,[])||[], ratings=G(RTK,{})||{}, shopping=G(SHK,[])||[], cooked=G(COK,[])||[], recent=G(HIK,[])||{}, notes=G(NTK,{})||{}, sortBy=G(SRTK,'default')||'default', qfs=G(QFK,[])||[], seach=G(SEAK,[])||[];
 
 function allR(){ return Object.assign({}, R, uR); }
 function isFav(i){ return fav.indexOf(i) >= 0; }
@@ -1140,46 +1194,50 @@ function tFav(i){
   else { fav.push(i); toast('В избранное','ok','❤️'); }
   S(FK,fav);
 }
-function addHistory(id){
-  var i = history.indexOf(id);
-  if(i>=0) history.splice(i,1);
-  history.unshift(id);
-  if(history.length > 10) history.pop();
-  S(HIK,history);
+function addRecent(id){
+  var i = recent.indexOf(id);
+  if(i>=0) recent.splice(i,1);
+  recent.unshift(id);
+  if(recent.length > 10) recent.pop();
+  S(HIK,recent);
 }
 function cookCount(id){ return (cooked.filter(function(x){return x===id;})).length; }
-function getD(cat){
-  var a = (D[cat]||[]).map(function(d){
-    var m = MET[d[0]] || ['30 мин','Средне'];
-    return {id:d[0], name:d[1], ico:d[2], desc:d[3], time:m[0], dif:m[1], isUser:false};
+
+/* ============ DISHES Map — строится один раз ============ */
+var DISHES = {};
+function rebuildDishes(){
+  DISHES = {};
+  Object.keys(D).forEach(function(cat){
+    D[cat].forEach(function(d){
+      // Показываем только те, у которых есть рецепт (R или uR)
+      if(!R[d[0]] && !uR[d[0]]) return;
+      var m = MET[d[0]] || ['30 мин','Средне'];
+      DISHES[d[0]] = {id:d[0], name:d[1], ico:d[2], desc:d[3], time:m[0], dif:m[1], category:cat, isUser:false};
+    });
   });
   Object.keys(uR).forEach(function(id){
     var r = uR[id];
-    if(r.category === cat) a.push({id:id, name:r.name, ico:r.emoji||'🍽', desc:r.desc||'Вкусное блюдо', time:r.time||'30 мин', dif:r.dif||'Средне', isUser:true});
+    DISHES[id] = {id:id, name:r.name, ico:r.emoji||'🍽', desc:r.desc||'Вкусное блюдо', time:r.time||'30 мин', dif:r.dif||'Средне', category:r.category, isUser:true};
   });
-  return a;
+}
+rebuildDishes();
+
+function getD(cat){
+  return Object.values(DISHES).filter(function(x){ return x.category === cat; });
 }
 function findD(id){
-  var res = null;
-  Object.keys(D).forEach(function(k){
-    D[k].forEach(function(d){
-      if(d[0]===id){
-        var m = MET[id] || ['30 мин','Средне'];
-        res = {id:d[0], name:d[1], ico:d[2], desc:d[3], time:m[0], dif:m[1]};
-      }
-    });
-  });
-  if(!res && uR[id]){
-    var x = uR[id];
-    res = {id:id, name:x.name, ico:x.emoji||'🍽', desc:x.desc||'Вкусное блюдо', time:x.time||'30 мин', dif:x.dif||'Средне'};
-  }
-  return res;
+  var d = DISHES[id];
+  if(!d) return null;
+  return {id:d.id, name:d.name, ico:d.ico, desc:d.desc, time:d.time, dif:d.dif};
 }
+
 function toast(m, t, icon){
   if(navigator.vibrate && t==='ok')try{navigator.vibrate(10)}catch(e){}
   var d = document.createElement('div');
   d.className = 'tst ' + (t||'');
-  d.innerHTML = '<span class="tic">'+(icon||(t==='ok'?'✓':t==='err'?'!':'ℹ️'))+'</span><span>'+m+'</span>';
+  var sp1 = document.createElement('span'); sp1.textContent = icon || (t==='ok'?'✓':t==='err'?'!':'ℹ️');
+  var sp2 = document.createElement('span'); sp2.textContent = m;
+  d.appendChild(sp1); d.appendChild(sp2);
   document.getElementById('toast').appendChild(d);
   setTimeout(function(){
     d.classList.add('out');
@@ -1208,7 +1266,10 @@ function applyTh(t){
   document.getElementById('thB2').textContent = t==='dark' ? '☀️' : '🌙';
   S(THK,t);
 }
-applyTh(G(THK,'light')||'light');
+var savedTh = G(THK,null);
+if(savedTh){ applyTh(savedTh); }
+else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){ applyTh('dark'); }
+else { applyTh('light'); }
 document.getElementById('thB').onclick = function(){ applyTh(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark'); };
 document.getElementById('thB2').onclick = document.getElementById('thB').onclick;
 
@@ -1219,18 +1280,37 @@ var screens = {
   addD:$('addD'), profile:$('profile'), shopping:$('shopping'), fridge:$('fridge')
 };
 var stack = ['auth'];
+var mainScroll = 0;
 
 function show(id){
+  // Защита от undefined — раньше это давало белый экран
+  if(!id || !screens[id]) id = 'auth';
   Object.keys(screens).forEach(function(k){ screens[k].classList.toggle('on', k === id); });
-  screens[id].scrollTop = 0;
+  var scr = screens[id];
+  if(scr){ scr.scrollTop = (id === 'main') ? mainScroll : 0; }
   var nav = (id==='main'||id==='profile'||id==='shopping') ? 'flex' : 'none';
   $('bnav').style.display = nav;
   updNav();
 }
-function goTo(id){ stack.push(id); show(id); }
-function goB(){ if(stack.length<=1)return; stack.pop(); show(stack[stack.length-1]); }
-function resetTo(id){ stack = [id]; show(id); }
-function updNav(){
+function goTo(id){
+  if(!screens[id]) return;
+  if(stack[stack.length-1] === id) return;
+  if(stack[stack.length-1] === 'main'){ mainScroll = screens.main.scrollTop; }
+  stack.push(id);
+  show(id);
+  if(id === 'main'){
+    renderRecent(); renderDOD(); renderFeed();
+  }
+}
+function goB(){
+  if(stack.length <= 1) return;
+  stack.pop();
+  var id = stack[stack.length-1];
+  if(!screens[id]) id = 'auth';
+  show(id);
+  if(id === 'main'){ renderRecent(); renderDOD(); }
+}
+function resetTo(id){ stack = [id]; show(id); }function updNav(){
   var cur = stack[stack.length-1];
   document.querySelectorAll('.ni[data-n]').forEach(function(b){
     var v = b.getAttribute('data-n');
@@ -1273,7 +1353,7 @@ function resetFlow(){
   if(pwBlkTimer){ clearInterval(pwBlkTimer); pwBlkTimer = null; }
   $('sendB').disabled = false; $('sendB').textContent = 'Код';
   $('s1').style.display = 'block'; $('s2').style.display = 'none';
-  $('cbox').classList.remove('on'); $('cbox').innerHTML = '';
+  $('cbox').classList.remove('on'); $('cbox').textContent = '';
   $('cd').value = ''; $('pw').value = ''; setMsg('');
 }
 
@@ -1308,8 +1388,13 @@ $('sendB').onclick = function(){
   var templateParams = { to_email: em, code: pc, app_name: "Let's cook!" };
 
   if(typeof emailjs === 'undefined' || typeof emailjs.send !== 'function'){
-    $('cbox').innerHTML = '🔑 Ваш код<b>' + pc + '</b>';
-    $('cbox').classList.add('on');
+    // Фолбэк — показываем код на экране
+    var cbox = $('cbox');
+    cbox.textContent = '';
+    var txt = document.createTextNode('🔑 Ваш код');
+    var b = document.createElement('b'); b.textContent = pc;
+    cbox.appendChild(txt); cbox.appendChild(b);
+    cbox.classList.add('on');
     $('s1').style.display = 'none'; $('s2').style.display = 'block';
     $('nf').style.display = (tab==='reg') ? 'block' : 'none';
     $('pwLbl').textContent = recovery ? 'Новый пароль' : 'Пароль';
@@ -1330,8 +1415,9 @@ $('sendB').onclick = function(){
 
   emailjs.send('service_si2snd6', 'template_kwa8lmj', templateParams)
     .then(function(){
-      $('cbox').innerHTML = '🔑 Код отправлен на почту<b>******</b>';
-      $('cbox').classList.add('on');
+      var cbox = $('cbox');
+      cbox.textContent = '🔑 Код отправлен на почту ******';
+      cbox.classList.add('on');
       $('s1').style.display = 'none'; $('s2').style.display = 'block';
       $('nf').style.display = (tab==='reg') ? 'block' : 'none';
       $('pwLbl').textContent = recovery ? 'Новый пароль' : 'Пароль';
@@ -1345,7 +1431,7 @@ $('sendB').onclick = function(){
         else $('sendB').textContent = left + 'с';
       }, 1000);
     }, function(err){
-      console.log('EmailJS error:', err);
+      console.warn('EmailJS error:', err);
       $('sendB').disabled = false;
       setMsg('Не удалось отправить письмо.','err');
       toast('Ошибка отправки','err','❌');
@@ -1387,7 +1473,7 @@ $('verB').onclick = function(){
     cdAttempts--;
     if(navigator.vibrate) try{ navigator.vibrate([40,60,40]); }catch(e){}
     if(cdAttempts > 0){
-      var word = (cdAttempts === 1) ? 'попытка' : (cdAttempts < 5 ? 'попытки' : 'попыток');
+      var word = plural(cdAttempts, 'попытка', 'попытки', 'попыток');
       setMsg('Неверный код. Осталось ' + cdAttempts + ' ' + word + '.','err');
       toast('Осталось попыток: ' + cdAttempts, 'err', '⚠️');
       $('cd').value = '';
@@ -1406,7 +1492,7 @@ $('verB').onclick = function(){
     var us = G(UK,{}) || {};
     if(us[pe]){ setMsg('Email уже занят','err'); return; }
     var dn = n || pe.split('@')[0];
-    us[pe] = {name:dn, password:p}; S(UK,us);
+    us[pe] = {name:dn, password:hashPw(p, pe)}; S(UK,us);
     S(SK,{email:pe, name:dn, guest:false});
     toast('Регистрация успешна!','ok','🎉');
     setTimeout(function(){ enter({email:pe, name:dn, guest:false}); }, 300);
@@ -1421,7 +1507,7 @@ $('verB').onclick = function(){
         setMsg('Новый пароль минимум 4 символа','err');
         return;
       }
-      u.password = npw;
+      u.password = hashPw(npw, pe);
       us2[pe] = u;
       S(UK, us2);
       pwSet(pe, { attempts: 0, until: 0 });
@@ -1446,7 +1532,10 @@ $('verB').onclick = function(){
       setMsg('Введите пароль (минимум 4 символа)','err');
       return;
     }
-    if(!u.password || u.password !== pw){
+    // Сравнение с хешем, поддержка старых plain-text записей
+    var pwH = hashPw(pw, pe);
+    var okPw = (u.password === pwH) || (u.password === pw);
+    if(!okPw){
       var lock = pwGet(pe);
       lock.attempts++;
       if(lock.attempts >= PWMAX){
@@ -1461,7 +1550,7 @@ $('verB').onclick = function(){
       } else {
         pwSet(pe, lock);
         var left = PWMAX - lock.attempts;
-        var word2 = (left === 1) ? 'попытка' : 'попытки';
+        var word2 = plural(left, 'попытка', 'попытки', 'попыток');
         setMsg('Неверный пароль. Осталось ' + left + ' ' + word2 + '.','err');
         toast('Осталось попыток: ' + left,'err','⚠️');
         if(navigator.vibrate) try{ navigator.vibrate([40,60,40]); }catch(e){}
@@ -1470,6 +1559,8 @@ $('verB').onclick = function(){
       }
       return;
     }
+    // Обновим хеш, если был plain-text
+    if(u.password === pw){ u.password = pwH; us2[pe] = u; S(UK, us2); }
 
     pwSet(pe, { attempts: 0, until: 0 });
     if(pwBlkTimer){ clearInterval(pwBlkTimer); pwBlkTimer = null; }
@@ -1520,15 +1611,10 @@ function enter(u){
 
 /* ============ БЛЮДО ДНЯ ============ */
 function renderDOD(){
-  var all = [];
-  Object.keys(D).forEach(function(k){
-    D[k].forEach(function(d){
-      var m = MET[d[0]] || ['30 мин','Средне'];
-      all.push({id:d[0], name:d[1], ico:d[2], desc:d[3], time:m[0], dif:m[1]});
-    });
-  });
-  var idx = new Date().getDate() % all.length;
-  var d = all[idx];
+  var pool = Object.values(DISHES);
+  if(!pool.length){ $('dod').style.display = 'none'; return; }
+  var day = Math.floor(Date.now() / 864e5);
+  var d = pool[day % pool.length];
   $('dodEm').textContent = d.ico;
   $('dodNm').textContent = d.name;
   $('dodDs').textContent = d.desc;
@@ -1541,12 +1627,12 @@ function renderDOD(){
 /* ============ НЕДАВНИЕ ============ */
 function renderRecent(){
   var block = $('recent');
-  if(!history.length){ block.classList.remove('on'); return; }
+  if(!recent.length){ block.classList.remove('on'); return; }
   var html = '';
-  history.forEach(function(id){
+  recent.forEach(function(id){
     var m = findD(id);
     if(!m) return;
-    html += '<div class="rc" data-rid="'+esc(id)+'"><div class="ri">'+esc(m.ico)+'</div><div class="rn">'+esc(m.name)+'</div></div>';
+    html += '<button class="rc" data-rid="'+esc(id)+'" type="button"><div class="ri">'+esc(m.ico)+'</div><div class="rn">'+esc(m.name)+'</div></button>';
   });
   if(!html){ block.classList.remove('on'); return; }
   $('recentRow').innerHTML = html;
@@ -1602,7 +1688,7 @@ function switchCat(c){
     bs[i].classList.toggle('on', isOn);
     if(isOn){ try{ bs[i].scrollIntoView({inline:'center', block:'nearest', behavior:'smooth'}); }catch(e){} }
   }
-  renderFeed();
+  renderFeed(true);
   setTimeout(updArrows, 400);
 }
 
@@ -1637,41 +1723,30 @@ function passesQF(d){
     var f = qfs[i];
     if(f==='quick' && timeToMin(d.time) > 30) return false;
     if(f==='fast' && timeToMin(d.time) > 15) return false;
-    if(f==='nobake'){ var rec = allR()[d.id]; if(rec && rec.s.some(function(s){return s[1]==='bake';})) return false; }
+    if(f==='nobake'){
+      var rec = allR()[d.id];
+      if(rec && rec.s.some(function(s){ return s[1]==='bake'; })) return false;
+    }
     if(f==='fav' && !isFav(d.id)) return false;
   }
   return true;
 }
 
-function renderFeed(){
+var renderFeedT = null;
+function renderFeed(forceAnim){
+  if(renderFeedT) clearTimeout(renderFeedT);
+  renderFeedT = setTimeout(function(){ doRenderFeed(forceAnim); }, forceAnim ? 0 : 180);
+}
+
+function doRenderFeed(forceAnim){
   var feed = $('feed');
   var ds;
 
   if(cv === 'fav'){
-    ds = [];
-    Object.keys(D).forEach(function(k){
-      D[k].forEach(function(d){
-        if(isFav(d[0])){ var m = MET[d[0]] || ['30 мин','Средне'];
-          ds.push({id:d[0], name:d[1], ico:d[2], desc:d[3], time:m[0], dif:m[1], isUser:false}); }
-      });
-    });
-    Object.keys(uR).forEach(function(id){
-      if(isFav(id)){ var r = uR[id];
-        ds.push({id:id, name:r.name, ico:r.emoji||'🍽', desc:r.desc||'Вкусное блюдо', time:r.time||'30 мин', dif:r.dif||'Средне', isUser:true}); }
-    });
+    ds = Object.values(DISHES).filter(function(d){ return isFav(d.id); });
   } else if(sq){
-    ds = [];
-    Object.keys(D).forEach(function(k){
-      D[k].forEach(function(d){
-        if(d[1].toLowerCase().indexOf(sq)>=0 || d[3].toLowerCase().indexOf(sq)>=0){
-          var m = MET[d[0]] || ['30 мин','Средне'];
-          ds.push({id:d[0], name:d[1], ico:d[2], desc:d[3], time:m[0], dif:m[1], isUser:false}); }
-      });
-    });
-    Object.keys(uR).forEach(function(id){
-      var r = uR[id];
-      if(r.name.toLowerCase().indexOf(sq)>=0){
-        ds.push({id:id, name:r.name, ico:r.emoji||'🍽', desc:r.desc||'Вкусное блюдо', time:r.time||'30 мин', dif:r.dif||'Средне', isUser:true}); }
+    ds = Object.values(DISHES).filter(function(d){
+      return d.name.toLowerCase().indexOf(sq)>=0 || d.desc.toLowerCase().indexOf(sq)>=0;
     });
   } else {
     ds = getD(cc);
@@ -1693,12 +1768,7 @@ function renderFeed(){
   ds.forEach(function(d){
     var f = isFav(d.id);
     var r = ratings[d.id];
-    var cat = cc;
-    Object.keys(D).forEach(function(k){
-      D[k].forEach(function(x){ if(x[0] === d.id) cat = k; });
-    });
-    if(uR[d.id] && uR[d.id].category) cat = uR[d.id].category;
-    html += '<div class="dc" data-id="'+esc(d.id)+'" data-cat="'+cat+'">'+
+    html += '<div class="dc" data-id="'+esc(d.id)+'" data-cat="'+esc(d.category)+'">'+
       '<button class="fav'+(f?' on':'')+'" data-fav="'+esc(d.id)+'" type="button">'+(f?'❤️':'🤍')+'</button>'+
       (d.isUser ? '<button class="del" data-del="'+esc(d.id)+'" type="button">×</button>' : '')+
       '<div class="ph"><span class="emo">'+esc(d.ico)+'</span></div>'+
@@ -1710,44 +1780,38 @@ function renderFeed(){
   });
   feed.innerHTML = html;
 
-  var cs = feed.querySelectorAll('[data-id]');
-  for(var i=0; i<cs.length; i++){
-    (function(c){
-      c.onclick = function(e){
-        if(e.target.closest('[data-fav]') || e.target.closest('[data-del]')) return;
-        openRecipe(c.getAttribute('data-id'));
-      };
-    })(cs[i]);
-  }
-  var fs = feed.querySelectorAll('[data-fav]');
-  for(var j=0; j<fs.length; j++){
-    (function(b){
-      b.onclick = function(e){
+  // Делегирование событий
+  if(!feed._bound){
+    feed._bound = true;
+    feed.addEventListener('click', function(e){
+      var favBtn = e.target.closest('[data-fav]');
+      if(favBtn){
         e.stopPropagation();
-        var id = b.getAttribute('data-fav');
+        var id = favBtn.getAttribute('data-fav');
         tFav(id);
-        var f = isFav(id);
-        b.classList.toggle('on', f);
-        b.textContent = f ? '❤️' : '🤍';
+        var f2 = isFav(id);
+        favBtn.classList.toggle('on', f2);
+        favBtn.textContent = f2 ? '❤️' : '🤍';
         if(cv === 'fav' || qfs.indexOf('fav') >= 0) setTimeout(renderFeed, 250);
-      };
-    })(fs[j]);
-  }
-  var dls = feed.querySelectorAll('[data-del]');
-  for(var m=0; m<dls.length; m++){
-    (function(b){
-      b.onclick = function(e){
+        return;
+      }
+      var delBtn = e.target.closest('[data-del]');
+      if(delBtn){
         e.stopPropagation();
-        var id = b.getAttribute('data-del');
+        var did = delBtn.getAttribute('data-del');
         if(confirm('Удалить?')){
-          delete uR[id]; S(RK,uR);
-          var fi = fav.indexOf(id);
+          delete uR[did]; S(RK,uR);
+          var fi = fav.indexOf(did);
           if(fi>=0){ fav.splice(fi,1); S(FK,fav); }
-          renderFeed();
+          rebuildDishes();
+          renderTabs(); renderFeed(true);
           toast('Удалено','','🗑');
         }
-      };
-    })(dls[m]);
+        return;
+      }
+      var card = e.target.closest('.dc');
+      if(card){ openRecipe(card.getAttribute('data-id')); }
+    });
   }
 }
 
@@ -1804,21 +1868,13 @@ $('clrS').onclick = function(){
 $('addB').onclick = function(){ openAdd(cc); };
 
 /* ============ РУЛЕТКА ============ */
-var rouMode = 'any', rouPick = null, rouTimer = null, rouFrame = 0;
+var rouMode = 'any', rouPick = null, rouTimer = null;
 
 function rouPool(mode){
-  var pool = [];
-  Object.keys(D).forEach(function(k){ D[k].forEach(function(d){ pool.push(d[0]); }); });
-  Object.keys(uR).forEach(function(id){ pool.push(id); });
-  if(mode==='fav') pool = pool.filter(function(id){ return isFav(id); });
-  if(mode==='quick') pool = pool.filter(function(id){
-    var m = MET[id] || (uR[id] ? [uR[id].time||'30 мин'] : ['30 мин']);
-    return timeToMin(m[0]) <= 30;
-  });
-  if(mode==='easy') pool = pool.filter(function(id){
-    var m = MET[id] || (uR[id] ? ['', uR[id].dif||'Легко'] : ['','Легко']);
-    return m[1] === 'Легко';
-  });
+  var pool = Object.values(DISHES);
+  if(mode==='fav') pool = pool.filter(function(d){ return isFav(d.id); });
+  if(mode==='quick') pool = pool.filter(function(d){ return timeToMin(d.time) <= 30; });
+  if(mode==='easy') pool = pool.filter(function(d){ return d.dif === 'Легко'; });
   return pool.length ? pool : null;
 }
 
@@ -1826,13 +1882,10 @@ function rouNext(done){
   var pool = rouPool(rouMode);
   if(!pool || !pool.length){ toast('Нет блюд под фильтр','err'); return; }
   rouPick = pool[Math.floor(Math.random()*pool.length)];
-  var m = findD(rouPick);
-  if(!m) return;
-  $('rouEm').textContent = m.ico;
-  $('rouTitle').textContent = m.name;
-  $('rouSub').textContent = '⏱ ' + m.time + ' · 🔥 ' + m.dif;
+  $('rouEm').textContent = rouPick.ico;
+  $('rouTitle').textContent = rouPick.name;
+  $('rouSub').textContent = '⏱ ' + rouPick.time + ' · 🔥 ' + rouPick.dif;
   if(done) return;
-  rouFrame = 0;
   var dur = 1800, t0 = Date.now();
   $('rouEm').className = 'rouEm';
   $('rouGo').disabled = true;
@@ -1842,29 +1895,21 @@ function rouNext(done){
     if(el < 600){ $('rouEm').className = 'rouEm'; }
     else if(el < 1200){ $('rouEm').className = 'rouEm slow'; }
     else { $('rouEm').className = 'rouEm stop'; }
-    rouFrame++;
     if(el >= dur){
       clearInterval(rouTimer); rouTimer = null;
       $('rouGo').disabled = false;
+      $('rouEm').textContent = rouPick.ico;
+      $('rouTitle').textContent = rouPick.name;
+      $('rouSub').textContent = '⏱ ' + rouPick.time + ' · 🔥 ' + rouPick.dif;
       if(navigator.vibrate) try{ navigator.vibrate([20,30,20]); }catch(e){}
-    }
-    if(el < dur - 200){
+    } else if(el < dur - 200){
       var pool2 = rouPool(rouMode);
       if(pool2 && pool2.length){
         var r = pool2[Math.floor(Math.random()*pool2.length)];
-        var mm = findD(r);
-        if(mm) $('rouEm').textContent = mm.ico;
+        $('rouEm').textContent = r.ico;
       }
     }
   }, 80);
-  setTimeout(function(){
-    var mf = findD(rouPick);
-    if(mf){
-      $('rouEm').textContent = mf.ico;
-      $('rouTitle').textContent = mf.name;
-      $('rouSub').textContent = '⏱ ' + mf.time + ' · 🔥 ' + mf.dif;
-    }
-  }, dur - 250);
 }
 
 $('luckyB').onclick = function(){
@@ -1879,7 +1924,7 @@ $('luckyB').onclick = function(){
   setTimeout(rouNext, 250);
 };
 $('rouGo').onclick = function(){
-  if(rouPick) openRecipe(rouPick);
+  if(rouPick) openRecipe(rouPick.id);
   $('rouModal').classList.remove('on');
 };
 $('rouAgain').onclick = function(){ rouNext(); };
@@ -1894,34 +1939,99 @@ document.querySelectorAll('#rouMode button').forEach(function(b){
 });
 
 $('fridgeOpenB').onclick = function(){ goTo('fridge'); };
-$('bk5').onclick = function(){ resetTo('main'); };
+$('bk5').onclick = goB;
+
+/* Нормализация строки для поиска: ё→е, нижний регистр */
+function norm(s){ return String(s||'').toLowerCase().replace(/ё/g,'е').trim(); }
+
+/* Синонимы ингредиентов */
+var SYN = {
+  egg:['яйц','яйцо','яйца'],
+  milk:['молок','молоч'],
+  meat:['мяс','говядин','свинин','баранин','стейк'],
+  chicken:['куриц','куриц','куриное'],
+  fish:['рыб','креветк','тунец','лосос','треск'],
+  tomato:['помидор','томат','черри'],
+  potato:['картоф','картошк'],
+  cucumber:['огурц','огур'],
+  cheese:['сыр','фет','моцарел','пармезан','сулугуни'],
+  cottage:['творог'],
+  cream:['сливк','сметан','кефир'],
+  pasta:['паст','макарон','спагет','лазан','булгур'],
+  rice:['рис'],
+  flour:['мук'],
+  onion:['лук','лучок'],
+  carrot:['морков'],
+  beet:['свекл','буряк'],
+  cabbage:['капуст'],
+  pea:['горох','горош'],
+  berry:['ягод','вишн','малин','смородин'],
+  honey:['мед'],
+  olive:['оливк','маслин'],
+  oil:['масл'],
+  salt:['соль','соли'],
+  sugar:['сахар'],
+  yeast:['дрожж']
+};
+
+function ingHasKey(rec, key){
+  return rec.i.some(function(g){ return g[0] === key; });
+}
+function recHasAny(rec, word){
+  return rec.i.some(function(g){
+    var key = g[0];
+    var name = norm(g[1]);
+    if(name.indexOf(word) >= 0) return true;
+    var syns = SYN[key] || [];
+    return syns.some(function(s){ return s.indexOf(word) >= 0 || word.indexOf(s) >= 0; });
+  });
+}
 
 $('fridgeB').onclick = function(){
-  var q = ($('fridgeQ').value||'').toLowerCase().trim();
-  if(!q){ toast('Введите ингредиенты','err'); return; }
-  var words = q.split(',').map(function(w){ return w.trim(); }).filter(function(w){ return w; });
+  var q = $('fridgeQ').value || '';
+  var words = q.split(/[,\n;]+|\s{2,}/).map(norm).filter(function(w){ return w.length > 1; });
+  if(!words.length){
+    // попробуем разбить по одиночным пробелам
+    words = q.split(/\s+/).map(norm).filter(function(w){ return w.length > 1; });
+  }
+  if(!words.length){ toast('Введите ингредиенты','err'); return; }
+
   var results = [];
-  Object.keys(D).forEach(function(k){
-    D[k].forEach(function(d){
-      var recipe = R[d[0]];
-      if(!recipe) return;
-      var matches = 0;
-      words.forEach(function(w){
-        var found = recipe.i.some(function(g){ return g[1].toLowerCase().indexOf(w) >= 0; });
-        if(found) matches++;
-      });
-      if(matches > 0) results.push({id:d[0], name:d[1], ico:d[2], matches:matches, total:words.length});
+  Object.keys(allR()).forEach(function(id){
+    var rec = allR()[id];
+    if(!rec || !rec.i) return;
+    var dish = DISHES[id]; if(!dish) return;
+
+    // считаем, сколько ингредиентов рецепта покрыто
+    var need = rec.i.filter(function(g){
+      // соль/масло/сахар/специи считаем всегда имеющимися
+      return !['salt','oil','sugar','yeast'].includes(g[0]);
     });
+    if(!need.length) return;
+
+    var got = need.filter(function(g){
+      return words.some(function(w){ return recHasAny({i:[g]}, w); });
+    }).length;
+
+    var missing = need.filter(function(g){
+      return !words.some(function(w){ return recHasAny({i:[g]}, w); });
+    }).map(function(g){ return g[1]; });
+
+    if(got > 0){
+      var pct = Math.round(got / need.length * 100);
+      results.push({id:id, name:dish.name, ico:dish.ico, pct:pct, got:got, total:need.length, missing:missing});
+    }
   });
-  results.sort(function(a,b){ return b.matches - a.matches; });
+  results.sort(function(a,b){ return b.pct - a.pct || b.got - a.got; });
+
   if(!results.length){
     $('matches').innerHTML = '<div class="empty"><span class="i">🥲</span><div class="t">Ничего не найдено</div><div class="s">Попробуйте другое</div></div>';
     return;
   }
   var html = '';
   results.slice(0,20).forEach(function(r){
-    var pct = Math.round(r.matches / r.total * 100);
-    html += '<div class="match" data-id="'+esc(r.id)+'"><div class="mi">'+esc(r.ico)+'</div><div class="mt"><div class="mn">'+esc(r.name)+'</div><div class="ms">Совпадений: '+r.matches+' из '+r.total+'</div></div><div class="mp">'+pct+'%</div></div>';
+    var missTxt = r.missing.length ? 'Не хватает: ' + r.missing.slice(0,4).join(', ') + (r.missing.length>4?'…':'') : 'Всё есть!';
+    html += '<div class="match" data-id="'+esc(r.id)+'"><div class="mi">'+esc(r.ico)+'</div><div class="mt"><div class="mn">'+esc(r.name)+'</div><div class="ms">Покрытие: '+r.got+' из '+r.total+' · '+esc(missTxt)+'</div></div><div class="mp">'+r.pct+'%</div></div>';
   });
   $('matches').innerHTML = html;
   $('matches').querySelectorAll('[data-id]').forEach(function(el){
@@ -1934,7 +2044,7 @@ var curId = null, portions = {};
 
 function getPortions(id){
   if(!portions[id]){
-    try{ portions[id] = JSON.parse(localStorage.getItem('ck_p9_' + id)) || 2; }catch(e){ portions[id] = 2; }
+    try{ portions[id] = JSON.parse(localStorage.getItem('ck_p9_' + id)) || (allR()[id] && allR()[id].base) || 2; }catch(e){ portions[id] = 2; }
   }
   return portions[id];
 }
@@ -1947,7 +2057,7 @@ function setPortions(id, n){
 function renderStars(id){
   var r = ratings[id] || 0;
   var html = '';
-  for(var i=1; i<=5; i++) html += '<span class="star'+(i<=r?' on':'')+'" data-star="'+i+'">★</span>';
+  for(var i=1; i<=5; i++) html += '<span class="star'+(i<=r?' on':'')+'" data-star="'+i+'" role="button" tabindex="0">★</span>';
   $('stars').innerHTML = html;
   var ss = $('stars').querySelectorAll('[data-star]');
   for(var j=0; j<ss.length; j++){
@@ -1962,14 +2072,25 @@ function renderStars(id){
   }
 }
 
+// Сохраняем состояние галочек ингредиентов — не сбрасываем при смене порций
 function renderIngredients(id, rec){
   var n = getPortions(id);
-  var factor = n / 2;
+  var base = rec.base || 2;
+  var factor = n / base;
+  var checked = {};
+  var oldCbs = $('rL').querySelectorAll('.ing');
+  // Сохраним текущее состояние
+  var oldRec = allR()[id];
+  if(oldRec && oldRec.i && oldRec.i.length === rec.i.length){
+    oldCbs.forEach(function(el, i){
+      if(el.querySelector('.cb').classList.contains('on')) checked[i] = true;
+    });
+  }
   var html = '';
-  rec.i.forEach(function(g){
+  rec.i.forEach(function(g, idx){
     var ic = IC[g[0]] || IC.flour;
     var qty = scaleQty(g[2] || '', factor);
-    html += '<div class="ing"><div class="cb">✓</div><svg viewBox="0 0 60 60">'+ic+'</svg><span class="nm">'+esc(g[1])+'</span><span class="gr">'+esc(qty)+'</span></div>';
+    html += '<div class="ing"><div class="cb'+(checked[idx]?' on':'')+'">✓</div><svg viewBox="0 0 60 60">'+ic+'</svg><span class="nm">'+esc(g[1])+'</span><span class="gr">'+esc(qty)+'</span></div>';
   });
   $('rL').innerHTML = html;
   var cbs = $('rL').querySelectorAll('.cb');
@@ -1981,9 +2102,8 @@ function renderIngredients(id, rec){
 function renderNutrition(id, rec){
   var n = getPortions(id);
   var nut = calcNutrition(rec, n);
-  var box = $('rNut');
-  var word = n===1 ? 'порцию' : (n<5 ? 'порции' : 'порций');
-  box.innerHTML =
+  var word = plural(n, 'порцию', 'порции', 'порций');
+  $('rNut').innerHTML =
     '<div class="nc"><div class="v">'+nut.k+'</div><div class="k">ккал</div></div>'+
     '<div class="nc"><div class="v">'+nut.p+'</div><div class="k">белки</div></div>'+
     '<div class="nc"><div class="v">'+nut.f+'</div><div class="k">жиры</div></div>'+
@@ -2002,27 +2122,23 @@ function renderTags(rec){
 
 function renderCooked(id){
   var c = cookCount(id);
-  $('rCooked').innerHTML = c ? '<div class="cookedBadge">👨‍🍳 Готовили '+c+' раз'+(c>1?'а':'')+'</div>' : '';
+  $('rCooked').innerHTML = c ? '<div class="cookedBadge">👨‍🍳 Готовили '+c+' ' + plural(c,'раз','раза','раз') + '</div>' : '';
 }
 
 function openRecipe(id){
-  addHistory(id);
-  curId = id;
   var r = allR()[id];
-  if(!r){ toast('Не найдено','err'); return; }
+  if(!r || !r.i || !r.s){ toast('Рецепт не найден','err'); return; }
   var m = findD(id);
   if(!m){ toast('Не найдено','err'); return; }
+  addRecent(id);
+  curId = id;
 
   $('rT').textContent = m.name;
   $('rD').textContent = m.desc || '';
   $('rI').innerHTML = '<span class="bdg">⏱ '+esc(m.time)+'</span><span class="bdg">🔥 '+esc(m.dif)+'</span>';
   $('rH').textContent = m.ico;
 
-  var cat = 'main';
-  Object.keys(D).forEach(function(k){
-    D[k].forEach(function(x){ if(x[0] === id) cat = k; });
-  });
-  if(uR[id] && uR[id].category) cat = uR[id].category;
+  var cat = DISHES[id] ? DISHES[id].category : 'main';
   $('rHero').setAttribute('data-cat', cat);
 
   renderTags(r);
@@ -2040,9 +2156,14 @@ function openRecipe(id){
   });
 
   $('rNotes').value = notes[id] || '';
+  var notesT = null;
   $('rNotes').oninput = function(){
-    notes[id] = this.value;
-    S(NTK, notes);
+    var v = this.value;
+    if(notesT) clearTimeout(notesT);
+    notesT = setTimeout(function(){
+      notes[id] = v;
+      S(NTK, notes);
+    }, 400);
   };
 
   var favA = $('favA');
@@ -2055,10 +2176,12 @@ function openRecipe(id){
   };
 
   $('shopA').onclick = function(){
-    var f = getPortions(id) / 2;
+    var base = r.base || 2;
+    var f = getPortions(id) / base;
     var items = r.i.map(function(ing){ return {name:ing[1], qty:scaleQty(ing[2]||'', f)}; });
     var added = 0;
     items.forEach(function(it){
+      // Объединяем одинаковые строки
       var exists = shopping.some(function(s){ return s.name===it.name && s.qty===it.qty; });
       if(!exists){ shopping.push({name:it.name, qty:it.qty, done:false}); added++; }
     });
@@ -2070,7 +2193,9 @@ function openRecipe(id){
 
   $('shareA').onclick = function(){
     var text = m.name + ' — рецепт из Let\'s cook!\n\nИнгредиенты:\n' +
-      r.i.map(function(g){ return '• ' + g[1] + ' — ' + g[2]; }).join('\n');
+      r.i.map(function(g){ return '• ' + g[1] + ' — ' + g[2]; }).join('\n') +
+      '\n\nПриготовление:\n' +
+      r.s.map(function(st, i){ return (i+1) + '. ' + st[0]; }).join('\n');
     if(navigator.share){
       navigator.share({title:m.name, text:text}).catch(function(){});
     } else if(navigator.clipboard){
@@ -2133,28 +2258,28 @@ document.querySelectorAll('#presets button').forEach(function(b){
 function scene(type, emoji){
   var bowl = '<ellipse cx="100" cy="88" rx="52" ry="13"/><path d="M48 88C46 128,154 128,152 88"/>';
   var pan = '<path d="M40 100h120"/><path d="M40 100q0 25 60 25t60-25"/><path d="M150 95l30-15"/>';
-  var flames = '<path class="flame" style="stroke:var(--accent)" d="M93 145q4-16 0-23q-4 7 0 23"/><path class="flame2" style="stroke:var(--accent)" d="M107 145q4-13 0-19q-4 6 0 19"/>';
+  var flames = '<path style="stroke:var(--accent)" d="M93 145q4-16 0-23q-4 7 0 23"/><path style="stroke:var(--accent)" d="M107 145q4-13 0-19q-4 6 0 19"/>';
   var steam = '<path class="steam" d="M80 95q-4-10 0-18"/><path class="steam2" d="M100 95q4-10 0-18"/><path class="steam3" d="M120 95q-4-10 0-18"/>';
   var plate = '<ellipse class="scene" cx="100" cy="118" rx="58" ry="16"/>';
   var fs = 'style="fill:var(--accent)"';
 
-  if(type==='egg') return bowl+'<ellipse class="egg-f" cx="100" cy="28" rx="9" ry="12"/><path class="shell-l" d="M92 54q-7 3-8 9q1 6 7 7"/><path class="shell-r" d="M108 54q7 3 8 9q-1 6-7 7"/><circle class="fill drip" cx="100" cy="72" r="8" '+fs+'/>';
-  if(type==='whisk') return bowl+'<g class="whisk"><path d="M100 30L100 50"/><path d="M90 50q10 24 0 34"/><path d="M100 50L100 84"/><path d="M110 50q-10 24 0 34"/></g>';
+  if(type==='egg') return bowl+'<ellipse cx="100" cy="28" rx="9" ry="12"/><path d="M92 54q-7 3-8 9q1 6 7 7"/><path d="M108 54q7 3 8 9q-1 6-7 7"/><circle class="fill" cx="100" cy="72" r="8" '+fs+'/>';
+  if(type==='whisk') return bowl+'<g><path d="M100 30L100 50"/><path d="M90 50q10 24 0 34"/><path d="M100 50L100 84"/><path d="M110 50q-10 24 0 34"/></g>';
   if(type==='flame') return pan+flames+'<ellipse class="fill" cx="100" cy="98" rx="15" ry="4" '+fs+'/>';
-  if(type==='ladle') return pan+'<g class="ladle"><ellipse cx="145" cy="32" rx="11" ry="7"/><path d="M155 30l22-10"/></g><path class="stream" style="stroke:var(--accent)" d="M143 40q-14 22-30 40"/><ellipse class="fill batter" cx="100" cy="112" rx="32" ry="10" '+fs+'/>';
-  if(type==='spatula') return pan+'<path class="spat" d="M14 96L58 110H96" style="stroke-width:5"/><ellipse class="fill pancake" cx="100" cy="112" rx="34" ry="10" '+fs+'/>';
-  if(type==='plate'||type==='fold') return plate+'<path class="scene fill" '+fs+' d="M100 103A34 9 0 0 0 66 112A34 9 0 0 0 100 121Z"/><path class="fill fold" '+fs+' d="M100 103A34 9 0 0 1 134 112A34 9 0 0 1 100 121Z"/>'+steam;
+  if(type==='ladle') return pan+'<ellipse cx="145" cy="32" rx="11" ry="7"/><path d="M155 30l22-10"/><path style="stroke:var(--accent)" d="M143 40q-14 22-30 40"/><ellipse class="fill" cx="100" cy="112" rx="32" ry="10" '+fs+'/>';
+  if(type==='spatula') return pan+'<path d="M14 96L58 110H96" style="stroke-width:5"/><ellipse class="fill" cx="100" cy="112" rx="34" ry="10" '+fs+'/>';
+  if(type==='plate'||type==='fold') return plate+'<path class="fill" '+fs+' d="M100 103A34 9 0 0 0 66 112A34 9 0 0 0 100 121Z"/>'+steam;
   if(type==='steam'||type==='boil') return pan+flames+steam+'<ellipse class="fill" cx="100" cy="98" rx="48" ry="8" '+fs+'/>';
-  if(type==='sizzle') return pan+flames+'<path class="sizzle" '+fs+' d="M76 98q0-14 16-15q18-1 22 10q4 12-10 18q-14 7-24 0q-6-4-4-13z"/>';
-  if(type==='leaf') return bowl+'<path class="leaf-l" d="M100 95q-24-2-32 32z"/><path class="leaf-r" d="M100 95L100 40q28 10 32 55z"/>';
-  if(type==='pour'||type==='mix') return bowl+'<circle class="fill plc" cx="85" cy="45" r="12" '+fs+'/><circle class="fill plc" cx="115" cy="45" r="10" '+fs+'/><ellipse class="fill plc" cx="100" cy="60" rx="8" ry="8" '+fs+'/>';
-  if(type==='grater') return bowl+'<path class="grater" d="M82 26L118 26L112 56L88 56Z"/><circle class="fill shaving" cx="95" cy="62" r="2.5" '+fs+'/><circle class="fill shaving2" cx="105" cy="68" r="2.5" '+fs+'/><circle class="fill shaving3" cx="100" cy="74" r="2.5" '+fs+'/>';
-  if(type==='bake') return plate+'<ellipse class="fill rise" cx="100" cy="108" rx="32" ry="14" '+fs+'/>'+steam;
+  if(type==='sizzle') return pan+flames+'<path '+fs+' d="M76 98q0-14 16-15q18-1 22 10q4 12-10 18q-14 7-24 0q-6-4-4-13z"/>';
+  if(type==='leaf') return bowl+'<path d="M100 95q-24-2-32 32z"/><path d="M100 95L100 40q28 10 32 55z"/>';
+  if(type==='pour'||type==='mix') return bowl+'<circle class="fill" cx="85" cy="45" r="12" '+fs+'/><circle class="fill" cx="115" cy="45" r="10" '+fs+'/><ellipse class="fill" cx="100" cy="60" rx="8" ry="8" '+fs+'/>';
+  if(type==='grater') return bowl+'<path d="M82 26L118 26L112 56L88 56Z"/><circle class="fill" cx="95" cy="62" r="2.5" '+fs+'/><circle class="fill" cx="105" cy="68" r="2.5" '+fs+'/><circle class="fill" cx="100" cy="74" r="2.5" '+fs+'/>';
+  if(type==='bake') return plate+'<ellipse class="fill" cx="100" cy="108" rx="32" ry="14" '+fs+'/>'+steam;
   if(type==='dough'||type==='cool') return bowl+'<ellipse class="fill" cx="100" cy="80" rx="32" ry="14" '+fs+'/>'+(type==='cool'?'':steam);
   return bowl+'<text class="scene" x="100" y="118" text-anchor="middle" font-size="44">'+(emoji||'🍽')+'</text>'+steam;
 }
 
-var si = 0, sd = [], tmInt = null, tmLeft = 0;
+var si = 0, sd = [], tmInt = null, tmEnd = 0, wakeLock = null;
 
 function renderStep(){
   var step = sd[si];
@@ -2166,12 +2291,14 @@ function renderStep(){
   $('prg').style.width = ((si+1)/sd.length*100) + '%';
   $('prevB').disabled = (si === 0);
   $('nextB').textContent = (si === sd.length-1) ? 'Готово! 🎉' : 'Далее →';
-  if(tmInt){ clearInterval(tmInt); tmInt = null; }
+  // Таймер НЕ сбрасывается при смене шага
   var mins = TIMER[curId];
   if(mins){
     $('tmRow').style.display = 'flex';
-    $('tmB').textContent = '⏱ ' + mins + ' мин';
-    $('tmB').classList.remove('on');
+    if(!tmInt){
+      $('tmB').textContent = '⏱ ' + mins + ' мин';
+      $('tmB').classList.remove('on');
+    }
   } else {
     $('tmRow').style.display = 'none';
   }
@@ -2186,21 +2313,24 @@ $('tmB').onclick = function(){
     return;
   }
   var mins = TIMER[curId] || 1;
-  tmLeft = mins * 60;
+  tmEnd = Date.now() + mins * 60000;
   $('tmB').classList.add('on');
-  tmInt = setInterval(function(){
-    tmLeft--;
-    if(tmLeft <= 0){
+  var update = function(){
+    var left = Math.max(0, Math.round((tmEnd - Date.now())/1000));
+    if(left <= 0){
       clearInterval(tmInt); tmInt = null;
       $('tmB').classList.remove('on');
       $('tmB').textContent = '⏰ Готово!';
       toast('Время вышло!','ok','⏰');
+      if(navigator.vibrate) try{ navigator.vibrate([200,100,200,100,200]); }catch(e){}
       conf();
     } else {
-      var m2 = Math.floor(tmLeft/60), s2 = tmLeft%60;
+      var m2 = Math.floor(left/60), s2 = left%60;
       $('tmB').textContent = '⏱ ' + m2 + ':' + (s2<10?'0':'') + s2;
     }
-  }, 1000);
+  };
+  update();
+  tmInt = setInterval(update, 500);
 };
 
 $('cookB').onclick = function(){
@@ -2222,7 +2352,10 @@ $('nextB').onclick = function(){
     conf();
     toast('Блюдо готово!','ok','🎉');
     if(tmInt){ clearInterval(tmInt); tmInt = null; }
-    resetTo('main');
+    goB();
+    setTimeout(function(){
+      renderRecent(); renderDOD(); renderFeed(true);
+    }, 100);
   }
 };
 
@@ -2250,7 +2383,7 @@ $('aS').onclick = addSR;
 
 function openAdd(cat){
   $('nN').value = ''; $('nE').value = ''; $('nD').value = '';
-  $('nT').value = '30 мин'; $('nF').value = 'Легко';
+  $('nT').value = '30'; $('nF').value = 'Легко'; $('nB').value = '2';
   $('if').innerHTML = ''; $('sf').innerHTML = '';
   $('nC').value = cat || 'breakfast';
   addIR(); addSR();
@@ -2262,8 +2395,10 @@ $('svB').onclick = function(){
   var n = $('nN').value.trim();
   var e = $('nE').value.trim() || '🍽';
   var de = $('nD').value.trim() || 'Вкусное блюдо';
-  var tm = $('nT').value.trim() || '30 мин';
+  var tmNum = parseInt($('nT').value, 10);
+  var tm = (isFinite(tmNum) && tmNum > 0 ? tmNum : 30) + ' мин';
   var df = $('nF').value;
+  var bs = parseInt($('nB').value, 10) || 2;
   if(!n){ toast('Введите название','err'); return; }
 
   var ings = [];
@@ -2283,8 +2418,9 @@ $('svB').onclick = function(){
   if(!ss.length){ toast('Добавьте шаг','err'); return; }
 
   var id = 'u_' + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
-  uR[id] = {category:c, name:n, emoji:e, desc:de, time:tm, dif:df, i:ings, s:ss};
+  uR[id] = {category:c, name:n, emoji:e, desc:de, time:tm, dif:df, base:bs, i:ings, s:ss};
   S(RK,uR);
+  rebuildDishes();
   toast('Сохранено!','ok','✅');
   cc = c; cv = 'feed';
   renderTabs(); switchCat(c); resetTo('main');
@@ -2304,12 +2440,20 @@ function renderProf(){
 $('shopB').onclick = function(){ renderShop(); goTo('shopping'); };
 
 $('expB').onclick = function(){
+  var portionsData = {};
+  try{
+    for(var i=0; i<localStorage.length; i++){
+      var k = localStorage.key(i);
+      if(k && k.indexOf('ck_p9_')===0) portionsData[k] = localStorage.getItem(k);
+    }
+  }catch(e){}
   var data = {
-    v:9, exported: new Date().toISOString(),
+    v:10, exported: new Date().toISOString(),
     user: G(SK,null),
     uR: uR, fav: fav, ratings: ratings, shopping: shopping,
-    cooked: cooked, history: history, notes: notes,
-    sortBy: sortBy, qfs: qfs, theme: G(THK,'light')
+    cooked: cooked, recent: recent, notes: notes,
+    sortBy: sortBy, qfs: qfs, theme: G(THK,'light'),
+    portions: portionsData
   };
   var blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
   var a = document.createElement('a');
@@ -2319,39 +2463,55 @@ $('expB').onclick = function(){
   setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 500);
   toast('Файл сохранён','ok','💾');
 };
+
 $('impB').onclick = function(){ $('impFile').click(); };
 $('impFile').onchange = function(){
   var f = this.files && this.files[0];
   if(!f) return;
   var reader = new FileReader();
   reader.onload = function(){
-    try{
-      var d = JSON.parse(reader.result);
-      if(d.uR){ uR = d.uR; S(RK,uR); }
-      if(d.fav){ fav = d.fav; S(FK,fav); }
-      if(d.ratings){ ratings = d.ratings; S(RTK,ratings); }
-      if(d.shopping){ shopping = d.shopping; S(SHK,shopping); }
-      if(d.cooked){ cooked = d.cooked; S(COK,cooked); }
-      if(d.history){ history = d.history; S(HIK,history); }
-      if(d.notes){ notes = d.notes; S(NTK,notes); }
-      if(d.sortBy){ sortBy = d.sortBy; S(SRTK,sortBy); renderSort(); }
-      if(d.qfs){ qfs = d.qfs; S(QFK,qfs); renderQF(); }
-      if(d.user){ S(SK,d.user); }
-      if(d.theme){ applyTh(d.theme); }
-      toast('Данные загружены','ok','📥');
-      renderDOD(); renderRecent(); renderTabs(); renderFeed();
-      if(G(SK,null)) enter(G(SK,null));
-    }catch(e){ toast('Ошибка чтения','err'); }
+    var d;
+    try{ d = JSON.parse(reader.result); }
+    catch(e){ toast('Не JSON','err'); return; }
+    if(!d || typeof d !== 'object'){ toast('Неверный формат','err'); return; }
+    if(!confirm('Импорт заменит текущие данные. Продолжить?')) return;
+
+    if(d.uR && typeof d.uR === 'object') uR = d.uR;
+    if(Array.isArray(d.fav)) fav = d.fav;
+    if(d.ratings && typeof d.ratings === 'object') ratings = d.ratings;
+    if(Array.isArray(d.shopping)) shopping = d.shopping;
+    if(Array.isArray(d.cooked)) cooked = d.cooked;
+    if(Array.isArray(d.recent)) recent = d.recent;
+    else if(Array.isArray(d.history)) recent = d.history; // совместимость
+    if(d.notes && typeof d.notes === 'object') notes = d.notes;
+    if(d.sortBy) sortBy = d.sortBy;
+    if(Array.isArray(d.qfs)) qfs = d.qfs;
+    if(d.theme) applyTh(d.theme);
+    if(d.portions && typeof d.portions === 'object'){
+      Object.keys(d.portions).forEach(function(k){
+        if(k.indexOf('ck_p9_')===0) try{ localStorage.setItem(k, d.portions[k]); }catch(e){}
+      });
+    }
+
+    S(RK,uR); S(FK,fav); S(RTK,ratings); S(SHK,shopping);
+    S(COK,cooked); S(HIK,recent); S(NTK,notes); S(SRTK,sortBy); S(QFK,qfs);
+
+    rebuildDishes();
+    renderSort(); renderQF();
+    toast('Данные загружены','ok','📥');
+    renderDOD(); renderRecent(); renderTabs(); renderFeed(true); renderProf();
   };
   reader.readAsText(f);
   this.value = '';
 };
+
 $('resetB').onclick = function(){
   if(!confirm('Удалить все свои рецепты, избранное, оценки, заметки и историю?')) return;
-  uR = {}; fav = []; ratings = {}; shopping = []; cooked = []; history = []; notes = {};
-  S(RK,uR); S(FK,fav); S(RTK,ratings); S(SHK,shopping); S(COK,cooked); S(HIK,history); S(NTK,notes);
+  uR = {}; fav = []; ratings = {}; shopping = []; cooked = []; recent = []; notes = {}; seach = [];
+  S(RK,uR); S(FK,fav); S(RTK,ratings); S(SHK,shopping); S(COK,cooked); S(HIK,recent); S(NTK,notes); S(SEAK,seach);
+  rebuildDishes();
   toast('Прогресс сброшен','','🧹');
-  renderDOD(); renderRecent(); renderTabs(); renderFeed(); renderProf();
+  renderDOD(); renderRecent(); renderTabs(); renderFeed(true); renderProf();
 };
 
 /* ============ PWA ============ */
@@ -2452,12 +2612,14 @@ document.querySelectorAll('.ni[data-n]').forEach(function(b){
     if(v === 'add'){ openAdd(cc); return; }
     if(v === 'feed'){
       if(stack[stack.length-1] !== 'main') resetTo('main');
+      else show('main');
       cv = 'feed'; sq = ''; $('srch').value = ''; $('clrS').classList.remove('on');
       renderSearchHist();
       renderFeed();
     }
     if(v === 'fav'){
       if(stack[stack.length-1] !== 'main') resetTo('main');
+      else show('main');
       cv = 'fav'; sq = ''; $('srch').value = ''; $('clrS').classList.remove('on');
       renderSearchHist();
       renderFeed();
@@ -2468,20 +2630,22 @@ document.querySelectorAll('.ni[data-n]').forEach(function(b){
   };
 });
 
+/* Сохраняем скролл главного экрана */
+screens.main.addEventListener('scroll', function(){ mainScroll = screens.main.scrollTop; }, {passive:true});
+
 /* ============ СТАРТ ============ */
 (function(){
   var s = G(SK, null);
   if(s){ enter(s); }
   else { show('auth'); }
+  // Спрячем сплэш, когда всё отрисовано
+  setTimeout(function(){
+    var sp = document.getElementById('splash');
+    if(sp) sp.style.display = 'none';
+  }, 1600);
 })();
 
 })();
-document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
-document.addEventListener('keydown', function(e){
-  if(e.key === 'F12') e.preventDefault();
-  if(e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) e.preventDefault();
-  if(e.ctrlKey && e.key.toLowerCase() === 'u') e.preventDefault();
-});
 </script>
 </body>
 </html>
