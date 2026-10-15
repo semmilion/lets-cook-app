@@ -37,7 +37,7 @@
   --ease:cubic-bezier(.22,.9,.32,1);
   --bounce:cubic-bezier(.34,1.56,.64,1);
   --sab:env(safe-area-inset-bottom, 0px);
-  --nav-h:100px;
+  --nav-h:12px;
 }
 @media (hover: hover) and (pointer: fine) and (min-width: 700px){
   :root{--nav-h:16px;}
@@ -60,7 +60,7 @@ input,textarea,select{font-family:inherit;font-size:16px}
              radial-gradient(circle at 90% 105%,rgba(232,104,58,.12),transparent 45%)}
 
 .scr{position:absolute;inset:0;display:none;flex-direction:column;
-  padding:0 22px calc(var(--nav-h) + 30px + var(--sab));
+  padding:0 22px calc(var(--nav-h) + 64px + 28px + var(--sab));
   overflow-y:auto;overflow-x:hidden;scrollbar-width:none;scroll-behavior:smooth}
 .scr::-webkit-scrollbar{display:none}
 .scr.on{display:flex;animation:scrSlide .45s cubic-bezier(.22,.9,.32,1)}
@@ -519,12 +519,11 @@ input,textarea,select{font-family:inherit;font-size:16px}
 .match .mp{font-family:Caveat;font-size:22px;color:var(--accent);font-weight:700}
 
 .bnav{position:fixed;left:50%;transform:translateX(-50%);
-  bottom:var(--nav-h);
+  bottom:calc(var(--nav-h) + var(--sab));
   width:calc(100% - 28px);max-width:580px;
   height:64px;z-index:50;
   background:var(--paper);border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--sh-4);
-  display:flex;align-items:center;justify-content:space-around;padding:0 6px;
-  padding-bottom:var(--sab)}
+  display:flex;align-items:center;justify-content:space-around;padding:0 6px}
 .ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;background:none;border:none;
   padding:6px 2px;color:var(--muted);font-weight:800;font-size:9.5px;transition:all .2s;position:relative}
 .ni .em{font-size:19px;transition:transform .2s var(--bounce)}
@@ -1382,6 +1381,11 @@ try{
   }
 }catch(e){ console.warn('Firebase init error', e); }
 
+function fbWhy(){
+  if(typeof firebase === 'undefined') return 'Не загрузилась библиотека Firebase (проверьте интернет и vercel.json)';
+  if(FB_CONFIG.apiKey.indexOf('ВСТАВЬТЕ') === 0) return 'В index.html не вставлены ключи Firebase (FB_CONFIG)';
+  return 'Вход временно недоступен. Можно войти как гость.';
+}
 var tab = 'login', busy = false, curUid = null, authReady = false;
 var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -1417,13 +1421,17 @@ function authErr(e){
     case 'auth/invalid-credential': return 'Неверный email или пароль';
     case 'auth/too-many-requests': return 'Слишком много попыток. Подождите и повторите позже.';
     case 'auth/network-request-failed': return 'Нет соединения с интернетом';
-    default: return 'Что-то пошло не так. Попробуйте позже.';
+    case 'auth/operation-not-allowed': return 'В Firebase не включён вход по Email/Password';
+    case 'auth/unauthorized-domain': return 'Домен не добавлен в Authorized domains в Firebase';
+    case 'auth/invalid-api-key':
+    case 'auth/api-key-not-valid.-please-pass-a-valid-api-key.': return 'Неверный apiKey в FB_CONFIG';
+    default: return 'Ошибка: ' + ((e && e.code) || 'неизвестно');
   }
 }
 
 $('forgotB').onclick = function(){
   if(busy) return;
-  if(!fbAuth){ setMsg('Вход временно недоступен. Можно войти как гость.','err'); return; }
+  if(!fbAuth){ setMsg(fbWhy(),'err'); return; }
   var em = ($('em').value||'').trim().toLowerCase();
   if(!EMAIL_RE.test(em)){ setMsg('Сначала введите корректный email','err'); return; }
   setBusy(true);
@@ -1435,7 +1443,7 @@ $('forgotB').onclick = function(){
 
 $('verB').onclick = function(){
   if(busy) return;
-  if(!fbAuth){ setMsg('Вход временно недоступен. Можно войти как гость.','err'); return; }
+  if(!fbAuth){ setMsg(fbWhy(),'err'); return; }
   var em = ($('em').value||'').trim().toLowerCase();
   var pw = $('pw').value || '';
   if(!EMAIL_RE.test(em)){ setMsg('Введите корректный email','err'); return; }
