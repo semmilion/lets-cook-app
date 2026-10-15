@@ -2750,6 +2750,18 @@ screens.main.addEventListener('scroll', function(){ mainScroll = screens.main.sc
 
 })();
 
+<div id="errBox" style="position:fixed;left:8px;right:8px;bottom:8px;background:#d24536;color:#fff;padding:10px;border-radius:8px;font:12px/1.4 monospace;z-index:99999;max-height:40vh;overflow:auto;display:none;white-space:pre-wrap"></div>
+<script>
+window.addEventListener('error', function(e){
+  var b = document.getElementById('errBox');
+  b.style.display = 'block';
+  b.textContent += '❌ ' + (e.message || 'error') + '\n' + (e.filename || '') + ':' + (e.lineno || '') + '\n\n';
+});
+window.addEventListener('unhandledrejection', function(e){
+  var b = document.getElementById('errBox');
+  b.style.display = 'block';
+  b.textContent += '❌ Promise: ' + (e.reason && (e.reason.message || e.reason.code)) + '\n\n';
+});
 </script>
 </body>
 </html>
