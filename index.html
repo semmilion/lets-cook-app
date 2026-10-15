@@ -1066,8 +1066,15 @@ function calcNutrition(rec, servings){
     t.f += per.f * gr/100;
     t.c += per.c * gr/100;
   });
-  var n = servings || 2;
-  return {k:Math.round(t.k/n), p:Math.round(t.p/n), f:Math.round(t.f/n), c:Math.round(t.c/n)};
+  // Базовая рецептура — на 2 порции.
+  // Масштабируем под выбранное количество порций.
+  var factor = (servings || 2) / 2;
+  return {
+    k: Math.round(t.k * factor),
+    p: Math.round(t.p * factor),
+    f: Math.round(t.f * factor),
+    c: Math.round(t.c * factor)
+  };
 }
 
 function getDietTags(rec){
@@ -2027,7 +2034,7 @@ function renderNutrition(id, rec){
     '<div class="nc"><div class="v">'+nut.p+'</div><div class="k">белки</div></div>'+
     '<div class="nc"><div class="v">'+nut.f+'</div><div class="k">жиры</div></div>'+
     '<div class="nc"><div class="v">'+nut.c+'</div><div class="k">углев.</div></div>'+
-    '<div class="hint">Примерно на 1 порцию · из '+n+'</div>';
+    '<div class="hint">Примерно на '+n+' '+(n===1?'порцию':(n<5?'порции':'порций'))+'</div>';
 }
 
 function renderTags(rec){
