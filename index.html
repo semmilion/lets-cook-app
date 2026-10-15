@@ -57,7 +57,7 @@ input,textarea,select{font-family:inherit}
              radial-gradient(circle at 90% 105%,rgba(232,104,58,.12),transparent 45%)}
 
 .scr{position:absolute;inset:0;display:none;flex-direction:column;
-  padding:0 22px calc(26px + var(--sab));
+  padding:0 22px calc(90px + var(--sab));
   overflow-y:auto;overflow-x:hidden;scrollbar-width:none;scroll-behavior:smooth}
 .scr::-webkit-scrollbar{display:none}
 .scr.on{display:flex;animation:scrSlide .45s cubic-bezier(.22,.9,.32,1)}
@@ -592,6 +592,36 @@ input,textarea,select{font-family:inherit}
 .dots{display:flex;gap:6px;justify-content:center;margin-bottom:10px}
 .dots i{width:6px;height:6px;border-radius:50%;background:var(--line-2);transition:all .3s}
 .dots i.on{background:var(--accent);transform:scale(1.4)}
+/* ============ АДАПТИВНЫЙ ОТСТУП ДЛЯ НИЖНЕГО МЕНЮ ============ */
+/* На тач-устройствах (телефоны, планшеты) — поднимаем меню над системной панелью */
+@media (pointer: coarse), (max-width: 900px){
+  .bnav{
+    bottom:calc(64px + var(--sab));
+  }
+}
+
+/* Отступ контента снизу — чтобы последняя карточка не пряталась под меню */
+@media (pointer: coarse), (max-width: 900px){
+  .scr{
+    padding-bottom:calc(96px + var(--sab));
+  }
+  #main{
+    padding-bottom:calc(164px + var(--sab));
+  }
+}
+
+/* На очень широких экранах (десктоп) — обычный отступ */
+@media (pointer: fine) and (min-width: 901px){
+  .bnav{
+    bottom:calc(16px + var(--sab));
+  }
+  .scr{
+    padding-bottom:calc(32px + var(--sab));
+  }
+  #main{
+    padding-bottom:calc(100px + var(--sab));
+  }
+}
 </style>
 </head>
 <body>
@@ -644,7 +674,7 @@ input,textarea,select{font-family:inherit}
   <div class="foot">Твой личный кулинарный помощник 🍳</div>
 </div>
 
-<div class="scr" id="main" style="padding-bottom:calc(110px + var(--sab))">
+<div class="scr" id="main" style="padding-bottom:calc(170px + var(--sab))">
   <div class="hdr">
     <div class="ttl">Let's cook!</div>
     <button class="thbtn" id="thB" type="button">🌙</button>
