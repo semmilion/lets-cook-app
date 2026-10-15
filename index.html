@@ -59,7 +59,7 @@ input,textarea,select{font-family:inherit}
              radial-gradient(circle at 90% 105%,rgba(232,104,58,.12),transparent 45%)}
 
 .scr{position:absolute;inset:0;display:none;flex-direction:column;
-  padding:26px 22px calc(26px + var(--sab));
+  padding:0 22px calc(26px + var(--sab));
   overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
 .scr::-webkit-scrollbar{display:none}
 .scr.on{display:flex;animation:scrIn .4s var(--ease)}
@@ -507,9 +507,15 @@ input,textarea,select{font-family:inherit}
 .ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.5);transform:scale(0);animation:rip .6s linear;pointer-events:none}
 [data-theme=dark] .ripple{background:rgba(255,255,255,.25)}
 @keyframes rip{to{transform:scale(4);opacity:0}}
-.hdr{background:var(--bg);position:sticky;top:0;z-index:20;
-  margin:-26px -22px 16px;padding:26px 22px 14px;
-  border-bottom:1px solid var(--line)}
+.hdr{
+  background:var(--bg);
+  position:sticky;
+  top:0;
+  z-index:20;
+  margin:0 -22px 16px;
+  padding:calc(16px + env(safe-area-inset-top, 0px)) 22px 14px;
+  border-bottom:1px solid var(--line);
+}
 .dod:hover .em{transform:scale(1.08) rotate(-4deg)}
 .dod .em{transition:transform .4s var(--bounce)}
 .dod::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at var(--mx,80%) var(--my,20%),rgba(232,104,58,.14),transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none}
@@ -553,6 +559,187 @@ input,textarea,select{font-family:inherit}
 .dots{display:flex;gap:6px;justify-content:center;margin-bottom:10px}
 .dots i{width:6px;height:6px;border-radius:50%;background:var(--line-2);transition:all .3s}
 .dots i.on{background:var(--accent);transform:scale(1.4)}
+/* ============ ANIMATION PACK 3.0 ============ */
+
+/* Плавная смена экранов */
+.scr.on{animation:scrSlide .45s cubic-bezier(.22,.9,.32,1)}
+@keyframes scrSlide{
+  from{opacity:0;transform:translateY(14px) scale(.98)}
+  to{opacity:1;transform:none}
+}
+
+/* Shake при ошибке */
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-8px)}
+  40%{transform:translateX(8px)}
+  60%{transform:translateX(-5px)}
+  80%{transform:translateX(5px)}
+}
+.shake{animation:shake .45s cubic-bezier(.36,.07,.19,.97)}
+.msg.err{animation:shake .45s cubic-bezier(.36,.07,.19,.97)}
+
+/* Heart burst при добавлении в избранное */
+@keyframes heartBurst{
+  0%{transform:scale(1)}
+  30%{transform:scale(1.4)}
+  50%{transform:scale(.9)}
+  70%{transform:scale(1.15)}
+  100%{transform:scale(1)}
+}
+.dc .fav.on{animation:heartBurst .7s cubic-bezier(.34,1.56,.64,1)}
+
+/* Волна вокруг иконки при клике */
+.dc .fav::after,.ni::after{
+  content:"";position:absolute;inset:0;border-radius:50%;
+  border:2px solid var(--accent);opacity:0;pointer-events:none;
+  transform:scale(.6);transition:all .4s;
+}
+.dc .fav:active::after,.ni:active::after{
+  opacity:.6;transform:scale(1.4);transition:0s;
+}
+
+/* Float-анимация для эмодзи в hero */
+@keyframes float{
+  0%,100%{transform:translateY(0) rotate(-3deg)}
+  50%{transform:translateY(-10px) rotate(3deg)}
+}
+.hero .emo{animation:float 4s ease-in-out infinite}
+
+/* Glow pulse — пульсирующее свечение */
+@keyframes glowPulse{
+  0%,100%{box-shadow:0 8px 24px rgba(232,104,58,.3)}
+  50%{box-shadow:0 8px 40px rgba(232,104,58,.55), 0 0 0 6px rgba(232,104,58,.12)}
+}
+.ni.add .em,.hw{animation:glowPulse 3s ease-in-out infinite}
+
+/* Плавный счётчик цифр */
+@keyframes numUp{
+  from{transform:translateY(20px);opacity:0}
+  to{transform:translateY(0);opacity:1}
+}
+.stat .n{animation:numUp .55s cubic-bezier(.34,1.56,.64,1) backwards}
+.stat:nth-child(1) .n{animation-delay:.05s}
+.stat:nth-child(2) .n{animation-delay:.1s}
+.stat:nth-child(3) .n{animation-delay:.15s}
+.stat:nth-child(4) .n{animation-delay:.2s}
+
+/* Slide-in для pill-ов */
+@keyframes pillIn{
+  from{opacity:0;transform:translateX(-14px)}
+  to{opacity:1;transform:none}
+}
+.pill{animation:pillIn .35s cubic-bezier(.22,.9,.32,1) backwards}
+.pill:nth-child(1){animation-delay:.02s}
+.pill:nth-child(2){animation-delay:.05s}
+.pill:nth-child(3){animation-delay:.08s}
+.pill:nth-child(4){animation-delay:.11s}
+.pill:nth-child(5){animation-delay:.14s}
+.pill:nth-child(6){animation-delay:.17s}
+
+/* Ингредиенты появляются каскадом */
+.ing{animation:ingIn .35s cubic-bezier(.22,.9,.32,1) backwards}
+.ing:nth-child(1){animation-delay:.02s}
+.ing:nth-child(2){animation-delay:.05s}
+.ing:nth-child(3){animation-delay:.08s}
+.ing:nth-child(4){animation-delay:.11s}
+.ing:nth-child(5){animation-delay:.14s}
+.ing:nth-child(6){animation-delay:.17s}
+@keyframes ingIn{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:none}}
+
+/* Пульс при new — например, "новое блюдо дня" */
+@keyframes newPulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.03)}
+  100%{transform:scale(1)}
+}
+.dod{animation:newPulse 3s ease-in-out infinite, cardIn .55s cubic-bezier(.34,1.56,.64,1) backwards}
+
+/* Liquid fill для прогресс-бара */
+.prog i{position:relative;overflow:hidden}
+.prog i::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);
+  animation:liquid 1.5s linear infinite
+}
+@keyframes liquid{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
+
+/* Parallax-эффект для карточки дня */
+.dod .em{transition:transform .5s cubic-bezier(.34,1.56,.64,1)}
+.dod:hover .em,.dod:active .em{transform:scale(1.12) rotate(-6deg)}
+
+/* Скелетоны при загрузке */
+.skShown{animation:skFade .35s forwards}
+@keyframes skFade{to{opacity:0;visibility:hidden;position:absolute}}
+
+/* Плавное появление модалки */
+.modalCard > *{animation:fadeUp .5s cubic-bezier(.22,.9,.32,1) backwards}
+.modalCard > *:nth-child(1){animation-delay:.05s}
+.modalCard > *:nth-child(2){animation-delay:.1s}
+.modalCard > *:nth-child(3){animation-delay:.15s}
+.modalCard > *:nth-child(4){animation-delay:.2s}
+.modalCard > *:nth-child(5){animation-delay:.25s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ============ ГРАДИЕНТЫ КАРТОЧЕК ПО КАТЕГОРИЯМ ============ */
+.dc .ph{position:relative;transition:background .3s}
+.dc[data-cat="breakfast"] .ph{background:linear-gradient(160deg,#ffe4b5,#ffb87a)}
+.dc[data-cat="soups"] .ph{background:linear-gradient(160deg,#ffd7b8,#f59b6e)}
+.dc[data-cat="main"] .ph{background:linear-gradient(160deg,#f7c9a8,#e8845c)}
+.dc[data-cat="salads"] .ph{background:linear-gradient(160deg,#d9f0c8,#8fc77c)}
+.dc[data-cat="desserts"] .ph{background:linear-gradient(160deg,#ffd9e2,#f39bb6)}
+.dc[data-cat="baking"] .ph{background:linear-gradient(160deg,#f8e0b8,#d9a96e)}
+[data-theme=dark] .dc .ph{filter:brightness(.75) saturate(1.2)}
+
+/* Hero рецепта — градиент по категории */
+.hero[data-cat="breakfast"]{background:linear-gradient(160deg,#ffe4b5,#ffb87a)}
+.hero[data-cat="soups"]{background:linear-gradient(160deg,#ffd7b8,#f59b6e)}
+.hero[data-cat="main"]{background:linear-gradient(160deg,#f7c9a8,#e8845c)}
+.hero[data-cat="salads"]{background:linear-gradient(160deg,#d9f0c8,#8fc77c)}
+.hero[data-cat="desserts"]{background:linear-gradient(160deg,#ffd9e2,#f39bb6)}
+.hero[data-cat="baking"]{background:linear-gradient(160deg,#f8e0b8,#d9a96e)}
+
+/* ============ ПОИСК — история и подсказки ============ */
+.searchHist{display:none;margin-top:-6px;margin-bottom:12px;padding:0 4px}
+.searchHist.on{display:block;animation:fadeUp .3s backwards}
+.searchHist .hdr2{font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+.searchHist .hdr2 button{background:none;border:none;color:var(--accent);font-size:10px;font-weight:800;padding:0;cursor:pointer}
+.searchHist .chips{display:flex;gap:6px;flex-wrap:wrap}
+.searchHist .chipH{font-size:12px;font-weight:700;padding:6px 12px;border-radius:var(--r-full);background:var(--paper);color:var(--ink-2);border:1px solid var(--line-2);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px}
+.searchHist .chipH:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+.searchHist .chipH::before{content:"🕐";font-size:10px;opacity:.6}
+
+/* ============ БЫСТРЫЕ ПОРЦИИ ============ */
+.presets{display:flex;gap:6px;margin-top:8px;margin-bottom:12px;flex-wrap:wrap;justify-content:center}
+.presets button{font-size:12px;font-weight:800;padding:7px 14px;border-radius:var(--r-full);background:var(--paper);color:var(--muted);border:1.5px solid var(--line-2);transition:all .2s;cursor:pointer}
+.presets button.on{background:var(--grad);color:#fff;border-color:transparent;box-shadow:var(--sh-a)}
+.presets button:hover{border-color:var(--accent);color:var(--accent)}
+.presets button.on:hover{color:#fff}
+
+/* ============ КОЛЬЦО ПРОГРЕССА ============ */
+.stat .n{position:relative}
+.stat .n::after{
+  content:"";position:absolute;left:-2px;right:-2px;bottom:-4px;height:2px;
+  background:var(--grad);border-radius:2px;transform:scaleX(0);
+  animation:statLine 1s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+@keyframes statLine{to{transform:scaleX(1)}}
+
+/* Пульс на активной таб-кнопке */
+.ni.on .em{animation:tabPop .4s cubic-bezier(.34,1.56,.64,1)}
+@keyframes tabPop{0%{transform:scale(1)}50%{transform:scale(1.25) translateY(-3px)}100%{transform:scale(1.15) translateY(-2px)}}
+
+/* ============ ПЛАВНАЯ ПРОКРУТКА КО ВСЕМУ ============ */
+.scr,.feed,.tbar,.rrow{scroll-behavior:smooth}
+/* Фон для overscroll сверху — устраняет белую полосу */
+html{background:var(--bg);overscroll-behavior-y:none}
+body{background:var(--bg)}
+@supports (padding-top:env(safe-area-inset-top)){
+  html::before{
+    content:"";position:fixed;top:0;left:0;right:0;height:env(safe-area-inset-top, 0px);
+    background:var(--bg);z-index:9999;pointer-events:none;
+  }
+}
 </style>
 </head>
 <body>
@@ -627,10 +814,9 @@ input,textarea,select{font-family:inherit}
       <div class="dodBdgs"><span class="bdg" id="dodTm"></span><span class="bdg" id="dodDf"></span></div>
     </div>
   </div>
-  <div class="search">
-    <span class="ic">🔍</span>
-    <input id="srch" placeholder="Найти блюдо...">
-    <button class="clr" id="clrS" type="button">✕</button>
+  <div class="searchHist" id="searchHist">
+    <div class="hdr2"><span>🕐 Недавние запросы</span><button type="button" id="clrHist">Очистить</button></div>
+    <div class="chips" id="histChips"></div>
   </div>
 
   <div class="luckyRow">
@@ -676,11 +862,12 @@ input,textarea,select{font-family:inherit}
 
   <div class="nut" id="rNut"></div>
 
-  <div class="portions">
-    <span class="lbl">🍽 Порции</span>
-    <button id="pMinus" type="button">−</button>
-    <span class="qty" id="pQty">2</span>
-    <button id="pPlus" type="button">+</button>
+  <div class="presets" id="presets">
+    <button type="button" data-p="1">1</button>
+    <button type="button" data-p="2" class="on">2</button>
+    <button type="button" data-p="4">4</button>
+    <button type="button" data-p="6">6</button>
+    <button type="button" data-p="8">8</button>
   </div>
 
   <div class="rate"><span class="lbl">Оценка</span><div class="stars" id="stars"></div></div>
@@ -1083,8 +1270,8 @@ function G(k,f){try{var v=localStorage.getItem(k);return v?JSON.parse(v):f}catch
 function S(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 function DL(k){try{localStorage.removeItem(k)}catch(e){}}
 
-var RK='ck_r9',UK='ck_u9',SK='ck_s9',FK='ck_f9',THK='ck_th9',RTK='ck_rt9',SHK='ck_sh9',COK='ck_c9',HIK='ck_h9',NTK='ck_nt9',SRTK='ck_sort9',QFK='ck_qf9';
-var uR=G(RK,{})||{}, fav=G(FK,[])||[], ratings=G(RTK,{})||{}, shopping=G(SHK,[])||[], cooked=G(COK,[])||[], history=G(HIK,[])||{}, notes=G(NTK,{})||{}, sortBy=G(SRTK,'default')||'default', qfs=G(QFK,[])||[];
+var RK='ck_r9',UK='ck_u9',SK='ck_s9',FK='ck_f9',THK='ck_th9',RTK='ck_rt9',SHK='ck_sh9',COK='ck_c9',HIK='ck_h9',NTK='ck_nt9',SRTK='ck_sort9',QFK='ck_qf9',SEAK='ck_sea9';
+var uR=G(RK,{})||{}, fav=G(FK,[])||[], ratings=G(RTK,{})||{}, shopping=G(SHK,[])||[], cooked=G(COK,[])||[], history=G(HIK,[])||{}, notes=G(NTK,{})||{}, sortBy=G(SRTK,'default')||'default', qfs=G(QFK,[])||[], seach=G(SEAK,[])||[];
 
 function allR(){ return Object.assign({}, R, uR); }
 function isFav(i){ return fav.indexOf(i) >= 0; }
@@ -1212,7 +1399,17 @@ $('tbR').onclick = function(){
   resetFlow();
 };
 
-function setMsg(t, c){ $('msg').textContent = t; $('msg').className = 'msg ' + (c||''); }
+function setMsg(t, c){
+  var el = $('msg');
+  el.textContent = t;
+  el.className = 'msg ' + (c||'');
+  if(c === 'err'){
+    el.classList.remove('shake');
+    void el.offsetWidth; // триггерим reflow
+    el.classList.add('shake');
+  }
+}
+
 function resetFlow(){
   pc = null; pe = null; cdAttempts = 3; recovery = false;
   if(cdTimer){ clearInterval(cdTimer); cdTimer = null; }
@@ -1638,7 +1835,12 @@ function renderFeed(){
   ds.forEach(function(d){
     var f = isFav(d.id);
     var r = ratings[d.id];
-    html += '<div class="dc" data-id="'+esc(d.id)+'">'+
+    var cat = cc;
+    Object.keys(D).forEach(function(k){
+      D[k].forEach(function(x){ if(x[0] === d.id) cat = k; });
+    });
+    if(uR[d.id] && uR[d.id].category) cat = uR[d.id].category;
+    html += '<div class="dc" data-id="'+esc(d.id)+'" data-cat="'+cat+'">'+
       '<button class="fav'+(f?' on':'')+'" data-fav="'+esc(d.id)+'" type="button">'+(f?'❤️':'🤍')+'</button>'+
       (d.isUser ? '<button class="del" data-del="'+esc(d.id)+'" type="button">×</button>' : '')+
       '<div class="ph"><span class="emo">'+esc(d.ico)+'</span></div>'+
@@ -1691,10 +1893,50 @@ function renderFeed(){
   }
 }
 
+function saveSearch(q){
+  q = (q||'').trim().toLowerCase();
+  if(q.length < 2) return;
+  var i = seach.indexOf(q);
+  if(i >= 0) seach.splice(i,1);
+  seach.unshift(q);
+  if(seach.length > 8) seach.pop();
+  S(SEAK, seach);
+}
+
+function renderSearchHist(){
+  var box = $('searchHist');
+  if(!seach.length || sq.length > 0){ box.classList.remove('on'); return; }
+  var html = '';
+  seach.slice(0,6).forEach(function(q){
+    html += '<button class="chipH" type="button" data-q="'+esc(q)+'">'+esc(q)+'</button>';
+  });
+  $('histChips').innerHTML = html;
+  box.classList.add('on');
+  $('histChips').querySelectorAll('[data-q]').forEach(function(b){
+    b.onclick = function(){
+      var q = b.getAttribute('data-q');
+      $('srch').value = q;
+      sq = q.toLowerCase();
+      $('clrS').classList.add('on');
+      renderFeed();
+    };
+  });
+}
+
+$('clrHist').onclick = function(){
+  seach = []; S(SEAK, seach); renderSearchHist();
+};
+
 $('srch').oninput = function(){
   sq = this.value.trim().toLowerCase();
   $('clrS').classList.toggle('on', sq.length > 0);
+  renderSearchHist();
   renderFeed();
+};
+
+// Enter — сохранить запрос
+$('srch').onkeydown = function(e){
+  if(e.key === 'Enter'){ saveSearch(this.value); this.blur(); }
 };
 $('clrS').onclick = function(){
   $('srch').value = ''; sq = '';
@@ -1928,6 +2170,20 @@ function openRecipe(id){
   $('pMinus').disabled = getPortions(id) <= 1;
   $('pPlus').disabled = getPortions(id) >= 12;
 
+  // Категория для градиента hero
+  var cat = 'main';
+  Object.keys(D).forEach(function(k){
+    D[k].forEach(function(d){ if(d[0] === id) cat = k; });
+  });
+  if(uR[id] && uR[id].category) cat = uR[id].category;
+  $('rH').closest('.hero').setAttribute('data-cat', cat);
+
+  // Обновить активную кнопку в пресетах порций
+  document.querySelectorAll('#presets button').forEach(function(b){
+    var v = parseInt(b.getAttribute('data-p'), 10);
+    b.classList.toggle('on', v === getPortions(id));
+  });
+
   $('rNotes').value = notes[id] || '';
   $('rNotes').oninput = function(){
     notes[id] = this.value;
@@ -1995,6 +2251,22 @@ $('pPlus').onclick = function(){
   renderIngredients(curId, r);
   renderNutrition(curId, r);
 };
+// Пресеты порций
+document.querySelectorAll('#presets button').forEach(function(b){
+  b.onclick = function(){
+    var v = parseInt(b.getAttribute('data-p'), 10);
+    setPortions(curId, v);
+    $('pQty').textContent = v;
+    $('pMinus').disabled = v <= 1;
+    $('pPlus').disabled = v >= 12;
+    var r = allR()[curId];
+    renderIngredients(curId, r);
+    renderNutrition(curId, r);
+    document.querySelectorAll('#presets button').forEach(function(x){ x.classList.remove('on'); });
+    b.classList.add('on');
+    if(navigator.vibrate) try{ navigator.vibrate(8); }catch(e){}
+  };
+});
 
 /* ============ ШАГИ ============ */
 function scene(type, emoji){
