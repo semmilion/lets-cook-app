@@ -590,9 +590,6 @@ input,textarea,select{font-family:inherit;font-size:16px}
 .rouMode button{font-size:11px;font-weight:800;padding:8px 12px;border:1.5px solid var(--line-2);
   border-radius:var(--r-full);background:var(--paper);color:var(--muted);cursor:pointer;transition:all .2s}
 .rouMode button.on{background:var(--grad);color:#fff;border-color:transparent}
-.dots{display:flex;gap:6px;justify-content:center;margin-bottom:10px}
-.dots i{width:6px;height:6px;border-radius:50%;background:var(--line-2);transition:all .3s}
-.dots i.on{background:var(--accent);transform:scale(1.4)}
 
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
@@ -828,8 +825,7 @@ input,textarea,select{font-family:inherit;font-size:16px}
 </div>
 
 <div class="modalBg" id="rouModal">
-  <div class="modalCard">
-    <div class="dots" id="rouDots"></div>
+    <div class="modalCard">
     <span class="rouEm" id="rouEm">🍳</span>
     <div class="rouTitle" id="rouTitle">Крутим…</div>
     <div class="rouSub" id="rouSub">Подбираем блюдо</div>
@@ -2036,7 +2032,6 @@ $('luckyB').onclick = function(){
   $('rouSub').textContent = 'Подбираем блюдо';
   $('rouEm').className = 'rouEm';
   $('rouGo').disabled = true;
-  $('rouDots').innerHTML = '<i class="on"></i><i></i><i></i>';
   setTimeout(rouNext, 250);
 };
 $('rouGo').onclick = function(){
