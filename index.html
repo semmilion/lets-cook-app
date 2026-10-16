@@ -1848,16 +1848,30 @@ function doRenderFeed(forceAnim){
     feed._bound = true;
     feed.addEventListener('click', function(e){
       var favBtn = e.target.closest('[data-fav]');
-      if(favBtn){
-        e.stopPropagation();
-        var id = favBtn.getAttribute('data-fav');
-        tFav(id);
-        var f2 = isFav(id);
-        favBtn.classList.toggle('on', f2);
-        favBtn.textContent = f2 ? '❤️' : '🤍';
-        if(cv === 'fav' || qfs.indexOf('fav') >= 0) setTimeout(renderFeed, 250);
-        return;
-      }
+      var favBtn = e.target.closest('[data-fav]');
+if(favBtn){
+  e.stopPropagation();
+  var id = favBtn.getAttribute('data-fav');
+  tFav(id);
+  var f2 = isFav(id);
+  favBtn.classList.toggle('on', f2);
+  favBtn.textContent = f2 ? '❤️' : '🤍';
+  // Если мы в разделе «Избранное» и убрали сердечко — плавно удалить карточку
+  if((cv === 'fav' || qfs.indexOf('fav') >= 0) && !f2){
+    var card = favBtn.closest('.dc');
+    if(card){
+      card.style.transition = 'opacity .25s, transform .25s';
+      card.style.opacity = '0';
+      card.style.transform = 'scale(.9)';
+      setTimeout(function(){
+        card.remove();
+        // Если карточек больше нет — показать пустое состояние
+        if(!feed.querySelector('.dc')) renderFeed();
+      }, 250);
+    }
+  }
+  return;
+}
       var delBtn = e.target.closest('[data-del]');
       if(delBtn){
         e.stopPropagation();
