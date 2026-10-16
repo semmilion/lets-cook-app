@@ -2683,7 +2683,27 @@ document.querySelectorAll('#presets button').forEach(function(b){
 function scene(type, emoji){
   /* User-supplied editorial drawings, cleaned and art-directed into one motion system. */
   var t = type || 'plate';
-  var base = (t==='sizzle'||t==='spatula'||t==='flame') ? 'pan' : (t==='whisk' && curId==='smoothie' ? 'blender' : 'chef');
+  var map = {
+  egg:        'egg',
+  whisk:      'chef',
+  mix:        'chef',
+  pour:       'chef',
+  fold:       'chef',
+  dough:      'chef',
+  cool:       'chef',
+  plate:      'food_strip',
+  leaf:       'utensils',
+  sizzle:     'pan',
+  flame:      'pan',
+  spatula:    'pan',
+  bake:       'pan',
+  boil:       'pan',
+  steam:      'pan',
+  ladle:      'utensils',
+  grater:     'utensils'
+};
+var base = map[t] || 'chef';
+var href = 'assets/drawings/' + base + '.webp';
   var href = 'assets/drawings/'+base+'.webp';
   var style = '<style>'+ 
     '.ink{filter:contrast(1.04);opacity:.96}.art{transform-box:view-box;transform-origin:100px 82px}.ghost{opacity:.075}.fx{fill:none;stroke:currentColor;stroke-width:1.35;stroke-linecap:round;stroke-linejoin:round}.dot{fill:currentColor}.surface{fill:rgba(255,255,255,.5);stroke:currentColor;stroke-width:1.25}'+

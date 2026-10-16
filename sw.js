@@ -1,4 +1,4 @@
-const CACHE = 'lets-cook-v6';
+const CACHE = 'lets-cook-v7';
 const ASSETS = [
   './',
   './index.html',
@@ -6,7 +6,16 @@ const ASSETS = [
   './icon-192.png',
   './icon-512.png',
   './icon-maskable-512.png',
-  './privacy.html'
+  './privacy.html',
+  './delete-account.html',
+  './assets/drawings/chef.webp',
+  './assets/drawings/pan.webp',
+  './assets/drawings/blender.webp',
+  './assets/drawings/egg.webp',
+  './assets/drawings/food_strip.webp',
+  './assets/drawings/utensils.webp',
+  './assets/drawings/kitchen_pattern.webp',
+  './assets/drawings/doodle_food.webp'
 ];
 
 self.addEventListener('install', event => {
