@@ -1297,12 +1297,31 @@ function esc(s){
 }
 
 /* ============ ХРАНИЛИЩЕ ============ */
-function G(k,f){try{var v=localStorage.getItem(k);return v?JSON.parse(v):f}catch(e){return f}}
+/* Per-account local storage. The session marker stays unscoped; personal data is namespaced. */
+var guestScopeId = null;
+function currentDataScope(){
+  if (guestScopeId) return guestScopeId;
+  try {
+    var raw = localStorage.getItem('ck_s9');
+    var session = raw ? JSON.parse(raw) : null;
+    if (session && session.guest) return guestScopeId || 'guest-unavailable';
+    if (session && session.uid) return 'user-' + String(session.uid).replace(/[^a-zA-Z0-9_-]/g,'_');
+  } catch(e) {}
+  return 'signed-out';
+}
+function storageKey(k){ return k === 'ck_s9' ? k : 'ckdata_' + currentDataScope() + '__' + k; }
+function G(k,f){try{var v=localStorage.getItem(storageKey(k));return v?JSON.parse(v):f}catch(e){return f}}
 function S(k,v){
-  try{ localStorage.setItem(k,JSON.stringify(v)); return true; }
+  try{ localStorage.setItem(storageKey(k),JSON.stringify(v)); return true; }
   catch(e){ console.warn('Save error', k, e); return false; }
 }
-function DL(k){try{localStorage.removeItem(k)}catch(e){}}
+function DL(k){try{localStorage.removeItem(storageKey(k))}catch(e){}}
+function reloadScopedData(){
+  uR=G(RK,{})||{}; fav=G(FK,[])||[]; ratings=G(RTK,{})||{}; shopping=G(SHK,[])||[];
+  cooked=G(COK,[])||[]; recent=G(HIK,[])||[]; notes=G(NTK,{})||{};
+  sortBy=G(SRTK,'default')||'default'; qfs=G(QFK,[])||[]; seach=G(SEAK,[])||[];
+  if(typeof rebuildDishes==='function') rebuildDishes();
+}
 
 var RK='ck_r9',UK='ck_u9',SK='ck_s9',FK='ck_f9',THK='ck_th9',RTK='ck_rt9',SHK='ck_sh9',COK='ck_c9',HIK='ck_h9',NTK='ck_nt9',SRTK='ck_sort9',QFK='ck_qf9',SEAK='ck_sea9';
 var uR=G(RK,{})||{}, fav=G(FK,[])||[], ratings=G(RTK,{})||{}, shopping=G(SHK,[])||[], cooked=G(COK,[])||[], recent=G(HIK,[])||{}, notes=G(NTK,{})||{}, sortBy=G(SRTK,'default')||'default', qfs=G(QFK,[])||[], seach=G(SEAK,[])||[];
@@ -1510,6 +1529,7 @@ function authErr(e){
 
 $('forgotB').onclick = function(){
   if(busy) return;
+  if(typeof navigator !== 'undefined' && navigator.onLine === false){ setMsg('Нет подключения к интернету. Проверьте сеть и попробуйте снова.','err'); return; }
   if(!fbAuth){ setMsg(fbWhy(),'err'); return; }
   var em = ($('em').value||'').trim().toLowerCase();
   if(!EMAIL_RE.test(em)){ setMsg('Сначала введите корректный email','err'); return; }
@@ -1522,6 +1542,7 @@ $('forgotB').onclick = function(){
 
 $('verB').onclick = function(){
   if(busy) return;
+  if(typeof navigator !== 'undefined' && navigator.onLine === false){ setMsg('Нет подключения к интернету. Проверьте сеть и попробуйте снова.','err'); return; }
   if(!fbAuth){ setMsg(fbWhy(),'err'); return; }
   var em = ($('em').value||'').trim().toLowerCase();
   var pw = $('pw').value || '';
@@ -1571,7 +1592,10 @@ $('delB').onclick = function(){
 };
 
 $('guestB').onclick = function(){
-  S(SK,{guest:true, name:'Гость'});
+  guestScopeId = 'guest-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+  // Guest mode is deliberately temporary and never reuses an account's data.
+  try { localStorage.removeItem(SK); } catch(e) {}
+  reloadScopedData();
   toast('Вход как гость','ok','👤');
   enter({guest:true, name:'Гость'});
 };
@@ -1588,6 +1612,9 @@ $('outB').onclick = function(){
 $('outB2').onclick = $('outB').onclick;
 
 function enter(u){
+  if(u && u.guest){ if(!guestScopeId) guestScopeId='guest-'+Date.now()+'-'+Math.random().toString(36).slice(2); }
+  else if(u && u.uid){ guestScopeId=null; try { localStorage.setItem('ck_s9', JSON.stringify(u)); } catch(e) {} }
+  reloadScopedData();
   $('chip').textContent = u.guest ? '👤 Гость' : '👤 ' + (u.name || u.email);
   var h = new Date().getHours();
   var g = h<6?'Доброй ночи':h<12?'Доброе утро':h<18?'Добрый день':'Добрый вечер';
@@ -2035,14 +2062,14 @@ var curId = null, portions = {};
 
 function getPortions(id){
   if(!portions[id]){
-    try{ portions[id] = JSON.parse(localStorage.getItem('ck_p9_' + id)) || (allR()[id] && allR()[id].base) || 2; }catch(e){ portions[id] = 2; }
+    try{ portions[id] = JSON.parse(localStorage.getItem(storageKey('ck_p9_' + id))) || (allR()[id] && allR()[id].base) || 2; }catch(e){ portions[id] = 2; }
   }
   return portions[id];
 }
 function setPortions(id, n){
   n = Math.max(1, Math.min(12, n|0));
   portions[id] = n;
-  try{ localStorage.setItem('ck_p9_' + id, JSON.stringify(n)); }catch(e){}
+  try{ localStorage.setItem(storageKey('ck_p9_' + id), JSON.stringify(n)); }catch(e){}
 }
 
 function renderStars(id){
@@ -2453,7 +2480,7 @@ $('expB').onclick = function(){
   try{
     for(var i=0; i<localStorage.length; i++){
       var k = localStorage.key(i);
-      if(k && k.indexOf('ck_p9_')===0) portionsData[k] = localStorage.getItem(k);
+      if(k && k.indexOf('ckdata_'+currentDataScope()+'__ck_p9_')===0) portionsData[k.slice(('ckdata_'+currentDataScope()+'__').length)] = localStorage.getItem(k);
     }
   }catch(e){}
   var data = {
@@ -2518,7 +2545,7 @@ $('impFile').onchange = function(){
     if(d.theme) applyTh(d.theme);
     if(d.portions && typeof d.portions === 'object'){
       Object.keys(d.portions).forEach(function(k){
-        if(k.indexOf('ck_p9_')===0 && /^\d{1,3}$/.test(String(d.portions[k]))) try{ localStorage.setItem(k, d.portions[k]); }catch(e){}
+        if(k.indexOf('ck_p9_')===0 && /^\d{1,3}$/.test(String(d.portions[k]))) try{ localStorage.setItem(storageKey(k), d.portions[k]); }catch(e){}
       });
     }
 
@@ -2664,13 +2691,13 @@ screens.main.addEventListener('scroll', function(){ mainScroll = screens.main.sc
 /* ============ СТАРТ ============ */
 (function(){
   var s = G(SK, null);
-  if(s && s.guest){ authReady = true; enter(s); }
+  if(s && s.guest){ try{localStorage.removeItem(SK)}catch(e){}; s=null; }
   if(fbAuth){
     fbAuth.onAuthStateChanged(function(u){
       if(u && u.emailVerified){
         if(curUid !== u.uid){
           curUid = u.uid;
-          var cu = {email:u.email, name:u.displayName || u.email.split('@')[0], guest:false};
+          var cu = {email:u.email, name:u.displayName || u.email.split('@')[0], guest:false, uid:u.uid};
           S(SK, cu); authReady = true; enter(cu);
         }
       } else {

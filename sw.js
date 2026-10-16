@@ -1,4 +1,4 @@
-const CACHE = 'lets-cook-v5';
+const CACHE = 'lets-cook-v6';
 const ASSETS = [
   './',
   './index.html',
