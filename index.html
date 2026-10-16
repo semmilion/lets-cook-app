@@ -20,6 +20,7 @@
 
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 
 <style>
 :root{
@@ -1310,12 +1311,45 @@ function currentDataScope(){
   return 'signed-out';
 }
 function storageKey(k){ return k === 'ck_s9' ? k : 'ckdata_' + currentDataScope() + '__' + k; }
+var cloudDb = null, cloudReadyUid = null, cloudSyncTimers = {};
+try { if(typeof firebase !== 'undefined' && firebase.firestore) cloudDb = firebase.firestore(); } catch(e) { console.warn('Firestore init error', e); }
+function cloudUserUid(){
+  try { var u = fbAuth && fbAuth.currentUser; return u && u.emailVerified ? u.uid : null; } catch(e) { return null; }
+}
+function cloudWrite(k,v){
+  var uid=cloudUserUid(); if(!uid || !cloudDb || k==='ck_s9') return;
+  clearTimeout(cloudSyncTimers[k]);
+  cloudSyncTimers[k]=setTimeout(function(){
+    cloudDb.collection('users').doc(uid).collection('appData').doc(k).set({value:v, updatedAt:firebase.firestore.FieldValue.serverTimestamp()})
+      .catch(function(e){ console.warn('Cloud save failed',k,e); if(typeof toast==='function') toast('Не удалось синхронизировать данные. Проверьте интернет и настройки Firebase.','err','☁️'); });
+  },250);
+}
 function G(k,f){try{var v=localStorage.getItem(storageKey(k));return v?JSON.parse(v):f}catch(e){return f}}
 function S(k,v){
-  try{ localStorage.setItem(storageKey(k),JSON.stringify(v)); return true; }
+  try{ localStorage.setItem(storageKey(k),JSON.stringify(v)); cloudWrite(k,v); return true; }
   catch(e){ console.warn('Save error', k, e); return false; }
 }
-function DL(k){try{localStorage.removeItem(storageKey(k))}catch(e){}}
+function DL(k){
+  try{localStorage.removeItem(storageKey(k))}catch(e){}
+  var uid=cloudUserUid(); if(uid && cloudDb) cloudDb.collection('users').doc(uid).collection('appData').doc(k).delete().catch(function(e){console.warn('Cloud delete failed',e)});
+}
+function syncCloudData(uid){
+  if(!uid || !cloudDb) return Promise.resolve(false);
+  var prefix='ckdata_user-'+String(uid).replace(/[^a-zA-Z0-9_-]/g,'_')+'__';
+  var col=cloudDb.collection('users').doc(uid).collection('appData');
+  return col.get().then(function(snap){
+    var cloud={}; snap.forEach(function(d){ cloud[d.id]=d.data().value; });
+    var local={};
+    for(var i=0;i<localStorage.length;i++){ var k=localStorage.key(i); if(k && k.indexOf(prefix)===0){ try{local[k.slice(prefix.length)]=JSON.parse(localStorage.getItem(k));}catch(e){} } }
+    if(snap.empty){
+      var batch=cloudDb.batch(); Object.keys(local).forEach(function(k){ batch.set(col.doc(k),{value:local[k],updatedAt:firebase.firestore.FieldValue.serverTimestamp()}); });
+      return Object.keys(local).length ? batch.commit().then(function(){cloudReadyUid=uid;return true;}) : (cloudReadyUid=uid,true);
+    }
+    Object.keys(local).forEach(function(k){ if(!Object.prototype.hasOwnProperty.call(cloud,k)) localStorage.removeItem(prefix+k); });
+    Object.keys(cloud).forEach(function(k){ try{localStorage.setItem(prefix+k,JSON.stringify(cloud[k]));}catch(e){} });
+    cloudReadyUid=uid; return true;
+  }).catch(function(e){ console.warn('Cloud sync failed',e); if(typeof setMsg==='function') setMsg('Не удалось загрузить данные из облака. Проверьте настройки Firestore и интернет.','err'); return false; });
+}
 function reloadScopedData(){
   uR=G(RK,{})||{}; fav=G(FK,[])||[]; ratings=G(RTK,{})||{}; shopping=G(SHK,[])||[];
   cooked=G(COK,[])||[]; recent=G(HIK,[])||[]; notes=G(NTK,{})||{};
@@ -2698,7 +2732,9 @@ screens.main.addEventListener('scroll', function(){ mainScroll = screens.main.sc
         if(curUid !== u.uid){
           curUid = u.uid;
           var cu = {email:u.email, name:u.displayName || u.email.split('@')[0], guest:false, uid:u.uid};
-          S(SK, cu); authReady = true; enter(cu);
+          S(SK, cu); authReady = true;
+          if(cloudDb) syncCloudData(u.uid).then(function(ok){ if(ok) enter(cu); else { setMsg('Не удалось синхронизировать данные. Проверьте подключение и настройки Firestore.','err'); enter(cu); } });
+          else { setMsg('Облачная синхронизация не настроена. Данные доступны только на этом устройстве.','err'); enter(cu); }
         }
       } else {
         curUid = null;
