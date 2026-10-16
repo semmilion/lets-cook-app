@@ -1311,8 +1311,6 @@ function currentDataScope(){
   return 'signed-out';
 }
 function storageKey(k){ return k === 'ck_s9' ? k : 'ckdata_' + currentDataScope() + '__' + k; }
-var cloudDb = null, cloudReadyUid = null, cloudSyncTimers = {};
-try { if(typeof firebase !== 'undefined' && firebase.firestore) cloudDb = firebase.firestore(); } catch(e) { console.warn('Firestore init error', e); }
 function cloudUserUid(){
   try { var u = fbAuth && fbAuth.currentUser; return u && u.emailVerified ? u.uid : null; } catch(e) { return null; }
 }
@@ -1507,14 +1505,17 @@ var FB_CONFIG = {
   appId: "1:674455249399:web:092a50195e3a999cc7cef2"
 };
 var fbAuth = null;
+var cloudDb = null;
+var cloudSyncTimers = {};
 try{
   if(typeof firebase !== 'undefined' && FB_CONFIG.apiKey.indexOf('ВСТАВЬТЕ') !== 0){
     firebase.initializeApp(FB_CONFIG);
     fbAuth = firebase.auth();
     fbAuth.languageCode = 'ru';
+    cloudDb = firebase.firestore();
+    console.log('Firebase + Firestore инициализированы');
   }
-}catch(e){ console.warn('Firebase init error', e); }
-
+}catch(e){ console.error('Firebase init error', e); }
 function fbWhy(){
   if(typeof firebase === 'undefined') return 'Не загрузилась библиотека Firebase (проверьте интернет)';
   if(FB_CONFIG.apiKey.indexOf('ВСТАВЬТЕ') === 0) return 'В index.html не вставлены ключи Firebase';
