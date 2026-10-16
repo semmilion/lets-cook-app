@@ -121,27 +121,14 @@ input,textarea,select{font-family:inherit;font-size:16px}
   border-radius:var(--r-md);background:var(--paper);color:var(--ink);outline:none;transition:all .25s}
 .fld input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(232,104,58,.14)}
 
-.codeBtn{padding:0 16px;border:1.5px solid var(--accent);border-radius:var(--r-md);background:transparent;
-  color:var(--accent);font-weight:800;font-size:13px;white-space:nowrap;transition:all .25s}
-.codeBtn:hover:not(:disabled){background:var(--accent);color:#fff}
-.codeBtn:disabled{opacity:.4;cursor:not-allowed}
-
 .btn{font-weight:800;font-size:15px;padding:15px;border:none;border-radius:var(--r-md);
   background:var(--grad);color:#fff;width:100%;margin-top:12px;box-shadow:var(--sh-a);transition:all .25s}
 .btn:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(232,104,58,.38)}
 .btn:active{transform:translateY(0) scale(.99)}
 .btn.gh{background:var(--paper);color:var(--ink);border:1.5px solid var(--line-2);box-shadow:var(--sh-1)}
-.btn.gh:hover{background:var(--paper);color:var(--accent);border-color:var(--accent)}
 
 .divider{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:10px;margin:20px 0 8px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px}
 .divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line-2)}
-
-.cbox{margin-bottom:16px;padding:16px;background:linear-gradient(135deg,#fff9e0,#ffefb8);
-  border-radius:var(--r-lg);text-align:center;font-size:13px;color:#7a5210;display:none;
-  border:1.5px dashed rgba(224,168,0,.5)}
-.cbox.on{display:block;animation:pop .4s var(--bounce)}
-@keyframes pop{0%{opacity:0;transform:scale(.85)}60%{transform:scale(1.02)}100%{opacity:1;transform:scale(1)}}
-.cbox b{display:block;letter-spacing:8px;font-size:30px;color:#1a1815;font-weight:900;margin-top:4px}
 
 .msg{font-size:13px;margin-top:12px;min-height:18px;font-weight:700;text-align:center}
 .msg.err{color:var(--err)}
@@ -193,7 +180,6 @@ input,textarea,select{font-family:inherit;font-size:16px}
   animation:cardIn .55s var(--bounce) backwards}
 @media (hover: hover){
   .dod:hover{transform:translateY(-2px);box-shadow:var(--sh-3)}
-  .dod:hover .em,.dod:active .em{transform:scale(1.12) rotate(-6deg)}
 }
 .dod::before{content:"БЛЮДО ДНЯ";position:absolute;top:16px;right:-56px;background:var(--grad);color:#fff;
   font-size:9.5px;font-weight:900;letter-spacing:2px;padding:5px 60px;transform:rotate(38deg);white-space:nowrap;z-index:2}
@@ -207,22 +193,12 @@ input,textarea,select{font-family:inherit;font-size:16px}
 .dod .bdg{font-size:10.5px;font-weight:800;padding:4px 9px;border-radius:8px;
   background:rgba(232,104,58,.1);color:var(--accent);white-space:nowrap;flex:0 0 auto;line-height:1.3}
 
-@media (max-width:400px){
-  .dod{padding:14px 14px;gap:12px}
-  .dod .em{font-size:44px;width:66px;height:66px}
-  .dodInfo{padding-right:38px}
-  .dod .nm{font-size:15.5px}
-  .dod .ds{font-size:11.5px;margin-bottom:6px}
-  .dod .bdg{font-size:10px;padding:3px 8px}
-}
-
 .recent{margin-bottom:16px;display:none}
 .recent.on{display:block}
 .recent .rlbl{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
 .recent .rrow{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
 .recent .rrow::-webkit-scrollbar{display:none}
 .recent .rc{flex:0 0 auto;width:74px;cursor:pointer;text-align:center;transition:transform .2s;background:none;border:none;padding:0}
-@media (hover: hover){.recent .rc:hover{transform:translateY(-3px)}}
 .recent .rc .ri{width:74px;height:74px;background:var(--grad-2);border-radius:var(--r-md);
   display:flex;align-items:center;justify-content:center;font-size:34px;box-shadow:var(--sh-1);margin-bottom:6px}
 .recent .rc .rn{font-size:10px;font-weight:800;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -244,13 +220,11 @@ input,textarea,select{font-family:inherit;font-size:16px}
 .searchHist .chips{display:flex;gap:6px;flex-wrap:wrap}
 .searchHist .chipH{font-size:12px;font-weight:700;padding:6px 12px;border-radius:var(--r-full);background:var(--paper);color:var(--ink-2);border:1px solid var(--line-2);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px}
 .searchHist .chipH::before{content:"🕐";font-size:10px;opacity:.6}
-@media (hover: hover){.searchHist .chipH:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}}
 
 .luckyRow{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
 .lucky{width:100%;font-weight:800;font-size:14px;padding:14px 18px;
   border:1.5px dashed var(--line-2);border-radius:var(--r-md);
   background:var(--paper);color:var(--accent);transition:all .25s;line-height:1.25}
-@media (hover: hover){.lucky:hover{border-color:var(--accent);border-style:solid;background:rgba(232,104,58,.05);transform:translateY(-1px)}}
 @media (min-width:540px){
   .luckyRow{flex-direction:row}
   .lucky{flex:1}
@@ -276,7 +250,6 @@ input,textarea,select{font-family:inherit;font-size:16px}
 .arr{flex:0 0 40px;height:40px;border:1.5px solid var(--line-2);border-radius:50%;background:var(--paper);
   color:var(--accent);font-size:18px;font-weight:900;display:flex;align-items:center;justify-content:center;
   transition:all .2s;padding:0;box-shadow:var(--sh-1)}
-@media (hover: hover){.arr:hover{background:var(--grad);color:#fff;border-color:transparent;transform:scale(1.08)}}
 .arr.hide{opacity:0;pointer-events:none;transform:scale(.8)}
 .pill{flex:0 0 auto;font-weight:800;font-size:13.5px;padding:13px 22px;border:1.5px solid var(--line-2);
   border-radius:var(--r-full);background:var(--paper);color:var(--muted);transition:all .25s;
@@ -289,7 +262,6 @@ input,textarea,select{font-family:inherit;font-size:16px}
 .pill:nth-child(4){animation-delay:.11s}
 .pill:nth-child(5){animation-delay:.14s}
 .pill:nth-child(6){animation-delay:.17s}
-@media (hover: hover){.pill:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}}
 .pill.on{background:var(--grad);color:#fff;border-color:transparent;box-shadow:var(--sh-a);transform:scale(1.02)}
 .pill .cnt{background:rgba(255,255,255,.24);border-radius:8px;padding:1px 6px;font-size:10px;font-weight:900}
 .pill.on .cnt{background:rgba(255,255,255,.3)}
@@ -340,7 +312,6 @@ input,textarea,select{font-family:inherit;font-size:16px}
 
 .abtn{margin-top:8px;font-weight:800;font-size:14px;padding:16px;border:2px dashed var(--line-2);
   border-radius:var(--r-lg);background:var(--paper);color:var(--accent);transition:all .25s;width:100%}
-@media (hover: hover){.abtn:hover{border-color:var(--accent);background:rgba(232,104,58,.05);border-style:solid}}
 
 .empty{grid-column:1/-1;text-align:center;padding:60px 24px;color:var(--muted);font-weight:700}
 .empty .i{font-size:64px;margin-bottom:12px;opacity:.55;display:block}
@@ -422,7 +393,6 @@ input,textarea,select{font-family:inherit;font-size:16px}
   line-height:1.6;
   color:var(--ink-2);
   font-weight:600;
-  animation:fadeUp .5s cubic-bezier(.22,.9,.32,1) backwards;
 }
 .about .aboutTitle{
   display:block;
@@ -433,7 +403,6 @@ input,textarea,select{font-family:inherit;font-size:16px}
   margin-bottom:6px;
   line-height:1.1;
 }
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .health{
   background:linear-gradient(135deg,rgba(26,155,82,.07),rgba(26,155,82,.02));
   border:1px solid var(--line-2);
@@ -445,7 +414,6 @@ input,textarea,select{font-family:inherit;font-size:16px}
   line-height:1.6;
   color:var(--ink-2);
   font-weight:600;
-  animation:fadeUp .5s cubic-bezier(.22,.9,.32,1) backwards;
 }
 .health .healthTitle{
   display:block;
@@ -467,15 +435,7 @@ input,textarea,select{font-family:inherit;font-size:16px}
 }
 
 .ing{display:flex;align-items:center;gap:12px;background:var(--paper);border:1px solid var(--line);
-  border-radius:var(--r-md);padding:14px 16px;margin-bottom:8px;box-shadow:var(--sh-1);
-  animation:ingIn .35s cubic-bezier(.22,.9,.32,1) backwards}
-.ing:nth-child(1){animation-delay:.02s}
-.ing:nth-child(2){animation-delay:.05s}
-.ing:nth-child(3){animation-delay:.08s}
-.ing:nth-child(4){animation-delay:.11s}
-.ing:nth-child(5){animation-delay:.14s}
-.ing:nth-child(6){animation-delay:.17s}
-@keyframes ingIn{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:none}}
+  border-radius:var(--r-md);padding:14px 16px;margin-bottom:8px;box-shadow:var(--sh-1)}
 .ing .cb{width:22px;height:22px;border:2px solid var(--line-2);border-radius:6px;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;font-size:12px;color:transparent;font-weight:900;cursor:pointer}
 .ing .cb.on{background:var(--grad);border-color:transparent;color:#fff}
@@ -580,8 +540,6 @@ input,textarea,select{font-family:inherit;font-size:16px}
 .cf{position:absolute;font-size:24px;top:-40px;animation:cfa linear forwards}
 @keyframes cfa{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
 
-@keyframes scIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
-.scene{animation:scIn .38s forwards;transform-origin:center}
 @keyframes stm{0%{transform:translateY(0);opacity:.85}100%{transform:translateY(-22px);opacity:0}}
 .steam{animation:stm 1.7s ease-in-out infinite}
 .steam2{animation:stm 1.7s ease-in-out .4s infinite}
@@ -589,7 +547,6 @@ input,textarea,select{font-family:inherit;font-size:16px}
 
 @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
 .shake{animation:shake .45s cubic-bezier(.36,.07,.19,.97)}
-.msg.err.shake{animation:shake .45s cubic-bezier(.36,.07,.19,.97)}
 
 .modalBg{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   z-index:5000;display:none;align-items:center;justify-content:center;padding:24px;opacity:0;transition:opacity .3s}
@@ -865,8 +822,14 @@ input,textarea,select{font-family:inherit;font-size:16px}
 
 <script>
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function(){
-    navigator.serviceWorker.register('sw.js').catch(function(e){ console.warn('SW error:', e); });
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' })
+      .then(function (registration) {
+        // Проверяем новую версию worker при каждом запуске приложения.
+        registration.update().catch(function () {});
+        // Если обновление установлено, оно активируется worker-ом через skipWaiting().
+      })
+      .catch(function (e) { console.warn('Service Worker registration error:', e); });
   });
 }
 </script>
@@ -921,7 +884,6 @@ var MET = {
 
 var TIMER = {borsch:2, shchi:2, kharcho:3, "pea-soup":3, "pumpkin-soup":2, solyanka:2, pilaf:3, "fish-baked":2, bolognese:2, lasagna:3, risotto:2, tiramisu:3, panna:3, mousse:3, cheesecake:3, icecream:3, medovik:3, bread:3, pizza:2, croissants:3, "cinnamon-rolls":3, donuts:3};
 
-// Расширенное описание блюда — что готовим, чем интересно, как подавать
 var ABOUT = {
   pancakes:"Тонкие кружевные блины на молоке — классика русской кухни. Подаются с маслом, мёдом, вареньем или сгущёнкой. Тесто должно быть как жидкие сливки — тогда блины получатся ажурными.",
   omelette:"Пышный омлет с молоком — быстрый и сытный завтрак за 10 минут. Секрет пышности — хорошо взбитые яйца и не слишком горячая сковорода.",
@@ -1010,10 +972,9 @@ var ABOUT = {
   "pie-meat":"Пирог с мясом — сытный пирог из песочного теста с фаршем и луком. Подаётся горячим.",
   "cheese-bread":"Хачапури — грузинская лепёшка с сыром. Горячая, с тянущимся сыром внутри.",
   cupcake:"Капкейки с кремом — маленькие кексы с кремовой шапкой. Красивые и вкусные.",
-    biscotti:"Бискотти — итальянское сухое печенье с орехами. Хрустящее, идеально к кофе."
+  biscotti:"Бискотти — итальянское сухое печенье с орехами. Хрустящее, идеально к кофе."
 };
 
-// Чем полезно блюдо — коротко и по существу
 var HEALTH = {
   pancakes:"Источник быстрой энергии за счёт углеводов. Яйца дают белок, молоко — кальций. Хороший завтрак перед активным днём.",
   omelette:"Отличный источник белка — до 20 г на порцию. Яйца содержат витамины A, D, B12 и холин, полезный для мозга.",
@@ -1105,7 +1066,6 @@ var HEALTH = {
   biscotti:"Миндаль — витамин E и полезные жиры. Сухое печенье с низким содержанием жира. Идеально к кофе."
 };
 
-// Вес штучных продуктов в граммах (для расчёта КБЖУ)
 var PIECEW = {
   egg:55, onion:100, tomato:120, potato:150, carrot:80, cucumber:100,
   avocado:200, olive:4, berry:5, pea:1,
@@ -1144,8 +1104,6 @@ var IL = {milk:"Молоко",flour:"Мука",egg:"Яйцо",sugar:"Сахар"
   honey:"Мёд",yeast:"Дрожжи",cottage:"Творог",pea:"Горох",noodle:"Лапша",pumpkin:"Тыква",
   mayonnaise:"Майонез",avocado:"Авокадо",fish:"Рыба"};
 
-// Блюда, у которых есть полный рецепт (R).
-// Для остальных в базе оставлены только метаданные — они не показываются в ленте.
 var R = {
   pancakes:{base:4,i:[["milk","Молоко","500 мл"],["flour","Мука","300 г"],["egg","Яйца","2 шт"],["sugar","Сахар","30 г"],["oil","Масло","20 г"]],s:[["Разбей яйца в миску","egg"],["Всыпь муку и сахар","whisk"],["Разогрей сковороду","flame"],["Вылей тесто","ladle"],["Переверни лопаткой","spatula"],["Подавай тёплыми","plate"]]},
   omelette:{base:2,i:[["egg","Яйца","3 шт"],["milk","Молоко","50 мл"],["salt","Соль","2 г"],["oil","Масло","15 г"]],s:[["Разбей яйца","egg"],["Взбей венчиком","whisk"],["Растопи масло","flame"],["Вылей смесь","ladle"],["Сложи пополам","fold"]]},
@@ -1339,6 +1297,7 @@ function esc(s){
     .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
     .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
+
 /* ============ ХРАНИЛИЩЕ ============ */
 function G(k,f){try{var v=localStorage.getItem(k);return v?JSON.parse(v):f}catch(e){return f}}
 function S(k,v){
@@ -1368,13 +1327,12 @@ function addRecent(id){
 }
 function cookCount(id){ return (cooked.filter(function(x){return x===id;})).length; }
 
-/* ============ DISHES Map — строится один раз ============ */
+/* ============ DISHES Map ============ */
 var DISHES = {};
 function rebuildDishes(){
   DISHES = {};
   Object.keys(D).forEach(function(cat){
     D[cat].forEach(function(d){
-      // Показываем только те, у которых есть рецепт (R или uR)
       if(!R[d[0]] && !uR[d[0]]) return;
       var m = MET[d[0]] || ['30 мин','Средне'];
       DISHES[d[0]] = {id:d[0], name:d[1], ico:d[2], desc:d[3], time:m[0], dif:m[1], category:cat, isUser:false};
@@ -1448,7 +1406,6 @@ var stack = ['auth'];
 var mainScroll = 0;
 
 function show(id){
-  // Защита от undefined — раньше это давало белый экран
   if(!id || !screens[id]) id = 'auth';
   Object.keys(screens).forEach(function(k){ screens[k].classList.toggle('on', k === id); });
   var scr = screens[id];
@@ -1475,7 +1432,9 @@ function goB(){
   show(id);
   if(id === 'main'){ renderRecent(); renderDOD(); }
 }
-function resetTo(id){ stack = [id]; show(id); }function updNav(){
+function resetTo(id){ stack = [id]; show(id); }
+
+function updNav(){
   var cur = stack[stack.length-1];
   document.querySelectorAll('.ni[data-n]').forEach(function(b){
     var v = b.getAttribute('data-n');
@@ -1488,7 +1447,6 @@ function resetTo(id){ stack = [id]; show(id); }function updNav(){
   });
 }
 
-/* ============ АВТОРИЗАЦИЯ ============ */
 /* ============ АВТОРИЗАЦИЯ (Firebase Auth) ============ */
 var FB_CONFIG = {
   apiKey: "AIzaSyDm0mvzoy4HLigSHu5wKeywOY2GwwH_QQY",
@@ -1508,8 +1466,8 @@ try{
 }catch(e){ console.warn('Firebase init error', e); }
 
 function fbWhy(){
-  if(typeof firebase === 'undefined') return 'Не загрузилась библиотека Firebase (проверьте интернет и vercel.json)';
-  if(FB_CONFIG.apiKey.indexOf('ВСТАВЬТЕ') === 0) return 'В index.html не вставлены ключи Firebase (FB_CONFIG)';
+  if(typeof firebase === 'undefined') return 'Не загрузилась библиотека Firebase (проверьте интернет)';
+  if(FB_CONFIG.apiKey.indexOf('ВСТАВЬТЕ') === 0) return 'В index.html не вставлены ключи Firebase';
   return 'Вход временно недоступен. Можно войти как гость.';
 }
 var tab = 'login', busy = false, curUid = null, authReady = false;
@@ -1541,16 +1499,14 @@ function authErr(e){
   switch(e && e.code){
     case 'auth/invalid-email': return 'Некорректный email';
     case 'auth/weak-password': return 'Слишком простой пароль (минимум 8 символов)';
-    case 'auth/email-already-in-use': return 'Не удалось создать аккаунт. Если email уже используется, войдите или сбросьте пароль.';
+    case 'auth/email-already-in-use': return 'Email уже используется';
     case 'auth/user-not-found':
     case 'auth/wrong-password':
     case 'auth/invalid-credential': return 'Неверный email или пароль';
-    case 'auth/too-many-requests': return 'Слишком много попыток. Подождите и повторите позже.';
+    case 'auth/too-many-requests': return 'Слишком много попыток. Подождите.';
     case 'auth/network-request-failed': return 'Нет соединения с интернетом';
     case 'auth/operation-not-allowed': return 'В Firebase не включён вход по Email/Password';
-    case 'auth/unauthorized-domain': return 'Домен не добавлен в Authorized domains в Firebase';
-    case 'auth/invalid-api-key':
-    case 'auth/api-key-not-valid.-please-pass-a-valid-api-key.': return 'Неверный apiKey в FB_CONFIG';
+    case 'auth/unauthorized-domain': return 'Домен не добавлен в Authorized domains';
     default: return 'Ошибка: ' + ((e && e.code) || 'неизвестно');
   }
 }
@@ -1563,7 +1519,7 @@ $('forgotB').onclick = function(){
   setBusy(true);
   fbAuth.sendPasswordResetEmail(em)
     .catch(function(e){ if(e && e.code !== 'auth/user-not-found') throw e; })
-    .then(function(){ setBusy(false); setMsg('Если такой аккаунт есть, мы отправили письмо для сброса пароля.','ok'); })
+    .then(function(){ setBusy(false); setMsg('Если такой аккаунт есть, мы отправили письмо.','ok'); })
     .catch(function(e){ setBusy(false); setMsg(authErr(e),'err'); });
 };
 
@@ -1596,10 +1552,10 @@ $('verB').onclick = function(){
   setBusy(true); setMsg('Входим…','');
   fbAuth.signInWithEmailAndPassword(em, pw)
     .then(function(c){
-      if(c.user.emailVerified){ setBusy(false); setMsg(''); return; } // приложение откроет onAuthStateChanged
+      if(c.user.emailVerified){ setBusy(false); setMsg(''); return; }
       return c.user.sendEmailVerification().catch(function(){})
         .then(function(){ return fbAuth.signOut(); })
-        .then(function(){ setBusy(false); setMsg('Email не подтверждён. Мы отправили новое письмо со ссылкой.','err'); });
+        .then(function(){ setBusy(false); setMsg('Email не подтверждён. Мы отправили новое письмо.','err'); });
     })
     .catch(function(e){ setBusy(false); setMsg(authErr(e),'err'); });
 };
@@ -1612,7 +1568,7 @@ $('delB').onclick = function(){
     try{ Object.keys(localStorage).forEach(function(k){ if(k.indexOf('ck_')===0) localStorage.removeItem(k); }); }catch(e){}
     location.reload();
   }).catch(function(e){
-    if(e && e.code === 'auth/requires-recent-login') toast('Выйдите, войдите снова и повторите удаление','err','⚠️');
+    if(e && e.code === 'auth/requires-recent-login') toast('Выйдите, войдите снова и повторите','err','⚠️');
     else toast('Не удалось удалить аккаунт','err','❌');
   });
 };
@@ -1828,7 +1784,6 @@ function doRenderFeed(forceAnim){
   });
   feed.innerHTML = html;
 
-  // Делегирование событий
   if(!feed._bound){
     feed._bound = true;
     feed.addEventListener('click', function(e){
@@ -1988,15 +1943,13 @@ document.querySelectorAll('#rouMode button').forEach(function(b){
 $('fridgeOpenB').onclick = function(){ goTo('fridge'); };
 $('bk5').onclick = goB;
 
-/* Нормализация строки для поиска: ё→е, нижний регистр */
 function norm(s){ return String(s||'').toLowerCase().replace(/ё/g,'е').trim(); }
 
-/* Синонимы ингредиентов */
 var SYN = {
   egg:['яйц','яйцо','яйца'],
   milk:['молок','молоч'],
   meat:['мяс','говядин','свинин','баранин','стейк'],
-  chicken:['куриц','куриц','куриное'],
+  chicken:['куриц','куриное'],
   fish:['рыб','креветк','тунец','лосос','треск'],
   tomato:['помидор','томат','черри'],
   potato:['картоф','картошк'],
@@ -2021,9 +1974,6 @@ var SYN = {
   yeast:['дрожж']
 };
 
-function ingHasKey(rec, key){
-  return rec.i.some(function(g){ return g[0] === key; });
-}
 function recHasAny(rec, word){
   return rec.i.some(function(g){
     var key = g[0];
@@ -2038,7 +1988,6 @@ $('fridgeB').onclick = function(){
   var q = $('fridgeQ').value || '';
   var words = q.split(/[,\n;]+|\s{2,}/).map(norm).filter(function(w){ return w.length > 1; });
   if(!words.length){
-    // попробуем разбить по одиночным пробелам
     words = q.split(/\s+/).map(norm).filter(function(w){ return w.length > 1; });
   }
   if(!words.length){ toast('Введите ингредиенты','err'); return; }
@@ -2049,9 +1998,7 @@ $('fridgeB').onclick = function(){
     if(!rec || !rec.i) return;
     var dish = DISHES[id]; if(!dish) return;
 
-    // считаем, сколько ингредиентов рецепта покрыто
     var need = rec.i.filter(function(g){
-      // соль/масло/сахар/специи считаем всегда имеющимися
       return !['salt','oil','sugar','yeast'].includes(g[0]);
     });
     if(!need.length) return;
@@ -2119,14 +2066,12 @@ function renderStars(id){
   }
 }
 
-// Сохраняем состояние галочек ингредиентов — не сбрасываем при смене порций
 function renderIngredients(id, rec){
   var n = getPortions(id);
   var base = rec.base || 2;
   var factor = n / base;
   var checked = {};
   var oldCbs = $('rL').querySelectorAll('.ing');
-  // Сохраним текущее состояние
   var oldRec = allR()[id];
   if(oldRec && oldRec.i && oldRec.i.length === rec.i.length){
     oldCbs.forEach(function(el, i){
@@ -2183,7 +2128,6 @@ function openRecipe(id){
   $('rT').textContent = m.name;
   $('rD').textContent = m.desc || '';
 
-    // Расширенное описание блюда
   var ab = ABOUT[id];
   var abBox = $('rAbout');
   if(ab){
@@ -2194,7 +2138,6 @@ function openRecipe(id){
     abBox.innerHTML = '';
   }
 
-  // Чем полезно
   var hl = HEALTH[id];
   var hlBox = $('rHealth');
   if(hl){
@@ -2205,6 +2148,7 @@ function openRecipe(id){
     hlBox.style.display = 'none';
     hlBox.innerHTML = '';
   }
+
   $('rI').innerHTML = '<span class="bdg">⏱ '+esc(m.time)+'</span><span class="bdg">🔥 '+esc(m.dif)+'</span>';
   $('rH').textContent = m.ico;
 
@@ -2251,7 +2195,6 @@ function openRecipe(id){
     var items = r.i.map(function(ing){ return {name:ing[1], qty:scaleQty(ing[2]||'', f)}; });
     var added = 0;
     items.forEach(function(it){
-      // Объединяем одинаковые строки
       var exists = shopping.some(function(s){ return s.name===it.name && s.qty===it.qty; });
       if(!exists){ shopping.push({name:it.name, qty:it.qty, done:false}); added++; }
     });
@@ -2349,7 +2292,7 @@ function scene(type, emoji){
   return bowl+'<text class="scene" x="100" y="118" text-anchor="middle" font-size="44">'+esc(emoji||'🍽')+'</text>'+steam;
 }
 
-var si = 0, sd = [], tmInt = null, tmEnd = 0, wakeLock = null;
+var si = 0, sd = [], tmInt = null, tmEnd = 0;
 
 function renderStep(){
   var step = sd[si];
@@ -2361,7 +2304,6 @@ function renderStep(){
   $('prg').style.width = ((si+1)/sd.length*100) + '%';
   $('prevB').disabled = (si === 0);
   $('nextB').textContent = (si === sd.length-1) ? 'Готово! 🎉' : 'Далее →';
-  // Таймер НЕ сбрасывается при смене шага
   var mins = TIMER[curId];
   if(mins){
     $('tmRow').style.display = 'flex';
@@ -2572,7 +2514,7 @@ $('impFile').onchange = function(){
     if(Array.isArray(d.shopping)) shopping = d.shopping;
     if(Array.isArray(d.cooked)) cooked = d.cooked;
     if(Array.isArray(d.recent)) recent = d.recent;
-    else if(Array.isArray(d.history)) recent = d.history; // совместимость
+    else if(Array.isArray(d.history)) recent = d.history;
     if(d.notes && typeof d.notes === 'object') notes = d.notes;
     if(d.sortBy) sortBy = d.sortBy;
     if(Array.isArray(d.qfs)) qfs = d.qfs;
@@ -2720,7 +2662,6 @@ document.querySelectorAll('.ni[data-n]').forEach(function(b){
   };
 });
 
-/* Сохраняем скролл главного экрана */
 screens.main.addEventListener('scroll', function(){ mainScroll = screens.main.scrollTop; }, {passive:true});
 
 /* ============ СТАРТ ============ */
@@ -2741,7 +2682,6 @@ screens.main.addEventListener('scroll', function(){ mainScroll = screens.main.sc
       }
     });
   } else if(!authReady){ authReady = true; show('auth'); }
-  // Спрячем сплэш, когда всё отрисовано
   setTimeout(function(){
     var sp = document.getElementById('splash');
     if(sp) sp.style.display = 'none';
@@ -2749,6 +2689,7 @@ screens.main.addEventListener('scroll', function(){ mainScroll = screens.main.sc
 })();
 
 })();
+</script>
 
 <div id="errBox" style="position:fixed;left:8px;right:8px;bottom:8px;background:#d24536;color:#fff;padding:10px;border-radius:8px;font:12px/1.4 monospace;z-index:99999;max-height:40vh;overflow:auto;display:none;white-space:pre-wrap"></div>
 <script>

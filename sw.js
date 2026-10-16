@@ -1,6 +1,11 @@
-const CACHE = 'lets-cook-v4';
+/* Let's cook! Service Worker
+ * При выпуске новой версии меняйте CACHE_VERSION. Регистрация также принудительно
+ * проверяет обновление sw.js при запуске приложения.
+ */
+'use strict';
 
-const ASSETS = [
+const CACHE_VERSION = 'lets-cook-v5';
+const APP_SHELL = [
   './',
   './index.html',
   './manifest.json',
@@ -10,48 +15,84 @@ const ASSETS = [
   './privacy.html'
 ];
 
-self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting())
-  );
+self.addEventListener('install', event => {
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE_VERSION);
+    // Не проваливаем установку целиком, если один необязательный ресурс недоступен.
+    await Promise.all(APP_SHELL.map(async url => {
+      try {
+        const response = await fetch(url, { cache: 'reload' });
+        if (response.ok && response.type !== 'opaque') await cache.put(url, response);
+      } catch (_) {}
+    }));
+    await self.skipWaiting();
+  })());
 });
 
-self.addEventListener('activate', e => {
-  e.waitUntil(
-    caches.keys()
-      .then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
-      .then(() => self.clients.claim())
-  );
+self.addEventListener('activate', event => {
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys.filter(key =>
+      key.startsWith('lets-cook-') && key !== CACHE_VERSION
+    ).map(key => caches.delete(key)));
+    await self.clients.claim();
+  })());
 });
 
-// Network-first для HTML, cache-first для остального
-self.addEventListener('fetch', e => {
-  if (e.request.method !== 'GET') return;
-  // API авторизации не кэшируем
-  if (/identitytoolkit|securetoken|firebaseinstallations/.test(e.request.url)) return;
+self.addEventListener('message', event => {
+  if (event.data === 'SKIP_WAITING') self.skipWaiting();
+});
 
-  const isHTML = e.request.destination === 'document' ||
-                 e.request.url.endsWith('/') ||
-                 e.request.url.endsWith('index.html');
+self.addEventListener('fetch', event => {
+  const request = event.request;
+  if (request.method !== 'GET') return;
 
-  if (isHTML) {
-    e.respondWith(
-      fetch(e.request)
-        .then(res => {
-          const copy = res.clone();
-          caches.open(CACHE).then(c => c.put(e.request, copy)).catch(()=>{});
-          return res;
-        })
-        .catch(() => caches.match('./index.html'))
-    );
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) {
+    // Не кэшируем сторонние API/авторизацию/скрипты.
+    if (/identitytoolkit|securetoken|firebaseinstallations|googleapis\.com/.test(url.hostname)) return;
+  }
+
+  const isNavigation = request.mode === 'navigate' ||
+    request.destination === 'document' ||
+    url.pathname.endsWith('/index.html') ||
+    url.pathname.endsWith('/');
+
+  if (isNavigation) {
+    event.respondWith((async () => {
+      try {
+        const response = await fetch(request);
+        if (response && response.ok) {
+          const cache = await caches.open(CACHE_VERSION);
+          cache.put('./index.html', response.clone()).catch(() => {});
+        }
+        return response;
+      } catch (_) {
+        return (await caches.match(request)) ||
+          (await caches.match('./index.html')) ||
+          new Response('Нет подключения к интернету. Откройте приложение онлайн хотя бы один раз.', {
+            status: 503, headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+          });
+      }
+    })());
     return;
   }
 
-  e.respondWith(
-    caches.match(e.request).then(hit => hit || fetch(e.request).then(res => {
-      const copy = res.clone();
-      caches.open(CACHE).then(c => c.put(e.request, copy)).catch(()=>{});
-      return res;
-    }).catch(() => caches.match('./index.html')))
-  );
+  // Cache-first для локальных ресурсов; сохраняем только успешные same-origin ответы.
+  if (url.origin === self.location.origin) {
+    event.respondWith((async () => {
+      const cached = await caches.match(request);
+      if (cached) return cached;
+      try {
+        const response = await fetch(request);
+        if (response && response.ok && response.type !== 'opaque') {
+          const cache = await caches.open(CACHE_VERSION);
+          cache.put(request, response.clone()).catch(() => {});
+        }
+        return response;
+      } catch (_) {
+        return new Response('', { status: 504, statusText: 'Offline' });
+      }
+    })());
+  }
 });
