@@ -1707,7 +1707,7 @@ function renderRecent(){
 }
 
 /* ============ ГЛАВНЫЙ ЭКРАН ============ */
-var cv = 'feed', sq = '', cc = 'breakfast';
+var cv = 'feed', sq = '', cc = 'breakfast', favCat = 'all';
 
 function renderSort(){
   var s = $('sortSel');
@@ -1730,14 +1730,50 @@ function renderQF(){
 
 function renderTabs(){
   var html = '';
-  CO.forEach(function(k){
-    var cnt = getD(k).length;
-    html += '<button class="pill'+(k===cc?' on':'')+'" data-c="'+k+'" type="button">'+CE[k]+' '+CATS[k]+' <span class="cnt">'+cnt+'</span></button>';
-  });
+  if(cv === 'fav'){
+    // Считаем сколько избранного в каждой категории
+    var favByCat = {};
+    CO.forEach(function(k){ favByCat[k] = 0; });
+    var totalFav = 0;
+    Object.values(DISHES).forEach(function(d){
+      if(isFav(d.id) && favByCat[d.category] !== undefined){
+        favByCat[d.category]++;
+        totalFav++;
+      }
+    });
+    // Вкладка "Все" — показывает все избранные блюда
+    html += '<button class="pill'+(favCat==='all'?' on':'')+'" data-c="__all__" type="button">❤️ Все <span class="cnt">'+totalFav+'</span></button>';
+    // Только категории с избранным
+    CO.forEach(function(k){
+      if(favByCat[k] > 0){
+        html += '<button class="pill'+(k===favCat?' on':'')+'" data-c="'+k+'" type="button">'+CE[k]+' '+CATS[k]+' <span class="cnt">'+favByCat[k]+'</span></button>';
+      }
+    });
+  } else {
+    CO.forEach(function(k){
+      var cnt = getD(k).length;
+      html += '<button class="pill'+(k===cc?' on':'')+'" data-c="'+k+'" type="button">'+CE[k]+' '+CATS[k]+' <span class="cnt">'+cnt+'</span></button>';
+    });
+  }
   $('tbar').innerHTML = html;
   var bs = $('tbar').querySelectorAll('[data-c]');
   for(var i=0; i<bs.length; i++){
-    (function(b){ b.onclick = function(){ switchCat(b.getAttribute('data-c')); }; })(bs[i]);
+    (function(b){
+      b.onclick = function(){
+        var c = b.getAttribute('data-c');
+        if(cv === 'fav'){
+          favCat = (c === '__all__') ? 'all' : c;
+          var bs2 = $('tbar').querySelectorAll('.pill');
+          for(var j=0; j<bs2.length; j++){
+            bs2[j].classList.toggle('on', bs2[j].getAttribute('data-c') === c);
+          }
+          renderFeed(true);
+          try{ b.scrollIntoView({inline:'center', block:'nearest', behavior:'smooth'}); }catch(e){}
+        } else {
+          switchCat(c);
+        }
+      };
+    })(bs[i]);
   }
   setTimeout(updArrows, 50);
 }
@@ -1807,8 +1843,10 @@ function doRenderFeed(forceAnim){
   var ds;
 
   if(cv === 'fav'){
-    ds = Object.values(DISHES).filter(function(d){ return isFav(d.id); });
-  } else if(sq){
+  ds = Object.values(DISHES).filter(function(d){
+    return isFav(d.id) && (favCat === 'all' || d.category === favCat);
+  });
+} else if(sq){
     ds = Object.values(DISHES).filter(function(d){
       return d.name.toLowerCase().indexOf(sq)>=0 || d.desc.toLowerCase().indexOf(sq)>=0;
     });
@@ -2717,19 +2755,29 @@ document.querySelectorAll('.ni[data-n]').forEach(function(b){
     var v = b.getAttribute('data-n');
     if(v === 'add'){ openAdd(cc); return; }
     if(v === 'feed'){
-      if(stack[stack.length-1] !== 'main') resetTo('main');
-      else show('main');
-      cv = 'feed'; sq = ''; $('srch').value = ''; $('clrS').classList.remove('on');
-      renderSearchHist();
-      renderFeed();
-    }
-    if(v === 'fav'){
-      if(stack[stack.length-1] !== 'main') resetTo('main');
-      else show('main');
-      cv = 'fav'; sq = ''; $('srch').value = ''; $('clrS').classList.remove('on');
-      renderSearchHist();
-      renderFeed();
-    }
+  if(stack[stack.length-1] !== 'main') resetTo('main');
+  else show('main');
+  cv = 'feed'; favCat = 'all'; sq = ''; $('srch').value = ''; $('clrS').classList.remove('on');
+  renderSearchHist();
+  renderTabs();
+  renderFeed();
+}
+if(v === 'fav'){
+  if(stack[stack.length-1] !== 'main') resetTo('main');
+  else show('main');
+  cv = 'fav'; favCat = 'all'; sq = ''; $('srch').value = ''; $('clrS').classList.remove('on');
+  renderSearchHist();
+  renderTabs();
+  renderFeed();
+}
+if(v === 'fav'){
+  if(stack[stack.length-1] !== 'main') resetTo('main');
+  else show('main');
+  cv = 'fav'; favCat = 'all'; sq = ''; $('srch').value = ''; $('clrS').classList.remove('on');
+  renderSearchHist();
+  renderTabs();
+  renderFeed();
+}
     if(v === 'shop'){ renderShop(); goTo('shopping'); }
     if(v === 'prof'){ renderProf(); goTo('profile'); }
     updNav();
