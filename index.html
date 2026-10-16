@@ -2707,8 +2707,8 @@ function scene(type, emoji){
   grater:     'utensils'
 };
 var base = map[t] || 'chef';
-var href = 'assets/drawings/' + base + '.webp';
-  var href = 'assets/drawings/'+base+'.webp';
+var href = '' + base + '.webp';
+  var href = ''+base+'.webp';
   var style = '<style>'+ 
     '.ink{filter:contrast(1.04);opacity:.96}.art{transform-box:view-box;transform-origin:100px 82px}.ghost{opacity:.075}.fx{fill:none;stroke:currentColor;stroke-width:1.35;stroke-linecap:round;stroke-linejoin:round}.dot{fill:currentColor}.surface{fill:rgba(255,255,255,.5);stroke:currentColor;stroke-width:1.25}'+
     '@keyframes breathe{0%,100%{transform:translateY(1px) rotate(-.15deg)}50%{transform:translateY(-1.5px) rotate(.15deg)}}'+
@@ -2723,7 +2723,7 @@ var href = 'assets/drawings/' + base + '.webp';
     '.chefArt,.panArt{animation:breathe 4.8s ease-in-out infinite}.whisk .chefArt,.mix .chefArt{animation:whisk .82s cubic-bezier(.45,.05,.55,.95) infinite}.sizzle .panArt,.spatula .panArt,.flame .panArt{animation:pan 1.28s cubic-bezier(.36,.07,.19,.97) infinite}.pour .pitcher{animation:pour 2.65s cubic-bezier(.4,0,.2,1) infinite;transform-box:view-box;transform-origin:146px 67px}.steam{animation:rise 2.8s ease-out infinite;transform-box:fill-box;transform-origin:center bottom}.steam.b{animation-delay:-.9s}.steam.c{animation-delay:-1.8s}.stream{stroke-dasharray:7 5;animation:dash 2.65s linear infinite}.knife{animation:chop .78s ease-in-out infinite;transform-box:view-box;transform-origin:122px 99px}.crumb{animation:fall 1.45s ease-in infinite;transform-box:fill-box}.crumb.b{animation-delay:-.48s}.crumb.c{animation-delay:-.96s}.blenderArt{animation:pulse .9s ease-in-out infinite}'+
     '@media(prefers-reduced-motion:reduce){.art,.pitcher,.steam,.stream,.knife,.crumb{animation:none!important}}'+
   '</style>';
-  var bg='<image href="assets/drawings/kitchen_pattern.webp" x="14" y="9" width="172" height="142" preserveAspectRatio="xMidYMid slice" class="ghost"/>';
+  var bg='<image href="kitchen_pattern.webp" x="14" y="9" width="172" height="142" preserveAspectRatio="xMidYMid slice" class="ghost"/>';
   var art='<image href="'+href+'" x="'+(base==='pan'?'35':'50')+'" y="'+(base==='pan'?'54':'8')+'" width="'+(base==='pan'?'130':'100')+'" height="'+(base==='pan'?'82':'146')+'" preserveAspectRatio="xMidYMid meet" class="ink art '+(base==='pan'?'panArt':base==='blender'?'blenderArt':'chefArt')+'"/>';
   var fx='';
   if(t==='boil'||t==='steam'||t==='bake'||t==='sizzle'||t==='flame') fx='<g class="fx"><path class="steam" d="M82 119c-7-8 6-11 0-20"/><path class="steam b" d="M100 117c-7-9 7-13 0-23"/><path class="steam c" d="M118 119c-6-8 6-12 0-20"/></g>';
@@ -2731,8 +2731,8 @@ var href = 'assets/drawings/' + base + '.webp';
   if(t==='grater') fx='<g class="fx"><path d="M119 82h18l6 39h-31z"/><path d="M122 89h11m-10 7h12m-11 7h12m-10 7h11"/><circle class="dot crumb" cx="119" cy="119" r="1.2"/><circle class="dot crumb b" cx="128" cy="117" r="1"/><circle class="dot crumb c" cx="136" cy="120" r="1.1"/></g>';
   if(t==='mix'||t==='whisk') fx='<g class="fx"><ellipse cx="101" cy="132" rx="25" ry="5" opacity=".35"/><path d="M91 129c8 5 18 5 26 0" opacity=".45"/></g>';
   if(t==='cool') fx='<g class="fx" opacity=".45"><path d="M78 128c14-5 30-5 44 0"/><path d="M88 120l-3-5m15 4v-6m13 8l4-5"/></g>';
-  if(t==='leaf'||t==='plate') fx='<image href="assets/drawings/utensils.webp" x="70" y="108" width="60" height="42" preserveAspectRatio="xMidYMid meet" opacity=".28"/>';
-  if(t==='fold'||t==='dough') fx='<image href="assets/drawings/food_strip.webp" x="56" y="110" width="88" height="38" preserveAspectRatio="xMidYMid slice" opacity=".25"/>';
+  if(t==='leaf'||t==='plate') fx='<image href="utensils.webp" x="70" y="108" width="60" height="42" preserveAspectRatio="xMidYMid meet" opacity=".28"/>';
+  if(t==='fold'||t==='dough') fx='<image href="food_strip.webp" x="56" y="110" width="88" height="38" preserveAspectRatio="xMidYMid slice" opacity=".25"/>';
   return '<svg class="'+esc(t)+'" viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" aria-label="Кулинарная иллюстрация в авторской линейной стилистике">'+style+'<g color="'+(document.documentElement.getAttribute('data-theme')==='dark'?'#eee9df':'#27231f')+'">'+bg+art+fx+'</g></svg>';
 }
 var si = 0, sd = [], tmInt = null, tmEnd = 0;
