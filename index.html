@@ -1310,12 +1310,12 @@ function currentDataScope(){
   } catch(e) {}
   return 'signed-out';
 }
-function storageKey(k){ return k === 'ck_s9' ? k : 'ckdata_' + currentDataScope() + '__' + k; }
+function storageKey(k){ return (k === 'ck_s9' || k === 'ck_th9') ? k : 'ckdata_' + currentDataScope() + '__' + k; }
 function cloudUserUid(){
   try { var u = fbAuth && fbAuth.currentUser; return u && u.emailVerified ? u.uid : null; } catch(e) { return null; }
 }
 function cloudWrite(k,v){
-  var uid=cloudUserUid(); if(!uid || !cloudDb || k==='ck_s9') return;
+  var uid=cloudUserUid(); if(!uid || !cloudDb || k==='ck_s9' || k==='ck_th9' || cloudReadyUid!==uid) return;
   clearTimeout(cloudSyncTimers[k]);
   cloudSyncTimers[k]=setTimeout(function(){
     cloudDb.collection('users').doc(uid).collection('appData').doc(k).set({value:v, updatedAt:firebase.firestore.FieldValue.serverTimestamp()})
@@ -1329,7 +1329,12 @@ function S(k,v){
 }
 function DL(k){
   try{localStorage.removeItem(storageKey(k))}catch(e){}
-  var uid=cloudUserUid(); if(uid && cloudDb) cloudDb.collection('users').doc(uid).collection('appData').doc(k).delete().catch(function(e){console.warn('Cloud delete failed',e)});
+  var uid=cloudUserUid(); if(uid && cloudDb && k!=='ck_s9' && k!=='ck_th9' && cloudReadyUid===uid) cloudDb.collection('users').doc(uid).collection('appData').doc(k).delete().catch(function(e){console.warn('Cloud delete failed',e)});
+}
+function cleanCloudValue(k,v){
+  if(k==='ck_r9') return (v && typeof v==='object' && !Array.isArray(v)) ? sanitizeUR(v) : {};
+  if(k==='ck_f9' || k==='ck_sh9') return Array.isArray(v) ? v.slice(0,2000) : [];
+  return v;
 }
 function syncCloudData(uid){
   if(!uid || !cloudDb) return Promise.resolve(false);
@@ -1344,7 +1349,7 @@ function syncCloudData(uid){
       return Object.keys(local).length ? batch.commit().then(function(){cloudReadyUid=uid;return true;}) : (cloudReadyUid=uid,true);
     }
     Object.keys(local).forEach(function(k){ if(!Object.prototype.hasOwnProperty.call(cloud,k)) localStorage.removeItem(prefix+k); });
-    Object.keys(cloud).forEach(function(k){ try{localStorage.setItem(prefix+k,JSON.stringify(cloud[k]));}catch(e){} });
+    Object.keys(cloud).forEach(function(k){ if(!/^ck_[A-Za-z0-9_.-]{1,100}$/.test(k) || k==='ck_s9' || k==='ck_th9') return; try{localStorage.setItem(prefix+k,JSON.stringify(cleanCloudValue(k,cloud[k])));}catch(e){} });
     cloudReadyUid=uid; return true;
   }).catch(function(e){ console.warn('Cloud sync failed',e); if(typeof setMsg==='function') setMsg('Не удалось загрузить данные из облака. Проверьте настройки Firestore и интернет.','err'); return false; });
 }
@@ -1356,7 +1361,7 @@ function reloadScopedData(){
 }
 
 var RK='ck_r9',UK='ck_u9',SK='ck_s9',FK='ck_f9',THK='ck_th9',RTK='ck_rt9',SHK='ck_sh9',COK='ck_c9',HIK='ck_h9',NTK='ck_nt9',SRTK='ck_sort9',QFK='ck_qf9',SEAK='ck_sea9';
-var uR=G(RK,{})||{}, fav=G(FK,[])||[], ratings=G(RTK,{})||{}, shopping=G(SHK,[])||[], cooked=G(COK,[])||[], recent=G(HIK,[])||{}, notes=G(NTK,{})||{}, sortBy=G(SRTK,'default')||'default', qfs=G(QFK,[])||[], seach=G(SEAK,[])||[];
+var uR=G(RK,{})||{}, fav=G(FK,[])||[], ratings=G(RTK,{})||{}, shopping=G(SHK,[])||[], cooked=G(COK,[])||[], recent=G(HIK,[])||[], notes=G(NTK,{})||{}, sortBy=G(SRTK,'default')||'default', qfs=G(QFK,[])||[], seach=G(SEAK,[])||[];
 
 function allR(){ return Object.assign({}, R, uR); }
 function isFav(i){ return fav.indexOf(i) >= 0; }
@@ -1514,7 +1519,6 @@ try{
     fbAuth = firebase.auth();
     fbAuth.languageCode = 'ru';
     cloudDb = firebase.firestore();
-    console.log('Firebase + Firestore инициализированы');
   }
 }catch(e){ console.error('Firebase init error', e); }
 function fbWhy(){
@@ -1617,14 +1621,34 @@ $('verB').onclick = function(){
 $('delB').onclick = function(){
   var u = fbAuth && fbAuth.currentUser;
   if(!u){ toast('В гостевом режиме аккаунта нет','',''); return; }
-  if(!confirm('Удалить аккаунт и все данные на этом устройстве навсегда?')) return;
-  u.delete().then(function(){
-    try{ Object.keys(localStorage).forEach(function(k){ if(k.indexOf('ck_')===0) localStorage.removeItem(k); }); }catch(e){}
-    location.reload();
-  }).catch(function(e){
-    if(e && e.code === 'auth/requires-recent-login') toast('Выйдите, войдите снова и повторите','err','⚠️');
-    else toast('Не удалось удалить аккаунт','err','❌');
-  });
+  if(!confirm('Удалить аккаунт и все ваши данные (в облаке и на этом устройстве) навсегда?')) return;
+  var pw = prompt('Для подтверждения введите пароль от аккаунта:');
+  if(!pw) return;
+  var uid = u.uid;
+  u.reauthenticateWithCredential(firebase.auth.EmailAuthProvider.credential(u.email, pw))
+    .then(function(){
+      cloudReadyUid = null; // блокируем фоновую запись в облако
+      if(!cloudDb) return;
+      return cloudDb.collection('users').doc(uid).collection('appData').get().then(function(snap){
+        var refs = []; snap.forEach(function(d){ refs.push(d.ref); });
+        var p = Promise.resolve();
+        for(var n=0; n<refs.length; n+=400){ (function(part){
+          p = p.then(function(){ var b = cloudDb.batch(); part.forEach(function(r){ b.delete(r); }); return b.commit(); });
+        })(refs.slice(n, n+400)); }
+        return p;
+      });
+    })
+    .then(function(){ return u.delete(); })
+    .then(function(){
+      try{ Object.keys(localStorage).forEach(function(k){ if(k.indexOf('ck_')===0 || k.indexOf('ckdata_')===0) localStorage.removeItem(k); }); }catch(e){}
+      location.reload();
+    })
+    .catch(function(e){
+      var c = e && e.code;
+      if(c === 'auth/wrong-password' || c === 'auth/invalid-credential') toast('Неверный пароль','err','⚠️');
+      else if(c === 'auth/requires-recent-login') toast('Выйдите, войдите снова и повторите','err','⚠️');
+      else toast('Не удалось удалить аккаунт','err','❌');
+    });
 };
 
 $('guestB').onclick = function(){
@@ -2801,7 +2825,7 @@ screens.main.addEventListener('scroll', function(){ mainScroll = screens.main.sc
           else { setMsg('Облачная синхронизация не настроена. Данные доступны только на этом устройстве.','err'); enter(cu); }
         }
       } else {
-        curUid = null;
+        curUid = null; cloudReadyUid = null;
         if(!authReady){ authReady = true; show('auth'); }
       }
     });
@@ -2818,11 +2842,13 @@ screens.main.addEventListener('scroll', function(){ mainScroll = screens.main.sc
 <div id="errBox" style="position:fixed;left:8px;right:8px;bottom:8px;background:#d24536;color:#fff;padding:10px;border-radius:8px;font:12px/1.4 monospace;z-index:99999;max-height:40vh;overflow:auto;display:none;white-space:pre-wrap"></div>
 <script>
 window.addEventListener('error', function(e){
+  if(location.search.indexOf('debug') < 0) return;
   var b = document.getElementById('errBox');
   b.style.display = 'block';
   b.textContent += '❌ ' + (e.message || 'error') + '\n' + (e.filename || '') + ':' + (e.lineno || '') + '\n\n';
 });
 window.addEventListener('unhandledrejection', function(e){
+  if(location.search.indexOf('debug') < 0) return;
   var b = document.getElementById('errBox');
   b.style.display = 'block';
   b.textContent += '❌ Promise: ' + (e.reason && (e.reason.message || e.reason.code)) + '\n\n';
