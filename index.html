@@ -864,6 +864,10 @@ button:active,.pill:active,.dc:active,.rc:active{transform:scale(.965)!important
   .timer button.on{animation:timerShift 7s ease infinite}
   .stnav button{animation:stnavShift 9s ease infinite}
 }
+
+/* Рисунки шагов (тёмные линии на прозрачном фоне): в тёмной теме делаем светлыми */
+[data-theme=dark] #stg image{filter:invert(1) sepia(.18) brightness(.97) contrast(1.04)}
+[data-theme=dark] #stg .ghost{opacity:.1}
 </style>
 </head>
 <body>
@@ -2716,7 +2720,7 @@ var href = 'assets/drawings/' + base + '.webp';
     '@keyframes chop{0%,100%{transform:translateY(-5px) rotate(-2deg)}45%{transform:translateY(5px) rotate(2deg)}}'+
     '@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(.985)}}'+
     '@keyframes fall{0%{transform:translateY(-6px);opacity:0}25%{opacity:.6}100%{transform:translateY(15px);opacity:0}}'+
-    '.chefArt{animation:breathe 4.8s ease-in-out infinite}.whisk .chefArt,.mix .chefArt{animation:whisk .82s cubic-bezier(.45,.05,.55,.95) infinite}.sizzle .panArt,.spatula .panArt,.flame .panArt{animation:pan 1.28s cubic-bezier(.36,.07,.19,.97) infinite}.pour .pitcher{animation:pour 2.65s cubic-bezier(.4,0,.2,1) infinite;transform-box:view-box;transform-origin:146px 67px}.steam{animation:rise 2.8s ease-out infinite;transform-box:fill-box;transform-origin:center bottom}.steam.b{animation-delay:-.9s}.steam.c{animation-delay:-1.8s}.stream{stroke-dasharray:7 5;animation:dash 2.65s linear infinite}.knife{animation:chop .78s ease-in-out infinite;transform-box:view-box;transform-origin:122px 99px}.crumb{animation:fall 1.45s ease-in infinite;transform-box:fill-box}.crumb.b{animation-delay:-.48s}.crumb.c{animation-delay:-.96s}.blenderArt{animation:pulse .22s ease-in-out infinite}'+
+    '.chefArt,.panArt{animation:breathe 4.8s ease-in-out infinite}.whisk .chefArt,.mix .chefArt{animation:whisk .82s cubic-bezier(.45,.05,.55,.95) infinite}.sizzle .panArt,.spatula .panArt,.flame .panArt{animation:pan 1.28s cubic-bezier(.36,.07,.19,.97) infinite}.pour .pitcher{animation:pour 2.65s cubic-bezier(.4,0,.2,1) infinite;transform-box:view-box;transform-origin:146px 67px}.steam{animation:rise 2.8s ease-out infinite;transform-box:fill-box;transform-origin:center bottom}.steam.b{animation-delay:-.9s}.steam.c{animation-delay:-1.8s}.stream{stroke-dasharray:7 5;animation:dash 2.65s linear infinite}.knife{animation:chop .78s ease-in-out infinite;transform-box:view-box;transform-origin:122px 99px}.crumb{animation:fall 1.45s ease-in infinite;transform-box:fill-box}.crumb.b{animation-delay:-.48s}.crumb.c{animation-delay:-.96s}.blenderArt{animation:pulse .9s ease-in-out infinite}'+
     '@media(prefers-reduced-motion:reduce){.art,.pitcher,.steam,.stream,.knife,.crumb{animation:none!important}}'+
   '</style>';
   var bg='<image href="assets/drawings/kitchen_pattern.webp" x="14" y="9" width="172" height="142" preserveAspectRatio="xMidYMid slice" class="ghost"/>';
