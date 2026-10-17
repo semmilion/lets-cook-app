@@ -2478,7 +2478,17 @@ function scene(type, emoji){
     ladle:'utensils', grater:'utensils'
   };
   var base = map[t] || 'chef';
-  var href = 'assets/drawings/' + base + '.webp';
+  // Use the packaged PNG line-art icons directly. The previous build referenced
+  // assets/drawings/*.webp, but that directory was not included in the ZIP,
+  // which left the cooking scene blank.
+  var sceneIcon = {
+    egg:'mixing-bowl', whisk:'whisk', mix:'mixing-bowl', pour:'measuring-jug',
+    fold:'mixing-bowl', dough:'rolling-pin', cool:'oven-mitt',
+    plate:'plate-cutlery', leaf:'salt-shaker', sizzle:'frying-pan',
+    flame:'saucepan', spatula:'spatula', bake:'oven', boil:'steaming-pot',
+    steam:'steaming-pot', ladle:'ladle', grater:'grater'
+  };
+  var href = 'assets/icons/' + (sceneIcon[t] || 'saucepan') + '.png';
 
   var style = '<style>'+
     '.art{opacity:.96;transform-box:fill-box;transform-origin:center}'+
