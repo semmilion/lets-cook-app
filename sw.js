@@ -1,4 +1,4 @@
-const CACHE = 'lets-cook-v8-inline-scenes';
+const CACHE = 'lets-cook-v7-readable-inline-scenes';
 const ASSETS = [
   './',
   './index.html',

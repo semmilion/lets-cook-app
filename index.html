@@ -851,6 +851,47 @@ button:active,.pill:active,.dc:active,.rc:active{transform:scale(.965)!important
 }
 
 .cook-tip{margin:12px 0 2px;padding:14px 16px;border:1px solid rgba(232,104,58,.28);border-left:4px solid var(--accent);border-radius:15px;background:linear-gradient(135deg,rgba(255,255,255,.72),rgba(245,165,94,.15));color:var(--ink-2);font-size:14px;line-height:1.5;box-shadow:0 5px 16px rgba(120,70,35,.06)}.cook-tip b{display:block;color:var(--accent);font-size:13px;margin-bottom:5px}.cook-tip p{margin:0 0 5px}.cook-tip small{display:block;color:var(--muted);font-size:12px}.cook-tip.pop{animation:tipPop .35s ease}@keyframes tipPop{from{opacity:.35;transform:translateY(5px)}to{opacity:1;transform:none}}@media(prefers-reduced-motion:reduce){.cook-tip.pop{animation:none}}
+
+/* Let's cook! readability + cookbook layout refresh */
+html,body{min-height:100%;height:auto}
+body{overflow-x:hidden;overflow-y:auto}
+.view{min-height:100dvh;height:auto;overflow:visible}
+.scr{height:auto;min-height:100dvh;overflow-x:hidden;overflow-y:auto;padding-bottom:max(24px,env(safe-area-inset-bottom))}
+.scr#steps{padding-bottom:calc(24px + env(safe-area-inset-bottom))}
+#steps .hdr{position:sticky;top:0;z-index:20;background:var(--paper);background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(12px);padding-top:8px}
+#steps .prog{position:sticky;top:58px;z-index:19}
+#steps .stage{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;padding:clamp(12px,3vw,22px);margin-bottom:16px}
+#steps .stage::after{pointer-events:none}
+#steps .canvas{width:100%;max-width:620px;margin:0 auto;min-height:180px}
+#steps .stage svg{width:100%;height:auto;min-height:180px;max-height:clamp(220px,42vh,440px);aspect-ratio:4/3;object-fit:contain}
+#steps .step-t{height:auto!important;max-height:none!important;overflow-wrap:anywhere;white-space:normal;line-height:1.65;padding:16px clamp(14px,3vw,22px);margin-top:14px}
+#steps .step-n{display:inline-flex;align-items:center;vertical-align:middle;margin:0 8px 5px 0}
+#steps .cook-tip{height:auto!important;max-height:none!important;overflow:visible!important;overflow-wrap:anywhere;white-space:normal;line-height:1.65;padding:16px clamp(14px,3vw,20px);font-size:15px}
+#steps .cook-tip p,#steps .cook-tip small{white-space:normal;overflow-wrap:anywhere;line-height:1.65}
+#steps .cook-tip small{font-size:13px;margin-top:8px}
+#steps .stnav{position:sticky;bottom:0;z-index:20;background:linear-gradient(180deg,transparent,var(--bg) 20%);padding:12px 0 max(10px,env(safe-area-inset-bottom));margin-top:0}
+#steps .timer{padding-bottom:10px}
+@media(min-width:900px){
+  #steps{max-width:900px;margin:0 auto}
+  #steps .stage{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+  #steps .canvas{width:min(100%,680px)}
+  #steps .stage svg{max-height:390px}
+  #steps .step-t,#steps .cook-tip{width:100%;box-sizing:border-box}
+}
+@media(max-width:520px){
+  #steps .stage{border-radius:24px}
+  #steps .canvas{min-height:150px}
+  #steps .stage svg{min-height:150px;max-height:34vh}
+  #steps .step-t{font-size:15px;margin-top:10px}
+  #steps .cook-tip{font-size:14px;margin-top:10px}
+  #steps .cook-tip b{font-size:14px}
+  #steps .stnav button{min-height:52px}
+}
+/* Never clip instructional copy, including when browser text is enlarged */
+#steps *{min-width:0}
+#steps .step-t,#steps .cook-tip,#steps .cook-tip *{overflow:visible;text-overflow:clip}
+@media(prefers-reduced-motion:reduce){#steps .stage::after{animation:none}}
+
 </style>
 </head>
 <body>
