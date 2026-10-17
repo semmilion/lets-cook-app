@@ -2471,7 +2471,7 @@ document.querySelectorAll('#presets button').forEach(function(b){
 function scene(type, emoji){
   var t=type||'plate';
   var iconMap={
-    egg:'batter-bowl',whisk:'whisk',mix:'mixing-bowl',pour:'measuring-jug',fold:'mixing-bowl-2',dough:'rolling-pin',cool:'oven-mitt',plate:'plate-cutlery',leaf:'salad-bowl',sizzle:'pancake-flip',flame:'boiling-pot',spatula:'spatula',bake:'oven',boil:'boiling-pot',steam:'pot-steam',ladle:'soup-bowl',grater:'grater-cheese',pancake:'pancake-flip',flip:'pancake-flip',serve:'pancake-stack'
+    egg:'batter-bowl',whisk:'whisk',mix:'bowl-whisk',pour:'pouring-ingredient',fold:'mixing-bowl-2',dough:'rolling-pin',cool:'oven-mitt',plate:'plate',leaf:'salad-bowl',sizzle:'pancake-flip',flame:'pot-motion',spatula:'spatula',bake:'oven',boil:'boiling-pot-2',steam:'pot-steam',ladle:'soup-bowl',grater:'grater-cheese',pancake:'pancake-flip',flip:'pancake-flip',serve:'pancake-stack'
   };
   var name=iconMap[t]||'pot-steam';
   var motion=(t==='whisk'||t==='mix'||t==='fold')?'stir':((t==='pour')?'pour':((t==='sizzle'||t==='spatula'||t==='pancake'||t==='flip')?'pan':'float'));
@@ -2485,7 +2485,7 @@ function scene(type, emoji){
     '@media(prefers-reduced-motion:reduce){.mainArt{animation-duration:5s!important}.steam{animation-duration:4s!important}}'+
     '</style>';
   var steam=(['boil','steam','bake','sizzle','flame','pancake','flip'].indexOf(t)>=0)?'<g><path class="steam" d="M77 39q-9-10 0-20t0-17"/><path class="steam s2" d="M100 35q-9-10 0-20t0-17"/><path class="steam s3" d="M123 39q-9-10 0-20t0-17"/></g>':'';
-  return style+'<g><ellipse cx="100" cy="145" rx="48" ry="7" fill="#a66c43" opacity=".13"/><image class="mainArt" href="assets/illustrations/'+name+'.png" x="18" y="20" width="164" height="125" preserveAspectRatio="xMidYMid meet"/>'+steam+'</g>';
+  return style+'<g><ellipse cx="100" cy="145" rx="48" ry="7" fill="#a66c43" opacity=".13"/><image class="mainArt" href="./assets/illustrations/'+name+'.png" xlink:href="./assets/illustrations/'+name+'.png" x="18" y="20" width="164" height="125" preserveAspectRatio="xMidYMid meet"/>'+steam+'</g>';
 }
 var si = 0, sd = [], tmInt = null, tmEnd = 0;
 
