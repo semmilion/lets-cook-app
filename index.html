@@ -2464,8 +2464,7 @@ document.querySelectorAll('#presets button').forEach(function(b){
 });
 
 /* ============ LINE-ART СЦЕНЫ ШАГОВ ============
-   Картинки лежат в корне репозитория: chef.webp, pan.webp, egg.webp,
-   blender.webp, food_strip.webp, utensils.webp, kitchen_pattern.webp.
+   Иллюстрации иконок находятся в assets/drawings/, отдельные инструменты — в assets/icons/.
    scene() возвращает СОДЕРЖИМОЕ SVG, а не весь <svg> — контейнер #stg уже
    есть в HTML. Иначе получается вложенный SVG, у которого ломаются
    координаты, clip-path и CSS-анимации. */
@@ -2479,7 +2478,7 @@ function scene(type, emoji){
     ladle:'utensils', grater:'utensils'
   };
   var base = map[t] || 'chef';
-  var href = base + '.webp';
+  var href = 'assets/drawings/' + base + '.webp';
 
   var style = '<style>'+
     '.art{opacity:.96;transform-box:fill-box;transform-origin:center}'+
@@ -2494,6 +2493,8 @@ function scene(type, emoji){
     '@keyframes riseA{0%{transform:translateY(7px) scale(.8);opacity:0}20%{opacity:.52}100%{transform:translateY(-19px) scale(1.1);opacity:0}}'+
     '@keyframes dashA{0%{stroke-dashoffset:28;opacity:0}22%,75%{opacity:.65}100%{stroke-dashoffset:-28;opacity:0}}'+
     '@keyframes fallA{0%{transform:translateY(-6px);opacity:0}25%{opacity:.6}100%{transform:translateY(15px);opacity:0}}'+
+    '@keyframes toolBob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-3px) rotate(3deg)}}'+
+    '.toolIcon{animation:toolBob 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center;opacity:.8}'+
     '.chefArt{animation:breatheA 4.8s ease-in-out infinite}'+
     '.whisk .chefArt,.mix .chefArt{animation:whiskA .82s cubic-bezier(.45,.05,.55,.95) infinite}'+
     '.sizzle .panArt,.spatula .panArt,.flame .panArt{animation:panA 1.28s cubic-bezier(.36,.07,.19,.97) infinite}'+
@@ -2503,10 +2504,10 @@ function scene(type, emoji){
     '.stream{stroke-dasharray:7 5;animation:dashA 2.65s linear infinite}'+
     '.crumb{animation:fallA 1.45s ease-in infinite;transform-box:fill-box}'+
     '.crumb.b{animation-delay:-.48s}.crumb.c{animation-delay:-.96s}'+
-    '@media(prefers-reduced-motion:reduce){.art,.pitcher,.steam,.stream,.crumb{animation:none!important}}'+
+    '@media(prefers-reduced-motion:reduce){.art,.pitcher,.steam,.stream,.crumb,.toolIcon{animation:none!important}}'+
     '</style>';
 
-  var bg = '<image href="kitchen_pattern.webp" x="14" y="9" width="172" height="142" preserveAspectRatio="xMidYMid slice" class="ghost"/>';
+  var bg = '<image href="assets/drawings/kitchen_pattern.webp" x="14" y="9" width="172" height="142" preserveAspectRatio="xMidYMid slice" class="ghost"/>';
 
   var xPos = (base==='pan') ? 35 : 50;
   var yPos = (base==='pan') ? 54 : 8;
@@ -2515,6 +2516,13 @@ function scene(type, emoji){
   var cls  = (base==='pan') ? 'panArt' : 'chefArt';
   var art = '<image href="'+href+'" x="'+xPos+'" y="'+yPos+'" width="'+w+'" height="'+h+'" preserveAspectRatio="xMidYMid meet" class="art '+cls+'"/>';
 
+  var iconMap = {
+    egg:'mixing-bowl', whisk:'whisk', mix:'mixing-bowl', pour:'measuring-jug', fold:'mixing-bowl', dough:'rolling-pin', cool:'oven-mitt',
+    plate:'plate-cutlery', leaf:'salt-shaker', sizzle:'frying-pan', flame:'saucepan', spatula:'spatula', bake:'oven', boil:'steaming-pot', steam:'steaming-pot',
+    ladle:'ladle', grater:'grater'
+  };
+  var iconName = iconMap[t] || 'saucepan';
+  var tool = '<image class="toolIcon" href="assets/icons/'+iconName+'.png" x="145" y="10" width="42" height="42" preserveAspectRatio="xMidYMid meet"/>';
   var fx = '';
   if(t==='boil'||t==='steam'||t==='bake'||t==='sizzle'||t==='flame'){
     fx = '<g class="fx"><path class="steam" d="M82 119c-7-8 6-11 0-20"/><path class="steam b" d="M100 117c-7-9 7-13 0-23"/><path class="steam c" d="M118 119c-6-8 6-12 0-20"/></g>';
@@ -2532,16 +2540,16 @@ function scene(type, emoji){
     fx = '<g class="fx" opacity=".45"><path d="M78 128c14-5 30-5 44 0"/><path d="M88 120l-3-5m15 4v-6m13 8l4-5"/></g>';
   }
   if(t==='leaf'||t==='plate'){
-    fx = '<image href="utensils.webp" x="70" y="108" width="60" height="42" preserveAspectRatio="xMidYMid meet" opacity=".28"/>';
+    fx = '<image href="assets/drawings/utensils.webp" x="70" y="108" width="60" height="42" preserveAspectRatio="xMidYMid meet" opacity=".28"/>';
   }
   if(t==='fold'||t==='dough'){
-    fx = '<image href="food_strip.webp" x="56" y="110" width="88" height="38" preserveAspectRatio="xMidYMid slice" opacity=".25"/>';
+    fx = '<image href="assets/drawings/food_strip.webp" x="56" y="110" width="88" height="38" preserveAspectRatio="xMidYMid slice" opacity=".25"/>';
   }
 
   /* ВАЖНО: возвращаем ТОЛЬКО содержимое, без внешней <svg>-обёртки.
      Обёртка уже есть в HTML: <svg id="stg" viewBox="0 0 200 160">. */
   var color = (document.documentElement.getAttribute('data-theme')==='dark') ? '#eee9df' : '#27231f';
-  return style + '<g color="'+color+'">' + bg + art + fx + '</g>';
+  return style + '<g color="'+color+'">' + bg + art + tool + fx + '</g>';
 }
 
 var si = 0, sd = [], tmInt = null, tmEnd = 0;
