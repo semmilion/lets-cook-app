@@ -1,4 +1,4 @@
-const CACHE = 'lets-cook-v13-cookbook-redesign';
+const CACHE = 'lets-cook-v14-selfcontained-photos';
 const ASSETS = [
   './',
   './index.html',
