@@ -1,4 +1,4 @@
-const CACHE = 'lets-cook-v7-readable-inline-scenes';
+const CACHE = 'lets-cook-v13-cookbook-redesign';
 const ASSETS = [
   './',
   './index.html',
@@ -6,6 +6,18 @@ const ASSETS = [
   './icon-192.png',
   './icon-512.png',
   './icon-maskable-512.png',
+  './assets/food/pancakes.jpg',
+  './assets/food/omelette.jpg',
+  './assets/food/chicken-soup.jpg',
+  './assets/food/salad.jpg',
+  './assets/food/syrniki.jpg',
+  './assets/food/chocolate-cake.jpg',
+  './assets/food/pasta.jpg',
+  './assets/food/salmon.jpg',
+  './assets/food/vegetable-stew.jpg',
+  './assets/food/smoothie.jpg',
+  './assets/food/cookies.jpg',
+  './assets/food/berry-pancakes.jpg',
   './privacy.html',
   './delete-account.html',
   './assets/drawings/blender.webp',
