@@ -1,4 +1,4 @@
-const CACHE = 'lets-cook-v14-selfcontained-photos';
+const CACHE = 'lets-cook-v16-cooking-workspace';
 const ASSETS = [
   './',
   './index.html',
@@ -18,6 +18,18 @@ const ASSETS = [
   './assets/food/smoothie.jpg',
   './assets/food/cookies.jpg',
   './assets/food/berry-pancakes.jpg',
+  './assets/food/ramen.jpg',
+  './assets/food/tom-yum.jpg',
+  './assets/food/borsch.jpg',
+  './assets/food/pumpkin-soup.jpg',
+  './assets/food/greek-salad.jpg',
+  './assets/food/caesar-salad.jpg',
+  './assets/food/salmon-poke.jpg',
+  './assets/food/lasagna.jpg',
+  './assets/food/tiramisu.jpg',
+  './assets/food/syrniki-fresh.jpg',
+  './assets/food/margherita-pizza.jpg',
+  './assets/food/chocolate-cake-fresh.jpg',
   './privacy.html',
   './delete-account.html',
   './assets/drawings/blender.webp',
