@@ -1,4 +1,4 @@
-const CACHE = 'lets-cook-v16-cooking-workspace';
+const CACHE = 'lets-cook-v17-cooking-workspace-redesign';
 const ASSETS = [
   './',
   './index.html',
@@ -15,6 +15,18 @@ const ASSETS = [
   './assets/food/pasta.jpg',
   './assets/food/salmon.jpg',
   './assets/food/vegetable-stew.jpg',
+  './assets/illustrations/mixing-bowl.png',
+  './assets/illustrations/whisk.png',
+  './assets/illustrations/frying-pan.png',
+  './assets/illustrations/spatula.png',
+  './assets/illustrations/measuring-jug.png',
+  './assets/illustrations/kitchen-scale.png',
+  './assets/illustrations/bowl-whisk.png',
+  './assets/illustrations/chopping-board.png',
+  './assets/illustrations/soup-bowl.png',
+  './assets/illustrations/oven.png',
+  './assets/illustrations/plated-meal.png',
+
   './assets/food/smoothie.jpg',
   './assets/food/cookies.jpg',
   './assets/food/berry-pancakes.jpg',
