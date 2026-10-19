@@ -1469,6 +1469,73 @@ body{overflow-x:hidden;overflow-y:hidden}
 @media(max-width:760px){#steps .cook-workspace{display:flex;flex-direction:column;width:calc(100% - 20px);gap:11px}#steps .cook-main{order:0;width:100%}#steps .cook-rail-left{order:1;width:auto}#steps .cook-rail-right{order:2;width:auto;display:grid;grid-template-columns:1fr}#steps .stage{grid-template-columns:1fr!important;grid-template-rows:minmax(350px,auto) auto auto!important;padding:10px!important;gap:10px!important}#steps .canvas{grid-column:1!important;grid-row:1!important;min-height:390px!important;height:390px!important}#steps .canvas #stg{width:34%!important;height:28%!important;right:8px;bottom:8px}#steps .step-t{grid-column:1!important;grid-row:2!important}#steps .cook-tip{grid-column:1!important;grid-row:3!important}#steps .cw-scene-head{padding:14px}#steps .cw-livebar{gap:8px;padding:10px}#steps .cw-clock{font-size:13px}#steps .cw-handnote{display:none}}
 @media(prefers-reduced-motion:reduce){#steps .cw-scene-art,#steps .canvas #stg{animation:none!important;transition:none!important}#steps .cw-step-item,#steps .cw-tools img,#steps .cw-tip-card,#steps .cw-card{transition:none!important}}
 
+
+/* Reference-matched cooking studio: full-bleed illustrated scene + floating controls */
+#steps{background:#fbf0df!important}
+#steps .hdr{max-width:none!important;width:100%!important;padding-left:max(24px,3vw)!important;padding-right:max(24px,3vw)!important;background:rgba(255,250,241,.94)!important;border-bottom:1px solid #f0dfc9!important}
+#steps .prog,#steps .cook-encourage{display:none!important}
+#steps .cook-workspace{width:min(1780px,calc(100% - 48px))!important;grid-template-columns:minmax(245px,315px) minmax(500px,1fr) minmax(245px,315px)!important;gap:18px!important;align-items:start!important;margin:18px auto 24px!important}
+#steps .cook-rail{padding:15px!important;border-radius:20px!important;background:rgba(255,251,244,.94)!important;border:1px solid rgba(255,255,255,.95)!important;box-shadow:0 10px 28px rgba(113,76,36,.07)!important}
+#steps .cook-main{min-width:0!important;display:flex!important;flex-direction:column!important;gap:0!important;overflow:visible!important}
+#steps .cw-scene-head{display:none!important}
+#steps .stage{position:relative!important;display:block!important;padding:0!important;margin:0!important;overflow:visible!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;min-height:0!important}
+#steps .canvas{position:relative!important;display:block!important;width:100%!important;height:clamp(470px,54vw,650px)!important;min-height:0!important;padding:0!important;overflow:hidden!important;border:1px solid rgba(255,255,255,.85)!important;border-radius:24px!important;background:#f5dfc1!important;box-shadow:0 12px 34px rgba(115,74,32,.10)!important;isolation:isolate!important}
+#steps .cw-scene-art{position:absolute!important;inset:0!important;display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center 46%!important;animation:none!important;transition:opacity .35s ease,object-position .35s ease!important}
+#steps .canvas:after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(255,248,235,.03) 55%,rgba(255,242,222,.14) 100%)}
+#steps .step-photo-wrap{display:none!important}
+#steps .canvas #stg{position:absolute!important;z-index:3!important;right:20px!important;bottom:20px!important;width:clamp(95px,16%,155px)!important;height:clamp(85px,15%,135px)!important;min-height:0!important;max-height:none!important;padding:8px!important;border:1px solid rgba(255,255,255,.95)!important;border-radius:18px!important;background:rgba(255,249,239,.9)!important;box-shadow:0 8px 24px rgba(69,45,23,.14)!important;backdrop-filter:blur(8px)!important;animation:cwActionFloat 5.5s ease-in-out infinite!important}
+#steps .step-t{position:absolute!important;z-index:5!important;left:18px!important;top:18px!important;width:min(265px,58%)!important;box-sizing:border-box!important;margin:0!important;padding:17px 19px!important;border-radius:17px!important;background:rgba(255,251,244,.96)!important;border:1px solid rgba(255,255,255,.95)!important;border-left:4px solid #ff7b1a!important;box-shadow:0 8px 24px rgba(91,57,24,.09)!important;backdrop-filter:blur(10px)!important}
+#steps .step-t .step-n{display:block!important;margin-bottom:7px!important;color:#f36e13!important;font-size:10px!important;font-weight:900!important;letter-spacing:.09em!important;text-transform:uppercase!important}
+#steps #sTxt{display:block!important;font-size:clamp(17px,1.5vw,23px)!important;line-height:1.25!important;font-weight:800!important;color:#28211a!important}
+#steps .cook-tip{display:none!important}
+#steps .cw-livebar{position:relative!important;z-index:6!important;margin:-74px 18px 0!important;padding:14px 17px!important;min-height:74px!important;box-sizing:border-box!important;border:1px solid rgba(255,255,255,.98)!important;border-radius:24px!important;background:rgba(255,251,244,.96)!important;box-shadow:0 10px 28px rgba(100,64,27,.12)!important;backdrop-filter:blur(12px)!important;gap:14px!important}
+#steps .cw-live-icon{width:44px!important;height:44px!important;flex:0 0 44px!important;display:grid!important;place-items:center!important;border-radius:50%!important;background:#fff0d9!important;color:#ff791a!important;font-size:26px!important}
+#steps .cw-live-copy b{font-size:13px!important;color:#2d261e!important}
+#steps .cw-live-copy span{font-size:11px!important}
+#steps .cw-clock{font-size:19px!important;min-width:58px!important;text-align:center!important}
+#steps .cw-step-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:15px 0 0;padding:9px 10px 11px;border-radius:24px;background:rgba(255,249,239,.7);border:1px solid rgba(255,255,255,.8)}
+#steps .cw-step-card{position:relative;display:flex;flex-direction:column;align-items:flex-start;min-width:0;min-height:132px;padding:12px 10px 10px;border:1px solid rgba(235,219,197,.7);border-radius:15px;background:rgba(255,252,247,.78);color:#3c3025;text-align:left;cursor:pointer;transition:transform .22s ease,border-color .22s ease,background .22s ease,box-shadow .22s ease}
+#steps .cw-step-card:hover{transform:translateY(-2px);background:#fffaf1}
+#steps .cw-step-card.active{border:1.5px solid #ff791a;background:linear-gradient(145deg,#fff8ec,#ffead4);box-shadow:0 5px 15px rgba(255,123,26,.10)}
+#steps .cw-step-card img{align-self:center;width:100%;height:62px;object-fit:contain;margin:0 0 5px;opacity:.85}
+#steps .cw-step-card b{display:block;width:100%;font-size:11px;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#steps .cw-step-card small{display:block;margin-top:4px;color:#a16a3c;font-size:10px}
+#steps .cw-step-card-no{position:absolute;top:8px;left:8px;width:22px;height:22px;display:grid;place-items:center;border-radius:50%;background:#eee8df;color:#8a8074;font-size:10px;font-weight:900}
+#steps .cw-step-card.active .cw-step-card-no{background:#ff8a24;color:white}
+#steps .stnav{position:static!important;display:grid!important;grid-template-columns:auto minmax(0,1fr)!important;gap:10px!important;padding:10px 0 0!important;margin:0!important;background:transparent!important}
+#steps .stnav button{min-height:48px!important;border-radius:15px!important}
+#steps .stnav button.gh{width:auto!important;min-width:80px!important;padding:12px 17px!important}
+#steps .cw-recipe img{border-radius:13px!important}
+#steps .cw-step-item{grid-template-columns:30px 42px minmax(0,1fr)!important;align-items:center!important}
+#steps .cw-step-art{width:40px!important;height:40px!important;object-fit:contain!important;padding:3px!important;border-radius:50%!important;border:1px solid #f0dfc9!important;background:#fff8ec!important}
+#steps .cw-ingredients{gap:5px!important}
+#steps .cw-tools img{height:72px!important;background:#fff2df!important}
+#steps .cw-tip-card{padding:16px!important}
+#steps .cw-handnote{font-size:22px!important}
+@media(max-width:1250px){#steps .cook-workspace{grid-template-columns:225px minmax(0,1fr)!important;width:calc(100% - 30px)!important}#steps .cook-rail-right{grid-column:1/-1!important;grid-template-columns:repeat(3,minmax(0,1fr))!important}#steps .canvas{height:clamp(430px,58vw,590px)!important}}
+@media(max-width:760px){#steps .hdr{padding-left:12px!important;padding-right:12px!important}#steps .cook-workspace{display:flex!important;flex-direction:column!important;width:calc(100% - 20px)!important;margin:10px auto 20px!important;gap:12px!important}#steps .cook-main{order:0!important;width:100%!important}#steps .cook-rail-left{order:1!important;width:auto!important}#steps .cook-rail-right{order:2!important;width:auto!important;display:grid!important;grid-template-columns:1fr!important}#steps .canvas{height:clamp(380px,105vw,510px)!important;border-radius:18px!important}#steps .step-t{left:10px!important;top:10px!important;width:min(245px,72%)!important;padding:12px 14px!important}#steps .canvas #stg{width:29%!important;height:25%!important;right:8px!important;bottom:8px!important}#steps .cw-livebar{margin:-56px 8px 0!important;padding:10px!important;gap:8px!important;min-height:62px!important;border-radius:18px!important}#steps .cw-live-icon{width:34px!important;height:34px!important;flex-basis:34px!important;font-size:20px!important}#steps .cw-clock{font-size:14px!important;min-width:44px!important}#steps .cw-pause{width:36px!important;height:36px!important;flex-basis:36px!important}#steps .cw-step-strip{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:10px;padding:7px;border-radius:18px}#steps .cw-step-card{min-height:112px;padding:9px}#steps .cw-step-card img{height:50px}#steps .stnav button{min-height:48px!important}#steps .cw-step-item{grid-template-columns:30px 40px minmax(0,1fr)!important}}
+@media(prefers-reduced-motion:reduce){#steps .cw-step-card,#steps .cw-scene-art,#steps .canvas #stg{animation:none!important;transition:none!important}}
+
+
+
+/* Reference match v6: large real food photo in the center, controls and sidebars around it */
+#steps .cook-workspace{grid-template-columns:minmax(245px,292px) minmax(420px,1fr) minmax(245px,292px)!important;gap:16px!important;width:min(1740px,calc(100% - 42px))!important;align-items:start!important}
+#steps .cook-main{gap:12px!important;min-width:0}
+#steps .cw-scene-head{padding:17px 22px!important}
+#steps .stage{display:block!important;min-height:0!important;padding:0!important;margin:0!important;border:1px solid rgba(255,255,255,.95)!important;border-radius:24px!important;background:rgba(255,251,244,.82)!important;box-shadow:0 14px 34px rgba(111,73,30,.08)!important;overflow:hidden!important}
+#steps .stage .canvas{position:relative!important;display:block!important;grid-column:auto!important;grid-row:auto!important;width:100%!important;max-width:none!important;height:clamp(340px,47vw,510px)!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;border-radius:22px!important;overflow:hidden!important;background:#f4dfc4!important;isolation:isolate}
+#steps .cw-scene-art{position:absolute!important;inset:0!important;z-index:0!important;display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center 54%!important;animation:none!important;transition:opacity .35s ease,transform .7s ease!important}
+#steps .canvas:hover .cw-scene-art{transform:scale(1.015)!important}
+#steps .stage .step-photo-wrap,#steps .stage #stg{display:none!important}
+#steps .stage .step-t,#steps .stage .cook-tip{display:none!important}
+#steps .cw-livebar{margin:0 12px!important;position:relative!important;z-index:2!important;transform:translateY(-1px);border-radius:0 0 20px 20px!important;background:rgba(255,251,244,.97)!important;box-shadow:none!important;border:0!important;border-top:1px solid #f1dfc8!important}
+#steps .cw-step-strip{margin:0 0 12px!important;padding:12px!important;border-radius:22px!important;background:rgba(255,251,244,.72)!important;border:1px solid rgba(255,255,255,.9)!important}
+#steps .cw-step-card{min-height:130px!important}
+#steps .cook-rail{background:rgba(255,251,244,.91)!important}
+@media(max-width:1180px){#steps .cook-workspace{grid-template-columns:220px minmax(0,1fr)!important;width:calc(100% - 28px)!important}#steps .cook-rail-right{grid-column:1/-1!important;grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:760px){#steps .cook-workspace{display:flex!important;flex-direction:column!important;width:calc(100% - 20px)!important;margin:12px auto 20px!important}#steps .cook-main{order:0!important;width:100%}#steps .stage .canvas{height:clamp(260px,68vw,390px)!important;min-height:0!important;border-radius:18px!important}#steps .cw-livebar{margin:0 6px!important;padding:11px!important;gap:9px!important}#steps .cw-step-strip{overflow-x:auto!important}#steps .cw-step-cards{min-width:0}#steps .cook-rail-left{order:1!important;width:100%}#steps .cook-rail-right{order:2!important;display:grid!important;grid-template-columns:1fr!important;width:100%}#steps .cw-scene-head{padding:14px!important}}
+@media(prefers-reduced-motion:reduce){#steps .cw-scene-art{transition:none!important;animation:none!important}}
+
 </style>
 </head>
 <body>
@@ -1645,6 +1712,7 @@ body{overflow-x:hidden;overflow-y:hidden}
     <div class="cook-tip" id="cookTip" aria-live="polite"><b>🎯 Как понять, что готово</b><p id="cookTipText">Следуй подсказке шага.</p><small id="cookTipCheck"></small></div>
   </div>
       <div class="cw-livebar"><div class="cw-live-icon">♨</div><div class="cw-live-copy"><b id="cwLiveTitle">Готовим</b><span id="cwLiveText">Следуйте шагам рецепта в своём темпе</span><div class="cw-live-progress"><i id="cwLiveProgress"></i></div></div><div class="cw-clock" id="cwClock">ГОТОВО?</div><button class="cw-pause" id="cwPause" type="button" aria-label="Пауза">Ⅱ</button></div>
+      <div class="cw-step-strip" id="cwStepCards" aria-label="Этапы готовки"></div>
       <div class="timer" id="tmRow" style="display:none"><button id="tmB" type="button">⏱ Таймер</button></div>
       <div class="stnav">
         <button class="gh" id="prevB" type="button" aria-label="Предыдущий шаг">← Назад</button>
@@ -3259,6 +3327,12 @@ function renderCookingWorkspace(step){
     return '<div class="cw-step-item '+(i===si?'active':'')+'" data-cw-step="'+i+'"><span class="cw-step-no">'+(i+1)+'</span><img class="cw-step-art" src="'+img+'" alt=""><div><b>'+esc(n)+'</b><small>'+(i===si?'Сейчас готовим':'Шаг '+(i+1))+'</small></div></div>';
   }).join('');
   if(mini) mini.innerHTML=(sd||[]).slice(0,4).map(function(s,i){return '<div class="cw-mini-step"><i>'+(i+1)+'</i><span>'+esc(s[0]||'Следуйте инструкции')+'</span></div>';}).join('');
+  var cards=$('cwStepCards');
+  if(cards) cards.innerHTML=(sd||[]).map(function(s,i){
+    var t=(s[0]||'').toLowerCase(), img=/нареж|измельч|шинк/.test(t)?'assets/illustrations/chopping-board.png':/взбей|смеш|перемеш|тест|венчик/.test(t)?'assets/illustrations/bowl-whisk.png':/жар|сковород|обжар|переверн/.test(t)?'assets/illustrations/frying-pan.png':/вар|кип|суп/.test(t)?'assets/illustrations/soup-bowl.png':/пода|укрась|сервир|готово|тарел|сложи/.test(t)?'assets/illustrations/plated-meal.png':'assets/illustrations/mixing-bowl.png';
+    return '<button type="button" class="cw-step-card '+(i===si?'active':'')+'" data-cw-jump="'+i+'"><span class="cw-step-card-no">'+(i+1)+'</span><img src="'+img+'" alt=""><b>'+esc(s[0]||'Шаг '+(i+1))+'</b><small>'+(i===si?'Сейчас':'Шаг '+(i+1))+'</small></button>';
+  }).join('');
+
   var ing=$('cwIngredients');
   if(ing&&r.i){
     ing.innerHTML=r.i.map(function(x,i){return '<div class="cw-ing"><label><input type="checkbox" data-cw-ing="'+i+'"><span>'+esc(x[1]||'Ингредиент')+'</span></label><span>'+esc(x[2]||'')+'</span></div>';}).join('');
@@ -3266,13 +3340,11 @@ function renderCookingWorkspace(step){
   var stepText=(step&&step[0])||'Подготовьте рабочее место.';
   var sceneArt=$('cwSceneArt');
   if(sceneArt){
-    var st=stepText.toLowerCase(), scene='assets/illustrations/chef-kitchen-scene.jpg';
-    if(/нареж|измельч|шинк|подготов|ингредиент/.test(st)) scene='assets/illustrations/ingredients-prep-scene.jpg';
-    else if(/жар|сковород|обжар|переверн|блин/.test(st)) scene='assets/illustrations/pan-pancake-scene.jpg';
-    else if(/пода|укрась|сервир|готово|тарел/.test(st)) scene='assets/illustrations/plating-pancakes-scene.jpg';
-    else if(/взбей|смеш|перемеш|тест|венчик/.test(st)) scene='assets/illustrations/chef-kitchen-scene.jpg';
-    if(sceneArt.getAttribute('src')!==scene){sceneArt.style.opacity='.35';sceneArt.setAttribute('src',scene);sceneArt.onload=function(){this.style.opacity='1';};}
-    sceneArt.alt='Иллюстрация этапа: '+stepText;
+    // Центральная сцена показывает фотографию именно выбранного блюда.
+    // Для блинов используем новое изображение из референса; остальные блюда берут свои локальные фото.
+    var scene = (curId === 'pancakes') ? 'assets/food/pancakes-hero.jpg' : foodPhotoPath(curId, (DISHES[curId]||{}).category||'main');
+    if(sceneArt.getAttribute('src')!==scene){sceneArt.style.opacity='.25';sceneArt.setAttribute('src',scene);sceneArt.onload=function(){this.style.opacity='1';};}
+    sceneArt.alt='Фотография блюда: '+(m?m.name:'готовим');
   }
   var title=$('cwTitle'), eyebrow=$('cwEyebrow'), sub=$('cwSub'), live=$('cwLiveText'), liveTitle=$('cwLiveTitle'), progress=$('cwLiveProgress'), clock=$('cwClock');
   if(title) title.textContent=(stepText.length>46?stepText.slice(0,43)+'…':stepText);
@@ -3285,6 +3357,8 @@ function renderCookingWorkspace(step){
   var tip=$('cwChefTip');
   if(tip){var t=(stepText||'').toLowerCase();tip.textContent=/взбей|смеш|перемеш/.test(t)?'Двигайтесь плавно и проверяйте консистенцию смеси — она подскажет больше, чем скорость.':/жар|сковород|обжар/.test(t)?'Хорошо разогрейте сковороду и не торопитесь переворачивать: дождитесь нужного цвета и текстуры.':/вар|кип|суп/.test(t)?'Поддерживайте умеренное кипение: слишком сильный огонь может испортить текстуру.':'Подготовьте ингредиенты заранее и ориентируйтесь на цвет, запах и текстуру блюда.';}
 }
+
+document.addEventListener('click',function(e){var card=e.target.closest('[data-cw-jump]');if(card){var n=Number(card.getAttribute('data-cw-jump'));if(Number.isFinite(n)&&n>=0&&n<sd.length){si=n;renderStep(true);}}});
 
 function renderStep(animate){
   var step = sd[si];

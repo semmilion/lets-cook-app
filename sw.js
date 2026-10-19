@@ -1,4 +1,4 @@
-const CACHE = 'lets-cook-v18-illustrated-cooking-workspace';
+const CACHE = 'lets-cook-v19-center-food-photo';
 const ASSETS = [
   './',
   './index.html',
