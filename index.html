@@ -1120,6 +1120,153 @@ body{overflow-x:hidden;overflow-y:hidden}
 }
 @media(prefers-reduced-motion:reduce){#steps .step-photo{transition:none!important}}
 
+
+/* ===== Cooking screen polish: readable instructions, responsive two-column layout ===== */
+#steps .stage{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+  align-items:center;
+  gap:clamp(16px,2.4vw,30px);
+  padding:clamp(14px,2vw,24px)!important;
+  box-sizing:border-box;
+  border:1px solid rgba(255,255,255,.9);
+  border-radius:28px;
+  background:linear-gradient(135deg,rgba(255,251,243,.98),rgba(255,241,222,.94));
+  box-shadow:0 18px 44px rgba(117,73,36,.10);
+}
+#steps .canvas{
+  grid-column:1;
+  grid-row:1 / span 2;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:12px;
+  width:100%;
+  max-width:none;
+  min-height:0;
+  padding:clamp(10px,1.5vw,18px);
+  box-sizing:border-box;
+  border:1px solid rgba(184,128,77,.20);
+  border-radius:22px;
+  background:linear-gradient(145deg,#fff4e2,#f5dfbf);
+}
+#steps .step-photo-wrap{
+  position:relative;
+  display:block;
+  width:100%;
+  max-height:clamp(100px,20vh,190px);
+  overflow:hidden;
+  border-radius:14px;
+  background:#f2dfc4;
+}
+#steps .step-photo{
+  display:block;
+  width:100%;
+  height:clamp(100px,20vh,190px);
+  object-fit:cover;
+  border-radius:14px;
+}
+#steps .step-photo-badge{
+  position:absolute;
+  left:10px;
+  bottom:10px;
+  max-width:calc(100% - 20px);
+  padding:6px 10px;
+  border-radius:999px;
+  background:rgba(255,250,239,.94);
+  color:#704a2d;
+  font-size:11px;
+  font-weight:700;
+  box-shadow:0 3px 12px rgba(70,42,20,.12);
+}
+#steps .stage svg{
+  display:block;
+  width:100%;
+  height:auto;
+  min-height:150px;
+  max-height:clamp(210px,37vh,360px);
+  aspect-ratio:4/3;
+  overflow:visible;
+}
+#steps .step-t{
+  grid-column:2;
+  grid-row:1;
+  align-self:end;
+  box-sizing:border-box;
+  width:100%;
+  height:auto!important;
+  max-height:none!important;
+  padding:18px 20px;
+  margin:0!important;
+  border-radius:17px;
+  border:1px solid #ffd1a6;
+  border-left:4px solid #ff781c;
+  background:linear-gradient(120deg,#fff3e1,#ffead4);
+  color:#2d2118;
+  font-size:clamp(16px,1.2vw,19px);
+  font-weight:650;
+  line-height:1.6;
+  white-space:normal;
+  overflow:visible;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+  hyphens:none;
+}
+#steps .step-n{
+  display:block;
+  margin:0 0 5px;
+  color:#e95f12;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+#steps .cook-tip{
+  grid-column:2;
+  grid-row:2;
+  align-self:start;
+  box-sizing:border-box;
+  width:100%;
+  height:auto!important;
+  max-height:none!important;
+  margin:0!important;
+  padding:18px 20px;
+  border:1px solid #eadbc6;
+  border-left:4px solid #f28a35;
+  border-radius:17px;
+  background:rgba(255,248,236,.96);
+  color:#594534;
+  font-size:15px;
+  line-height:1.75;
+  white-space:normal;
+  overflow:visible!important;
+  overflow-wrap:break-word!important;
+  word-break:normal!important;
+  hyphens:none;
+}
+#steps .cook-tip b{display:block;margin-bottom:9px;color:#bd4b0b;font-size:13px}
+#steps .cook-tip p{margin:0 0 10px;white-space:normal;line-height:1.75;overflow-wrap:break-word;word-break:normal}
+#steps .cook-tip small{display:block;padding-top:10px;border-top:1px solid #eadbc6;color:#92775f;font-size:13px;line-height:1.7;white-space:normal;overflow-wrap:break-word;word-break:normal}
+#steps .stnav{position:sticky;bottom:0;z-index:20;display:flex;gap:12px;padding:12px 0 max(10px,env(safe-area-inset-bottom));margin-top:12px;background:linear-gradient(180deg,transparent,var(--bg) 22%)}
+#steps .stnav button{min-height:54px;border-radius:16px}
+#steps #nextB{flex:1;font-weight:800;letter-spacing:.01em}
+#steps .prog{height:9px;border-radius:999px;overflow:hidden}
+#steps #prg{border-radius:999px;transition:width .35s ease}
+@media(max-width:760px){
+  #steps .stage{grid-template-columns:minmax(0,1fr);gap:12px;padding:12px!important;border-radius:23px}
+  #steps .canvas{grid-column:1;grid-row:1;gap:8px;padding:9px;border-radius:18px}
+  #steps .step-photo-wrap,#steps .step-photo{height:clamp(95px,21vh,170px);max-height:none}
+  #steps .stage svg{grid-column:1;min-height:135px;max-height:30vh;aspect-ratio:4/3}
+  #steps .step-t{grid-column:1;grid-row:2;padding:15px 16px;font-size:16px}
+  #steps .cook-tip{grid-column:1;grid-row:3;padding:15px 16px;font-size:14px;line-height:1.7}
+  #steps .cook-tip small{font-size:12px}
+  #steps .stnav button{min-height:52px}
+  #steps .hdr{padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}
+}
+@media(prefers-reduced-motion:reduce){
+  #steps #prg{transition:none}
+  #steps .cook-tip.pop{animation:none}
+}
 </style>
 </head>
 <body>
@@ -1275,7 +1422,7 @@ body{overflow-x:hidden;overflow-y:hidden}
     <div class="canvas">
       <div class="step-photo-wrap" id="stepPhotoWrap">
         <img id="stepPhoto" class="step-photo" alt="Фото готового блюда" loading="eager">
-        <span class="step-photo-badge">🍽 Ориентир готового блюда</span>
+        <span class="step-photo-badge">🍽 Как выглядит результат</span>
       </div>
       <svg id="stg" viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet"></svg>
     </div>
@@ -2870,7 +3017,7 @@ function renderStep(animate){
   var stepPhoto = $('stepPhoto');
   if(stepPhoto){
     var dishMeta = DISHES[curId] || {category:'main'};
-    stepPhoto.onerror = function(){ this.onerror=null; this.style.display='none'; };
+    stepPhoto.onerror = function(){ this.onerror=null; this.removeAttribute('src'); this.alt='Иллюстрация действия показана ниже'; this.style.display='none'; var wrap=this.closest('.step-photo-wrap'); if(wrap) wrap.style.display='none'; };
     stepPhoto.onload = function(){ this.style.display='block'; };
     stepPhoto.alt = (m ? m.name : 'Блюдо') + ' — фото готового блюда';
     stepPhoto.src = foodPhotoPath(curId, dishMeta.category);
