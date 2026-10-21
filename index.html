@@ -1268,253 +1268,10 @@ body{overflow-x:hidden;overflow-y:hidden}
   #steps .cook-tip.pop{animation:none}
 }
 
-/* ===== COOKING WORKSPACE — warm editorial kitchen redesign ===== */
-#steps{--cook-cream:#fff9ef;--cook-line:#ead8bd;--cook-orange:#f47b20;--cook-brown:#72543a;background:radial-gradient(ellipse at 55% 10%,rgba(255,218,169,.38),transparent 42%),radial-gradient(ellipse at 90% 72%,rgba(244,123,32,.08),transparent 32%),var(--bg)}
-#steps .hdr{min-height:76px;display:flex;align-items:center;gap:16px;margin-bottom:10px;padding:12px clamp(16px,3vw,42px);background:rgba(255,249,239,.86);border-bottom:1px solid rgba(134,94,49,.12);backdrop-filter:blur(18px)}
-[data-theme=dark] #steps .hdr{background:rgba(36,29,22,.9)}
-#steps .ttl{font-family:Caveat,'Nunito',sans-serif;font-size:clamp(31px,3vw,44px);letter-spacing:-.4px;color:var(--ink)}
-#steps .bk{flex:0 0 46px;width:46px;height:46px;border-radius:16px;background:var(--cook-cream);border:1px solid var(--cook-line);box-shadow:0 4px 12px rgba(91,57,23,.07)}
-#steps .prog{height:7px!important;margin:8px auto 0;max-width:1180px;background:#eadcc7!important;border-radius:999px;overflow:hidden}
-#steps #prg{height:100%;background:linear-gradient(90deg,#ff9c42,#f47720 65%,#ffc276);box-shadow:0 0 12px rgba(244,123,32,.22)}
-#steps .cook-encourage{max-width:1180px;margin:10px auto 18px!important;padding:9px 15px;border-radius:999px;background:rgba(255,250,242,.8);border:1px solid rgba(135,91,43,.09);font-size:12px!important;font-weight:700;letter-spacing:.01em}
-[data-theme=dark] #steps .cook-encourage{background:var(--paper)}
-#steps .stage{width:100%;max-width:1180px;box-sizing:border-box;margin:0 auto 16px!important;padding:clamp(14px,2vw,24px)!important;display:grid!important;grid-template-columns:minmax(0,1.12fr) minmax(300px,.88fr)!important;grid-template-rows:auto 1fr;align-items:stretch;gap:16px!important;border-radius:30px!important;border:1px solid rgba(255,255,255,.9)!important;background:linear-gradient(135deg,rgba(255,252,245,.98),rgba(255,239,216,.95))!important;box-shadow:0 20px 55px rgba(109,72,33,.10),inset 0 1px 0 #fff!important;overflow:hidden;perspective:none!important}
-[data-theme=dark] #steps .stage{background:linear-gradient(135deg,#2a2119,#211910)!important;border-color:var(--line)!important}
-#steps .stage::before{background:radial-gradient(ellipse at 15% 5%,rgba(255,205,138,.26),transparent 42%),radial-gradient(ellipse at 90% 100%,rgba(244,123,32,.1),transparent 45%)!important}
-#steps .stage::after{display:none!important}
-#steps .canvas{grid-column:1!important;grid-row:1 / span 2!important;align-self:stretch;width:100%!important;max-width:none!important;min-height:0!important;box-sizing:border-box;padding:12px!important;display:flex;flex-direction:column;gap:12px;border-radius:24px;background:linear-gradient(155deg,#fff7e8,#f6dfbd);border:1px solid rgba(212,156,91,.26);box-shadow:inset 0 1px 0 rgba(255,255,255,.9);transform:none!important}
-[data-theme=dark] #steps .canvas{background:linear-gradient(155deg,#35291e,#251b13);border-color:var(--line)}
-#steps .step-photo-wrap{position:relative;width:100%;height:clamp(150px,24vh,270px);flex:0 0 auto;margin:0!important;border-radius:17px;overflow:hidden;background:linear-gradient(135deg,#ead1aa,#fff0d5);box-shadow:0 5px 16px rgba(83,54,25,.08)}
-#steps .step-photo{display:block;width:100%;height:100%;object-fit:cover;border-radius:0!important;filter:saturate(1.04);transition:filter .4s,transform .7s cubic-bezier(.2,.75,.2,1)}
-#steps .step-photo-wrap:hover .step-photo{transform:scale(1.025)}
-#steps .step-photo-badge{left:12px!important;right:auto!important;bottom:12px!important;padding:8px 11px!important;border-radius:999px!important;background:rgba(255,250,241,.94)!important;color:#755034!important;font-size:11px!important;font-weight:800;box-shadow:0 3px 10px rgba(50,30,10,.1)}
-#steps .stage svg{width:100%!important;max-width:590px;min-height:200px!important;max-height:clamp(230px,37vh,390px)!important;aspect-ratio:4/3;align-self:center;filter:drop-shadow(0 8px 8px rgba(95,65,35,.08));overflow:visible}
-#steps .step-t{grid-column:2!important;grid-row:1!important;align-self:end;box-sizing:border-box;width:100%;margin:0!important;padding:22px 22px 23px!important;border-radius:20px!important;border:1px solid #ffd0a5!important;border-left:4px solid var(--cook-orange)!important;background:linear-gradient(125deg,#fff0db,#fff7eb)!important;color:#32271e!important;font-size:clamp(17px,1.3vw,21px)!important;font-weight:700;line-height:1.6!important;box-shadow:0 7px 18px rgba(134,80,30,.05)!important}
-[data-theme=dark] #steps .step-t{background:linear-gradient(125deg,#3a2a1d,#302319)!important;color:var(--ink)!important;border-color:rgba(255,164,89,.25)!important;border-left-color:var(--accent)!important}
-#steps .step-n{display:block!important;margin:0 0 8px!important;color:#e96517!important;font-family:Nunito,sans-serif;font-size:11px!important;letter-spacing:.09em!important;font-weight:900!important;animation:none!important;background:none!important;box-shadow:none!important;padding:0!important}
-#steps .cook-tip{grid-column:2!important;grid-row:2!important;align-self:start;box-sizing:border-box;width:100%;margin:0!important;padding:20px 22px!important;border:1px solid #eadbc6!important;border-left:4px solid #f5a04b!important;border-radius:20px!important;background:rgba(255,250,241,.92)!important;color:#604b37!important;font-size:15px!important;line-height:1.75!important;box-shadow:0 7px 18px rgba(109,72,33,.045)!important}
-[data-theme=dark] #steps .cook-tip{background:var(--paper)!important;color:var(--ink-2)!important;border-color:var(--line)!important;border-left-color:var(--accent)!important}
-#steps .cook-tip b{display:block;margin-bottom:10px;color:#e66a1a!important;font-size:14px!important;letter-spacing:.01em}
-#steps .cook-tip p{margin:0 0 12px!important;line-height:1.8!important}
-#steps .cook-tip small{display:block;padding-top:12px!important;border-top:1px solid #eadbc6!important;color:#92775f!important;font-size:13px!important;line-height:1.75!important}
-#steps .timer{width:100%;max-width:1180px;box-sizing:border-box;margin:0 auto 12px!important;padding:12px 16px!important;border:1px solid var(--line)!important;border-radius:22px!important;background:var(--paper)!important;box-shadow:0 5px 16px rgba(91,57,23,.05)!important;justify-content:flex-end}
-#steps #tmB{min-height:46px;padding:0 20px;border:1px solid rgba(244,123,32,.2);border-radius:14px;background:linear-gradient(135deg,#fff1dc,#ffe1bf);color:#a84d12;font-weight:850;box-shadow:0 4px 12px rgba(244,123,32,.08)}
-#steps #tmB.on{background:var(--grad);color:#fff;box-shadow:0 6px 18px rgba(244,123,32,.22)}
-#steps .stnav{position:sticky;bottom:0;z-index:20;width:100%;max-width:1180px;box-sizing:border-box;margin:0 auto!important;padding:14px 0 max(12px,env(safe-area-inset-bottom))!important;display:flex;gap:12px;background:linear-gradient(180deg,transparent 0%,var(--bg) 28%)!important}
-#steps .stnav button{min-height:56px!important;border-radius:17px!important;box-shadow:0 4px 12px rgba(91,57,23,.07)}
-#steps .stnav .gh{flex:0 0 58px;background:var(--paper);border:1px solid var(--line)}
-#steps #nextB{flex:1;background:var(--grad)!important;color:#fff!important;font-size:15px;font-weight:900;box-shadow:0 9px 20px rgba(244,123,32,.2)!important}
-#steps #nextB:hover{filter:brightness(1.035);transform:translateY(-1px)}
-#steps .stage,#steps .step-t,#steps .cook-tip,#steps .timer{animation:workspaceFade .45s ease both}
-@keyframes workspaceFade{from{opacity:.75;transform:translateY(5px)}to{opacity:1;transform:none}}
-@media(min-width:761px){#steps .stage{min-height:520px}#steps .canvas{min-height:480px!important}#steps .stage svg{flex:1;min-height:240px!important}}
-@media(max-width:760px){
- #steps .hdr{min-height:65px;margin-bottom:8px;padding:9px 14px}
- #steps .ttl{font-size:32px}
- #steps .prog{margin:7px 14px 0;max-width:none}
- #steps .cook-encourage{margin:9px 14px 13px!important;border-radius:14px;text-align:left!important;line-height:1.5;padding:10px 12px}
- #steps .stage{grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto auto auto!important;gap:11px!important;padding:11px!important;border-radius:23px!important}
- #steps .canvas{grid-column:1!important;grid-row:1!important;min-height:0!important;padding:9px!important;gap:8px;border-radius:18px}
- #steps .step-photo-wrap{height:clamp(135px,24vh,210px)}
- #steps .stage svg{min-height:150px!important;max-height:28vh!important;flex:initial}
- #steps .step-t{grid-column:1!important;grid-row:2!important;padding:16px!important;font-size:16px!important}
- #steps .cook-tip{grid-column:1!important;grid-row:3!important;padding:16px!important;font-size:14px!important;line-height:1.7!important}
- #steps .cook-tip small{font-size:12px!important}
- #steps .timer{margin:0 0 8px!important;border-radius:17px!important}
- #steps .stnav{padding-top:10px!important}
- #steps .stnav button{min-height:53px!important}
-}
-@media(prefers-reduced-motion:reduce){#steps .stage,#steps .step-t,#steps .cook-tip,#steps .timer{animation:none!important}#steps .step-photo{transition:none!important}#steps .step-photo-wrap:hover .step-photo{transform:none}}
-
-
-/* Cooking workspace — editorial line-art redesign */
-:root{--cw-paper:#fff8ed;--cw-cream:#f8ecd9;--cw-orange:#ff7b1a;--cw-ink:#30271f;--cw-muted:#8e7d6a}
-#steps{background:radial-gradient(ellipse at 50% 35%,#fff9ee 0,#f8ecd9 72%,#f5e5ce 100%);color:var(--cw-ink)}
-#steps .hdr{display:flex;align-items:center;gap:16px;padding:14px clamp(18px,3vw,42px);border-bottom:1px solid rgba(140,100,58,.13);background:rgba(255,248,237,.88)!important}
-#steps .hdr .ttl{font-family:'Caveat',cursive;font-size:clamp(30px,3vw,42px);font-weight:700;color:#2b2119}
-#steps .bk{width:46px;height:46px;border-radius:16px;background:#fffaf2;border:1px solid #eadcc8;box-shadow:0 3px 10px #5c3d1710;font-size:24px}
-#steps .prog{height:7px;margin:12px clamp(18px,4vw,70px) 0;background:#e7d6bd;border-radius:99px;overflow:hidden}
-#steps .prog i{background:linear-gradient(90deg,#ff8c25,#ff6d13);border-radius:99px;transition:width .65s cubic-bezier(.22,.8,.25,1)}
-#steps .cook-encourage{display:none!important}
-#steps .cook-workspace{display:grid;grid-template-columns:minmax(245px,292px) minmax(380px,1fr) minmax(240px,292px);gap:18px;align-items:stretch;width:min(1680px,calc(100% - 48px));margin:18px auto 28px}
-#steps .cook-rail{min-width:0;align-self:start;background:rgba(255,251,244,.88);border:1px solid rgba(255,255,255,.95);border-radius:23px;padding:16px;box-shadow:0 12px 35px rgba(111,73,30,.07);backdrop-filter:blur(10px)}
-#steps .cw-recipe{display:flex;gap:12px;align-items:center;padding-bottom:16px;border-bottom:1px solid #f0dfc8}
-#steps .cw-recipe img{width:78px;height:78px;object-fit:cover;border-radius:15px;background:#f4dfbf}
-#steps .cw-recipe b{display:block;font-size:18px;margin-bottom:5px}
-#steps .cw-recipe span{font-size:12px;color:var(--cw-muted);line-height:1.4;display:block}
-#steps .cw-section-title{font-size:10px;font-weight:900;letter-spacing:1.15px;color:#9b8770;margin:17px 0 10px}
-#steps .cw-step-list{display:grid;gap:6px}
-#steps .cw-step-item{display:grid;grid-template-columns:31px 38px 1fr;align-items:center;gap:8px;padding:10px 8px;border-radius:14px;border:1px solid transparent;transition:background .28s,border-color .28s,transform .28s}
-#steps .cw-step-item.active{background:linear-gradient(110deg,#fff0dc,#ffead0);border-color:#ffd3a2;box-shadow:inset 3px 0 #ff7b1a}
-#steps .cw-step-no{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#fff8ed;border:1px solid #ead8bf;font-size:12px;font-weight:900}
-#steps .cw-step-item.active .cw-step-no{background:#ff811f;color:white;border-color:#ff811f}
-#steps .cw-step-art{width:36px;height:36px;object-fit:contain}
-#steps .cw-step-item b{font-size:12px;display:block;line-height:1.3}
-#steps .cw-step-item small{font-size:11px;color:#bd6b2c;display:block;margin-top:4px}
-#steps .cw-divider{height:1px;background:#efdfca;margin:15px 0}
-#steps .cw-ingredients{display:grid;gap:8px}
-#steps .cw-ing{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;padding:4px 0}
-#steps .cw-ing label{display:flex;align-items:center;gap:8px;min-width:0}
-#steps .cw-ing input{accent-color:#ff7b1a;width:15px;height:15px}
-#steps .cw-ing span{color:#665444;white-space:nowrap}
-#steps .cw-muted{font-size:12px;color:var(--cw-muted)}
-#steps .cw-start{width:100%;margin-top:17px;padding:13px 15px;border:0;border-radius:13px;background:linear-gradient(100deg,#ff7a1a,#ffad50);color:white;font-weight:900;box-shadow:0 7px 18px #ff8b252b}
-#steps .cook-main{min-width:0;display:flex;flex-direction:column;gap:12px}
-#steps .cw-scene-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 24px;border-radius:21px;background:rgba(255,251,244,.93);border:1px solid #fff;box-shadow:0 8px 26px rgba(111,73,30,.05)}
-#steps .cw-eyebrow{font-size:10px;font-weight:900;letter-spacing:1.1px;color:#ff7418}
-#steps .cw-scene-head h2{font-size:clamp(22px,2vw,30px);line-height:1.15;margin:7px 0 6px}
-#steps .cw-scene-head p{font-size:13px;color:#776858;line-height:1.5;margin:0;max-width:440px}
-#steps .cw-chef-stamp{flex:0 0 74px;width:74px;height:74px;border-radius:50%;display:grid;place-content:center;text-align:center;background:#fff0d9;color:#ff781c;font-size:22px;border:1px solid #ffe0ba}
-#steps .cw-chef-stamp span{font-family:'Caveat',cursive;font-size:12px;line-height:1.05;color:#85502c}
-#steps .stage{display:grid!important;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);grid-template-rows:minmax(260px,1fr) auto;gap:14px;padding:16px!important;margin:0!important;border:1px solid rgba(255,255,255,.9);border-radius:24px;background:linear-gradient(135deg,rgba(255,251,244,.97),rgba(255,237,214,.95));box-shadow:0 12px 32px rgba(111,73,30,.07);min-height:0!important}
-#steps .canvas{grid-column:1;grid-row:1/3;display:flex;flex-direction:column;justify-content:space-between;gap:12px;max-width:none!important;width:100%;min-height:0!important;overflow:hidden;border-radius:17px;background:linear-gradient(155deg,#fff2df,#f4dfbf);padding:10px;border:1px solid #f0d3ae}
-#steps .step-photo-wrap{height:clamp(100px,18vh,170px);flex:0 0 auto;border-radius:14px;background:#f3dfbf}
-#steps .step-photo{object-position:center 55%}
-#steps .canvas #stg{width:100%;height:auto;flex:1;min-height:190px;max-height:340px;aspect-ratio:4/3;object-fit:contain}
-#steps .step-t{grid-column:2;grid-row:1;align-self:start;margin:0!important;padding:18px!important;border-radius:17px!important;background:#fff4e5!important;border:1px solid #ffd3a4!important;border-left:4px solid #ff7b1a!important;font-size:15px;line-height:1.65}
-#steps .step-n{display:block!important;color:#ff7418!important;font-size:10px!important;letter-spacing:1px;text-transform:uppercase;margin:0 0 10px!important}
-#steps .cook-tip{grid-column:2;grid-row:2;align-self:start;margin:0!important;padding:18px!important;border-radius:17px!important;background:rgba(255,251,244,.86)!important;border:1px solid #ead9c2!important;border-left:4px solid #ff8a2a!important;box-shadow:none!important;font-size:13px;line-height:1.7}
-#steps .cook-tip b{font-size:12px}
-#steps .cw-livebar{display:flex;align-items:center;gap:14px;padding:15px 18px;border-radius:22px;background:rgba(255,251,244,.95);border:1px solid white;box-shadow:0 8px 24px rgba(111,73,30,.07)}
-#steps .cw-live-icon{width:46px;height:46px;flex:0 0 46px;border-radius:50%;display:grid;place-items:center;background:#fff0d9;color:#ff791a;font-size:25px}
-#steps .cw-live-copy{min-width:0;flex:1}
-#steps .cw-live-copy b{display:block;font-size:13px;margin-bottom:4px}
-#steps .cw-live-copy span{display:block;font-size:12px;color:#877764;margin-bottom:9px}
-#steps .cw-live-progress{height:6px;border-radius:9px;background:#f0dfca;overflow:hidden}
-#steps .cw-live-progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ff791a,#ffb14e);border-radius:9px;transition:width .5s}
-#steps .cw-clock{font-size:17px;font-weight:900;font-variant-numeric:tabular-nums;white-space:nowrap}
-#steps .cw-pause{width:43px;height:43px;flex:0 0 43px;border-radius:50%;background:#fffaf2;color:#ff791a;border:2px solid #ff9b43;font-size:17px}
-#steps .timer{margin:0!important}
-#steps .stnav{display:grid;grid-template-columns:auto 1fr;gap:10px;margin-top:0!important}
-#steps .stnav button{min-height:48px;border-radius:14px;font-weight:900}
-#steps .stnav #nextB{background:linear-gradient(100deg,#ff7b1a,#ffad50);box-shadow:0 8px 20px #ff8b252b}
-#steps .cook-rail-right{display:grid;gap:12px}
-#steps .cw-tip-card{display:flex;gap:12px;padding:15px;border:1px solid #fff;border-radius:18px;background:linear-gradient(135deg,#fff7e9,#ffefd9)}
-#steps .cw-tip-icon{width:39px;height:39px;flex:0 0 39px;border-radius:50%;display:grid;place-items:center;background:#ffe3bd;color:#ff7418;font-size:22px}
-#steps .cw-tip-card b{font-size:13px;color:#ff7418}
-#steps .cw-tip-card p{font-size:12px;line-height:1.65;color:#6f5c49;margin:7px 0 0}
-#steps .cw-card{padding:16px;border-radius:19px;border:1px solid #fff;background:rgba(255,251,244,.9);box-shadow:0 8px 22px rgba(111,73,30,.05)}
-#steps .cw-card h3{font-size:14px;margin:0 0 13px}
-#steps .cw-mini-step{display:grid;grid-template-columns:29px 1fr;gap:10px;align-items:start;margin:12px 0}
-#steps .cw-mini-step i{display:grid;place-items:center;width:27px;height:27px;border-radius:50%;background:#ffdfb9;color:#9b4a13;font-style:normal;font-size:12px;font-weight:900}
-#steps .cw-mini-step span{font-size:11px;line-height:1.6;color:#766656}
-#steps .cw-tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 8px}
-#steps .cw-tools>div{text-align:center;min-width:0}
-#steps .cw-tools img{display:block;width:100%;height:66px;object-fit:contain;padding:8px;border-radius:12px;background:#fff2df;border:1px solid #f2e2cc}
-#steps .cw-tools span{display:block;font-size:10px;color:#766656;margin-top:6px}
-#steps .cw-handnote{font-family:'Caveat',cursive;font-size:22px;color:#b86a2c;text-align:center;line-height:1.15;transform:rotate(-3deg);padding:6px}
-#steps .stage svg{max-width:100%}
-#steps .step-photo-wrap::after{opacity:.45}
-@media(max-width:1180px){
- #steps .cook-workspace{grid-template-columns:230px minmax(0,1fr);width:calc(100% - 28px);gap:13px}
- #steps .cook-rail-right{grid-column:1/-1;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start}
- #steps .cw-handnote{display:none}
- #steps .cw-tools{grid-template-columns:repeat(3,minmax(0,1fr))}
-}
-@media(max-width:760px){
- #steps .cook-workspace{display:flex;flex-direction:column;width:calc(100% - 20px);margin:12px auto 20px;gap:11px}
- #steps .cook-main{order:0}
- #steps .cook-rail-left{order:1}
- #steps .cook-rail-right{order:2;display:grid;grid-template-columns:1fr}
- #steps .cw-scene-head{padding:15px;border-radius:17px}
- #steps .cw-chef-stamp{width:54px;height:54px;flex-basis:54px;font-size:17px}
- #steps .cw-chef-stamp span{font-size:10px}
- #steps .stage{grid-template-columns:1fr!important;grid-template-rows:auto auto auto!important;padding:10px!important;gap:10px}
- #steps .canvas{grid-column:1!important;grid-row:1!important;min-height:300px!important}
- #steps .step-photo-wrap{height:110px}
- #steps .canvas #stg{min-height:185px;max-height:290px}
- #steps .step-t{grid-column:1!important;grid-row:2!important;padding:14px!important}
- #steps .cook-tip{grid-column:1!important;grid-row:3!important;padding:14px!important}
- #steps .cw-livebar{gap:9px;padding:11px}
- #steps .cw-live-icon{width:36px;height:36px;flex-basis:36px;font-size:20px}
- #steps .cw-clock{font-size:14px}
- #steps .cw-pause{width:36px;height:36px;flex-basis:36px}
- #steps .cw-ingredients{grid-template-columns:repeat(2,minmax(0,1fr))}
- #steps .cw-rail-right{grid-template-columns:1fr}
- #steps .cw-tools img{height:60px}
-}
-@media(prefers-reduced-motion:reduce){
- #steps .cw-step-item,#steps .cw-live-progress i,#steps .prog i{transition:none!important}
-}
-
-
-/* Visual polish v4 — illustrated cooking canvas */
-#steps .cook-workspace{grid-template-columns:minmax(238px,286px) minmax(430px,1fr) minmax(238px,286px);gap:16px;width:min(1740px,calc(100% - 42px));align-items:start}
-#steps .cook-rail{padding:15px;border-radius:22px;background:rgba(255,251,244,.9);box-shadow:0 10px 30px rgba(111,73,30,.065)}
-#steps .cook-main{gap:12px}
-#steps .cw-scene-head{padding:16px 20px;border-radius:19px}
-#steps .cw-chef-stamp{box-shadow:0 6px 16px rgba(239,132,48,.08)}
-#steps .stage{grid-template-columns:minmax(0,1fr) minmax(250px,.68fr)!important;grid-template-rows:minmax(440px,1fr) auto!important;gap:14px!important;padding:14px!important;border-radius:25px!important;background:rgba(255,251,244,.72)!important;box-shadow:0 16px 38px rgba(111,73,30,.075)!important}
-#steps .canvas{position:relative;grid-column:1!important;grid-row:1/3!important;display:block!important;min-height:560px!important;height:100%;padding:0!important;overflow:hidden;border-radius:19px!important;border:1px solid rgba(235,205,165,.75)!important;background:#f7e5cc!important;isolation:isolate}
-#steps .cw-scene-art{position:absolute;inset:0;z-index:0;display:block;width:100%;height:100%;object-fit:cover;object-position:center 45%;transition:opacity .3s ease,transform 1.1s cubic-bezier(.2,.7,.2,1);animation:cwSceneFloat 8s ease-in-out infinite;will-change:transform}
-#steps .canvas:hover .cw-scene-art{transform:scale(1.018)}
-#steps .step-photo-wrap{display:none!important}
-#steps .canvas #stg{position:absolute;z-index:2;right:13px;bottom:13px;width:clamp(125px,31%,205px)!important;height:clamp(105px,27%,170px)!important;min-height:0!important;max-height:none!important;aspect-ratio:4/3;padding:8px;border:1px solid rgba(255,255,255,.92);border-radius:16px;background:rgba(255,249,239,.88);box-shadow:0 8px 22px rgba(69,45,23,.13);backdrop-filter:blur(8px);filter:none!important;animation:cwActionFloat 5.5s ease-in-out infinite}
-#steps .step-t{grid-column:2!important;grid-row:1!important;align-self:start!important;margin:0!important;padding:19px!important;border-radius:17px!important;background:linear-gradient(145deg,#fff5e7,#ffecd7)!important;border:1px solid #ffd7ad!important;border-left:4px solid #ff7b1a!important;box-shadow:0 5px 16px rgba(111,73,30,.04)!important}
-#steps .cook-tip{grid-column:2!important;grid-row:2!important;align-self:start!important;margin:0!important;padding:18px!important;border-radius:17px!important;background:rgba(255,251,244,.94)!important;border:1px solid #ead9c2!important;border-left:4px solid #ff9b43!important}
-#steps .cw-livebar{border-radius:20px;padding:14px 17px;box-shadow:0 10px 26px rgba(111,73,30,.07)}
-#steps .cw-live-progress i{transition:width .7s cubic-bezier(.22,.8,.25,1)}
-#steps .cw-step-item{transition:background .25s ease,border-color .25s ease,transform .25s ease,box-shadow .25s ease}
-#steps .cw-step-item:hover{transform:translateX(2px)}
-#steps .cw-step-item.active{box-shadow:inset 3px 0 #ff7b1a,0 5px 14px rgba(255,123,26,.07)}
-#steps .cw-tools img{transition:transform .25s ease,background .25s ease;object-fit:contain}
-#steps .cw-tools>div:hover img{transform:translateY(-3px) rotate(-2deg);background:#fff7ea}
-#steps .cw-tip-card,#steps .cw-card{box-shadow:0 8px 22px rgba(111,73,30,.045);transition:transform .25s ease,box-shadow .25s ease}
-#steps .cw-tip-card:hover,#steps .cw-card:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(111,73,30,.07)}
-#steps .cw-pause{transition:transform .2s ease,box-shadow .2s ease}
-#steps .cw-pause:hover{transform:scale(1.05);box-shadow:0 5px 12px rgba(255,123,26,.18)}
-@keyframes cwSceneFloat{0%,100%{transform:scale(1)}50%{transform:scale(1.012)}}
-@keyframes cwActionFloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-4px) rotate(-.6deg)}}
-@media(max-width:1280px){#steps .cook-workspace{grid-template-columns:220px minmax(0,1fr);width:calc(100% - 30px);gap:13px}#steps .cook-rail-right{grid-column:1/-1;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start}#steps .canvas{min-height:500px!important}}
-@media(max-width:760px){#steps .cook-workspace{display:flex;flex-direction:column;width:calc(100% - 20px);gap:11px}#steps .cook-main{order:0;width:100%}#steps .cook-rail-left{order:1;width:auto}#steps .cook-rail-right{order:2;width:auto;display:grid;grid-template-columns:1fr}#steps .stage{grid-template-columns:1fr!important;grid-template-rows:minmax(350px,auto) auto auto!important;padding:10px!important;gap:10px!important}#steps .canvas{grid-column:1!important;grid-row:1!important;min-height:390px!important;height:390px!important}#steps .canvas #stg{width:34%!important;height:28%!important;right:8px;bottom:8px}#steps .step-t{grid-column:1!important;grid-row:2!important}#steps .cook-tip{grid-column:1!important;grid-row:3!important}#steps .cw-scene-head{padding:14px}#steps .cw-livebar{gap:8px;padding:10px}#steps .cw-clock{font-size:13px}#steps .cw-handnote{display:none}}
-@media(prefers-reduced-motion:reduce){#steps .cw-scene-art,#steps .canvas #stg{animation:none!important;transition:none!important}#steps .cw-step-item,#steps .cw-tools img,#steps .cw-tip-card,#steps .cw-card{transition:none!important}}
-
-
-/* Reference-matched cooking studio: full-bleed illustrated scene + floating controls */
-#steps{background:#fbf0df!important}
-#steps .hdr{max-width:none!important;width:100%!important;padding-left:max(24px,3vw)!important;padding-right:max(24px,3vw)!important;background:rgba(255,250,241,.94)!important;border-bottom:1px solid #f0dfc9!important}
-#steps .prog,#steps .cook-encourage{display:none!important}
-#steps .cook-workspace{width:min(1780px,calc(100% - 48px))!important;grid-template-columns:minmax(245px,315px) minmax(500px,1fr) minmax(245px,315px)!important;gap:18px!important;align-items:start!important;margin:18px auto 24px!important}
-#steps .cook-rail{padding:15px!important;border-radius:20px!important;background:rgba(255,251,244,.94)!important;border:1px solid rgba(255,255,255,.95)!important;box-shadow:0 10px 28px rgba(113,76,36,.07)!important}
-#steps .cook-main{min-width:0!important;display:flex!important;flex-direction:column!important;gap:0!important;overflow:visible!important}
-#steps .cw-scene-head{display:none!important}
-#steps .stage{position:relative!important;display:block!important;padding:0!important;margin:0!important;overflow:visible!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;min-height:0!important}
-#steps .canvas{position:relative!important;display:block!important;width:100%!important;height:clamp(470px,54vw,650px)!important;min-height:0!important;padding:0!important;overflow:hidden!important;border:1px solid rgba(255,255,255,.85)!important;border-radius:24px!important;background:#f5dfc1!important;box-shadow:0 12px 34px rgba(115,74,32,.10)!important;isolation:isolate!important}
-#steps .cw-scene-art{position:absolute!important;inset:0!important;display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center 46%!important;animation:none!important;transition:opacity .35s ease,object-position .35s ease!important}
-#steps .canvas:after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(255,248,235,.03) 55%,rgba(255,242,222,.14) 100%)}
-#steps .step-photo-wrap{display:none!important}
-#steps .canvas #stg{position:absolute!important;z-index:3!important;right:20px!important;bottom:20px!important;width:clamp(95px,16%,155px)!important;height:clamp(85px,15%,135px)!important;min-height:0!important;max-height:none!important;padding:8px!important;border:1px solid rgba(255,255,255,.95)!important;border-radius:18px!important;background:rgba(255,249,239,.9)!important;box-shadow:0 8px 24px rgba(69,45,23,.14)!important;backdrop-filter:blur(8px)!important;animation:cwActionFloat 5.5s ease-in-out infinite!important}
-#steps .step-t{position:absolute!important;z-index:5!important;left:18px!important;top:18px!important;width:min(265px,58%)!important;box-sizing:border-box!important;margin:0!important;padding:17px 19px!important;border-radius:17px!important;background:rgba(255,251,244,.96)!important;border:1px solid rgba(255,255,255,.95)!important;border-left:4px solid #ff7b1a!important;box-shadow:0 8px 24px rgba(91,57,24,.09)!important;backdrop-filter:blur(10px)!important}
-#steps .step-t .step-n{display:block!important;margin-bottom:7px!important;color:#f36e13!important;font-size:10px!important;font-weight:900!important;letter-spacing:.09em!important;text-transform:uppercase!important}
-#steps #sTxt{display:block!important;font-size:clamp(17px,1.5vw,23px)!important;line-height:1.25!important;font-weight:800!important;color:#28211a!important}
-#steps .cook-tip{display:none!important}
-#steps .cw-livebar{position:relative!important;z-index:6!important;margin:-74px 18px 0!important;padding:14px 17px!important;min-height:74px!important;box-sizing:border-box!important;border:1px solid rgba(255,255,255,.98)!important;border-radius:24px!important;background:rgba(255,251,244,.96)!important;box-shadow:0 10px 28px rgba(100,64,27,.12)!important;backdrop-filter:blur(12px)!important;gap:14px!important}
-#steps .cw-live-icon{width:44px!important;height:44px!important;flex:0 0 44px!important;display:grid!important;place-items:center!important;border-radius:50%!important;background:#fff0d9!important;color:#ff791a!important;font-size:26px!important}
-#steps .cw-live-copy b{font-size:13px!important;color:#2d261e!important}
-#steps .cw-live-copy span{font-size:11px!important}
-#steps .cw-clock{font-size:19px!important;min-width:58px!important;text-align:center!important}
-#steps .cw-step-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:15px 0 0;padding:9px 10px 11px;border-radius:24px;background:rgba(255,249,239,.7);border:1px solid rgba(255,255,255,.8)}
-#steps .cw-step-card{position:relative;display:flex;flex-direction:column;align-items:flex-start;min-width:0;min-height:132px;padding:12px 10px 10px;border:1px solid rgba(235,219,197,.7);border-radius:15px;background:rgba(255,252,247,.78);color:#3c3025;text-align:left;cursor:pointer;transition:transform .22s ease,border-color .22s ease,background .22s ease,box-shadow .22s ease}
-#steps .cw-step-card:hover{transform:translateY(-2px);background:#fffaf1}
-#steps .cw-step-card.active{border:1.5px solid #ff791a;background:linear-gradient(145deg,#fff8ec,#ffead4);box-shadow:0 5px 15px rgba(255,123,26,.10)}
-#steps .cw-step-card img{align-self:center;width:100%;height:62px;object-fit:contain;margin:0 0 5px;opacity:.85}
-#steps .cw-step-card b{display:block;width:100%;font-size:11px;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#steps .cw-step-card small{display:block;margin-top:4px;color:#a16a3c;font-size:10px}
-#steps .cw-step-card-no{position:absolute;top:8px;left:8px;width:22px;height:22px;display:grid;place-items:center;border-radius:50%;background:#eee8df;color:#8a8074;font-size:10px;font-weight:900}
-#steps .cw-step-card.active .cw-step-card-no{background:#ff8a24;color:white}
-#steps .stnav{position:static!important;display:grid!important;grid-template-columns:auto minmax(0,1fr)!important;gap:10px!important;padding:10px 0 0!important;margin:0!important;background:transparent!important}
-#steps .stnav button{min-height:48px!important;border-radius:15px!important}
-#steps .stnav button.gh{width:auto!important;min-width:80px!important;padding:12px 17px!important}
-#steps .cw-recipe img{border-radius:13px!important}
-#steps .cw-step-item{grid-template-columns:30px 42px minmax(0,1fr)!important;align-items:center!important}
-#steps .cw-step-art{width:40px!important;height:40px!important;object-fit:contain!important;padding:3px!important;border-radius:50%!important;border:1px solid #f0dfc9!important;background:#fff8ec!important}
-#steps .cw-ingredients{gap:5px!important}
-#steps .cw-tools img{height:72px!important;background:#fff2df!important}
-#steps .cw-tip-card{padding:16px!important}
-#steps .cw-handnote{font-size:22px!important}
-@media(max-width:1250px){#steps .cook-workspace{grid-template-columns:225px minmax(0,1fr)!important;width:calc(100% - 30px)!important}#steps .cook-rail-right{grid-column:1/-1!important;grid-template-columns:repeat(3,minmax(0,1fr))!important}#steps .canvas{height:clamp(430px,58vw,590px)!important}}
-@media(max-width:760px){#steps .hdr{padding-left:12px!important;padding-right:12px!important}#steps .cook-workspace{display:flex!important;flex-direction:column!important;width:calc(100% - 20px)!important;margin:10px auto 20px!important;gap:12px!important}#steps .cook-main{order:0!important;width:100%!important}#steps .cook-rail-left{order:1!important;width:auto!important}#steps .cook-rail-right{order:2!important;width:auto!important;display:grid!important;grid-template-columns:1fr!important}#steps .canvas{height:clamp(380px,105vw,510px)!important;border-radius:18px!important}#steps .step-t{left:10px!important;top:10px!important;width:min(245px,72%)!important;padding:12px 14px!important}#steps .canvas #stg{width:29%!important;height:25%!important;right:8px!important;bottom:8px!important}#steps .cw-livebar{margin:-56px 8px 0!important;padding:10px!important;gap:8px!important;min-height:62px!important;border-radius:18px!important}#steps .cw-live-icon{width:34px!important;height:34px!important;flex-basis:34px!important;font-size:20px!important}#steps .cw-clock{font-size:14px!important;min-width:44px!important}#steps .cw-pause{width:36px!important;height:36px!important;flex-basis:36px!important}#steps .cw-step-strip{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:10px;padding:7px;border-radius:18px}#steps .cw-step-card{min-height:112px;padding:9px}#steps .cw-step-card img{height:50px}#steps .stnav button{min-height:48px!important}#steps .cw-step-item{grid-template-columns:30px 40px minmax(0,1fr)!important}}
-@media(prefers-reduced-motion:reduce){#steps .cw-step-card,#steps .cw-scene-art,#steps .canvas #stg{animation:none!important;transition:none!important}}
+/* === Cooking Workspace — only #steps, rest of app unchanged === */
+#steps{max-width:none!important;width:100%!important;padding:0 22px 28px!important;background:linear-gradient(135deg,#fbf2df,#f7ead4)!important}
+#steps .cw-head{height:70px;display:flex;align-items:center;gap:16px;border-bottom:1px solid #ead9bd}.cw-brand{display:flex;align-items:center;gap:9px;font-size:21px}.cw-brand small{font-size:11px;color:#9b8972;font-weight:500}.cw-head .ttl{margin-left:auto;font-size:16px;color:#8a6847}.cw-grid{display:grid;grid-template-columns:300px minmax(520px,1fr) 280px;gap:14px;max-width:1500px;margin:14px auto 0}.cw-side{background:rgba(255,252,246,.91);border:1px solid rgba(214,185,145,.45);border-radius:22px;padding:14px;box-shadow:0 12px 32px rgba(111,74,36,.08)}.cw-side h3{font-size:14px;margin:12px 0;color:#3d2d22}.cw-recipe-card{display:flex;gap:11px;align-items:center;padding-bottom:12px;border-bottom:1px solid #eadcc7}.cw-recipe-card img{width:78px;height:78px;object-fit:cover;border-radius:14px}.cw-recipe-card b{display:block;font-size:18px}.cw-recipe-card small{display:block;color:#9a8268;margin-top:6px}.cw-steps{display:grid;gap:6px}.cw-step{display:grid;grid-template-columns:32px 1fr;gap:9px;align-items:center;padding:8px;border-radius:13px;cursor:pointer}.cw-step.on{background:#fff0db;box-shadow:inset 3px 0 #ff7a1a}.cw-step .n{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#fff;border:1px solid #ead3b2;font-weight:800;color:#9b744e}.cw-step.on .n{background:#ff7a1a;color:#fff;border-color:#ff7a1a}.cw-step b{font-size:12px}.cw-step small{display:block;color:#c56b2b;margin-top:2px}.cw-sep{height:1px;background:#eadcc7;margin:14px 0}.cw-ingredients{display:grid;gap:8px}.cw-ing{display:flex;justify-content:space-between;font-size:12px;color:#5f5247}.cw-ing span:last-child{color:#7f6b58}.cw-start{width:100%;border:0;border-radius:13px;padding:13px;background:linear-gradient(90deg,#ff7416,#ffac4c);color:white;font-weight:800;margin-top:16px}.cw-main{min-width:0}.cw-scene{position:relative;height:660px;overflow:hidden;border-radius:28px;background:#f6dcb6;box-shadow:0 18px 45px rgba(115,73,31,.13)}.cw-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.8) brightness(1.07);transform:scale(1.04)}.cw-wash{position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,245,226,.35),rgba(255,238,211,.08)),linear-gradient(0deg,rgba(255,242,219,.28),transparent 45%)}.cw-title{position:absolute;left:18px;top:18px;z-index:4;width:min(300px,45%);padding:15px 18px;border-radius:18px;background:rgba(255,252,246,.9);backdrop-filter:blur(12px);box-shadow:0 8px 24px rgba(75,50,28,.08)}.cw-title .step-n{display:block;color:#ff6f13;font-size:12px;font-weight:800}.cw-title strong{display:block;font-size:26px;margin:5px 0;color:#2d241e}.cw-title small{color:#756558}.cw-art{position:absolute;left:50%;top:51%;width:58%;height:48%;transform:translate(-50%,-50%);z-index:3;display:grid;place-items:center;filter:drop-shadow(0 12px 18px rgba(68,46,25,.18))}.cw-art svg{width:100%;height:100%;transform:scale(1.45)}.cw-note{position:absolute;right:7%;top:23%;z-index:4;background:rgba(255,251,244,.9);padding:15px 22px;border-radius:50%;transform:rotate(-6deg);font-family:cursive;color:#a85b2e}.cw-timerbar{position:absolute;z-index:5;left:4%;right:4%;bottom:18px;display:flex;align-items:center;gap:13px;padding:12px 16px;background:rgba(255,252,247,.9);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.8);border-radius:22px}.cw-fire{font-size:30px}.cw-progress{flex:1}.cw-progress b,.cw-progress span{display:block;font-size:12px}.cw-progress span{color:#8e7d6c}.cw-progress .prog{margin-top:7px;height:7px}.cw-timerbar button{border:2px solid #ff791c;background:#fff7ed;border-radius:50px;padding:12px 15px;color:#e95f00;font-weight:800}.cw-carousel{display:flex;gap:10px;align-items:stretch;margin-top:12px;padding:12px;background:rgba(255,252,246,.78);border-radius:24px}.cw-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;flex:1}.cw-card{padding:8px;border:1px solid #eadbc5;border-radius:14px;background:rgba(255,255,255,.62);cursor:pointer;min-width:0}.cw-card.on{border:2px solid #ff7b1c;background:#fff8ee}.cw-card .mini{height:64px;border-radius:10px;background:#f7ead7;display:grid;place-items:center;overflow:hidden}.cw-card svg{width:90px;height:70px}.cw-card b{font-size:11px;display:block;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cw-carousel>button{border:0;border-radius:15px;background:#fff;color:#e86d18;font-weight:800;padding:0 13px}.cw-right section{padding:4px 0 14px;border-bottom:1px solid #eadcc7}.cw-tip{background:#fff0da;border-radius:16px;padding:12px!important;border:0!important}.cw-tip p{font-size:12px;line-height:1.55;color:#68584c}.cw-guide-row{display:grid;grid-template-columns:30px 1fr;gap:8px;margin:10px 0;font-size:12px;line-height:1.4;color:#66574b}.cw-guide-row i{font-style:normal;width:27px;height:27px;border-radius:50%;background:#ffe1bc;color:#b96124;display:grid;place-items:center;font-weight:800}.cw-guide-row.on{font-weight:800;color:#e56810}.cw-tools{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.cw-tools div{min-height:66px;border-radius:12px;background:#fff2de;display:grid;place-items:center;font-size:25px}.cw-tools small{font-size:9px;color:#77695d}.cw-right .cook-tip{margin-top:12px!important;padding:12px!important;font-size:11px!important}.cw-right .cook-tip p{font-size:11px!important}.cw-right .cook-tip small{font-size:10px!important}.cw-right .cook-tip b{font-size:11px!important}
+@media(max-width:1100px){.cw-grid{grid-template-columns:250px 1fr}.cw-right{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.cw-scene{height:580px}}@media(max-width:760px){#steps{padding:0 10px 20px!important}.cw-brand small,.cw-head .ttl{display:none}.cw-grid{grid-template-columns:1fr}.cw-left{order:2}.cw-main{order:1}.cw-right{order:3;display:block}.cw-scene{height:500px}.cw-title{width:65%}.cw-art{width:75%}.cw-cards{grid-template-columns:repeat(2,1fr)}.cw-card:nth-child(n+5){display:none}}
 
 </style>
 </head>
@@ -1665,45 +1422,31 @@ body{overflow-x:hidden;overflow-y:hidden}
 </div>
 
 <div class="scr" id="steps">
-  <div class="hdr"><button class="bk" id="bk2" type="button" aria-label="Назад">←</button><div class="ttl" id="sT">Готовим</div></div>
-  <div class="prog"><i id="prg" style="width:0%"></i></div><p class="cook-encourage" id="cookEncourage" style="margin:8px 0;color:var(--muted);font-size:12px;text-align:center">👩‍🍳 Готовь в своём темпе: один шаг за раз — и получится.</p>
-  <div class="cook-workspace">
-    <aside class="cook-rail cook-rail-left">
-      <div class="cw-recipe"><img id="cwDishPhoto" alt="" src="assets/food/pancakes.jpg"><div><b id="cwDishName">Готовим</b><span id="cwDishMeta">Ваш кулинарный помощник</span></div></div>
-      <div class="cw-section-title">ЭТАПЫ ПРИГОТОВЛЕНИЯ</div>
-      <div class="cw-step-list" id="cwStepList"></div>
-      <div class="cw-divider"></div>
-      <div class="cw-section-title">ИНГРЕДИЕНТЫ</div>
-      <div class="cw-ingredients" id="cwIngredients"><p class="cw-muted">Откройте рецепт, чтобы увидеть ингредиенты.</p></div>
-      <button class="cw-start" type="button" id="cwStart">▶ Начать готовить</button>
+  <div class="cw-head"><button class="bk" id="bk2" type="button" aria-label="Назад">←</button><div class="cw-brand">👨‍🍳 <b>Let’s cook!</b><small>Готовим спокойно — шаг за шагом</small></div><div class="ttl" id="sT">Готовим</div></div>
+  <div class="cw-grid">
+    <aside class="cw-side cw-left">
+      <div class="cw-recipe-card"><img id="cwDish" alt=""><div><b id="cwName">Блюдо</b><small id="cwMeta"></small></div></div>
+      <h3>Этапы приготовления</h3><div id="cwSteps" class="cw-steps"></div>
+      <div class="cw-sep"></div><h3>🛒 Ингредиенты</h3><div id="cwIngredients" class="cw-ingredients"></div>
+      <button class="cw-start" id="cwStart" type="button">▶ Начать готовить</button>
     </aside>
-    <main class="cook-main">
-      <div class="cw-scene-head"><div><span class="cw-eyebrow" id="cwEyebrow">ШАГ 1</span><h2 id="cwTitle">Подготовка</h2><p id="cwSub">Подготовьте ингредиенты и рабочее место.</p></div><div class="cw-chef-stamp">✦<span>Готовим<br>с удовольствием</span></div></div>
-      <div class="stage">
-    <div class="canvas">
-      <img id="cwSceneArt" class="cw-scene-art" src="assets/illustrations/chef-kitchen-scene.jpg" alt="Иллюстрация повара на кухне" loading="eager">
-      <div class="step-photo-wrap" id="stepPhotoWrap">
-        <img id="stepPhoto" class="step-photo" alt="Фото готового блюда" loading="eager">
-        <span class="step-photo-badge">🍽 Как выглядит результат</span>
+    <main class="cw-main">
+      <div class="cw-scene">
+        <img id="stepPhoto" class="cw-bg" alt="Фото блюда" loading="eager">
+        <div class="cw-wash"></div>
+        <div class="cw-title"><span class="step-n" id="sN">Шаг 1</span><strong id="sTxt"></strong><small id="cookEncourage">Готовь в своём темпе</small></div>
+        <div class="cw-art"><svg id="stg" viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet"></svg></div>
+        <div class="cw-note">♡ Готовьте<br>с удовольствием!</div>
+        <div class="cw-timerbar"><div class="cw-fire">🔥</div><div class="cw-progress"><b>Готовим</b><span id="cwAction">Текущий шаг</span><div class="prog"><i id="prg" style="width:0%"></i></div></div><button id="tmB" type="button">⏱ Таймер</button></div>
       </div>
-      <svg id="stg" viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet"></svg>
-    </div>
-    <div class="step-t"><span class="step-n" id="sN">Шаг 1</span><span id="sTxt"></span></div>
-    <div class="cook-tip" id="cookTip" aria-live="polite"><b>🎯 Как понять, что готово</b><p id="cookTipText">Следуй подсказке шага.</p><small id="cookTipCheck"></small></div>
-  </div>
-      <div class="cw-livebar"><div class="cw-live-icon">♨</div><div class="cw-live-copy"><b id="cwLiveTitle">Готовим</b><span id="cwLiveText">Следуйте шагам рецепта в своём темпе</span><div class="cw-live-progress"><i id="cwLiveProgress"></i></div></div><div class="cw-clock" id="cwClock">ГОТОВО?</div><button class="cw-pause" id="cwPause" type="button" aria-label="Пауза">Ⅱ</button></div>
-      <div class="cw-step-strip" id="cwStepCards" aria-label="Этапы готовки"></div>
-      <div class="timer" id="tmRow" style="display:none"><button id="tmB" type="button">⏱ Таймер</button></div>
-      <div class="stnav">
-        <button class="gh" id="prevB" type="button" aria-label="Предыдущий шаг">← Назад</button>
-        <button id="nextB" type="button">Далее →</button>
-      </div>
+      <div class="cw-carousel"><button class="gh" id="prevB" type="button">‹</button><div id="cwCards" class="cw-cards"></div><button id="nextB" type="button">Далее →</button></div>
+      <div class="timer" id="tmRow" style="display:none"></div>
     </main>
-    <aside class="cook-rail cook-rail-right">
-      <section class="cw-tip-card"><div class="cw-tip-icon">☼</div><div><b>Совет повара</b><p id="cwChefTip">Подготовьте всё заранее — так готовить спокойнее и приятнее.</p></div></section>
-      <section class="cw-card"><h3>Пошаговый рецепт</h3><div id="cwMiniSteps"></div></section>
-      <section class="cw-card"><h3>Вам понадобится</h3><div class="cw-tools"><div><img src="assets/illustrations/mixing-bowl.png" alt=""><span>Миска</span></div><div><img src="assets/illustrations/whisk.png" alt=""><span>Венчик</span></div><div><img src="assets/illustrations/frying-pan.png" alt=""><span>Сковорода</span></div><div><img src="assets/illustrations/spatula.png" alt=""><span>Лопатка</span></div><div><img src="assets/illustrations/measuring-jug.png" alt=""><span>Мерный стакан</span></div></div></section>
-      <div class="cw-handnote">Вкусные моменты<br>создаём вместе ♡</div>
+    <aside class="cw-side cw-right">
+      <section class="cw-tip"><h3>💡 Совет</h3><p id="cwChefTip">Готовьте без спешки и ориентируйтесь на текстуру блюда.</p></section>
+      <section><h3>📖 Пошаговый рецепт</h3><div id="cwGuide"></div></section>
+      <section><h3>🍴 Вам понадобится</h3><div class="cw-tools"><div>🥣<small>Миска</small></div><div>🥄<small>Венчик</small></div><div>🍳<small>Сковорода</small></div><div>🔪<small>Нож</small></div><div>🥛<small>Мерный стакан</small></div></div></section>
+      <div class="cook-tip" id="cookTip" aria-live="polite"><b>🎯 Как понять, что готово</b><p id="cookTipText"></p><small id="cookTipCheck"></small></div>
     </aside>
   </div>
 </div>
@@ -3253,7 +2996,7 @@ function scene(type, emoji){
     '.mainArt{transform-box:fill-box;transform-origin:center;animation:'+(motion==='stir'?'stirScene 1s ease-in-out infinite':motion==='pan'?'panScene 1.05s ease-in-out infinite':motion==='pour'?'stirScene 1.25s ease-in-out infinite':'floatScene 2s ease-in-out infinite')+'}'+
     '.steam{fill:none;stroke:#a9826c;stroke-width:3;stroke-linecap:round;animation:steamScene 1.6s ease-out infinite}.s2{animation-delay:-.5s}.s3{animation-delay:-1s}'+
     '@media(prefers-reduced-motion:reduce){.mainArt{animation:none}.steam{animation:none;opacity:.65}}'+
-    '\n</style>';
+    '</style>';
   var steam=(['boil','steam','bake','sizzle','flame','pancake','flip'].indexOf(t)>=0)?'<g><path class="steam" d="M76 46q-8-8 0-16t0-16"/><path class="steam s2" d="M100 42q-8-8 0-16t0-16"/><path class="steam s3" d="M124 46q-8-8 0-16t0-16"/></g>':'';
   return style+'<ellipse cx="100" cy="145" rx="48" ry="7" fill="#a66c43" opacity=".13"/>'+art[key]+steam;
 }
@@ -3291,57 +3034,17 @@ function cookingTip(recipeId, stepText, sceneType){
   return ['Выполни действие по списку ингредиентов и поддерживай умеренный нагрев, если блюдо готовится на плите.','Переходи дальше, когда ингредиенты равномерно обработаны и достигли указанной в рецепте текстуры.'];
 }
 
-
-function renderCookingWorkspace(step){
-  var m=findD(curId), r=allR()[curId]||{}, dish=$('cwDishName'), meta=$('cwDishMeta');
-  if(dish) dish.textContent=m?m.name:'Готовим';
-  if(meta) meta.textContent=(m?m.time+' · '+m.dif:'')+' · готовим вместе';
-  var photo=$('cwDishPhoto');
-  if(photo&&m){photo.onerror=function(){this.onerror=null;this.src='assets/food/pancakes.jpg';};photo.src=foodPhotoPath(curId,(DISHES[curId]||{}).category||'main');}
-  var list=$('cwStepList'), mini=$('cwMiniSteps');
-  var names=['Подготовка','Смешивание','Приготовление','Финальный штрих'];
-  var art=['assets/illustrations/kitchen-scale.png','assets/illustrations/mixing-bowl.png','assets/illustrations/frying-pan.png','assets/illustrations/plated-meal.png'];
-  if(list) list.innerHTML=(sd||[]).map(function(s,i){
-    var t=(s[0]||'').toLowerCase(), n=/нареж|измельч|шинк/.test(t)?'Нарезка':/взбей|смеш|перемеш|тест/.test(t)?'Смешивание':/жар|сковород|обжар/.test(t)?'Жарка':/вар|кип|суп/.test(t)?'Варка':/духов|выпек|запек/.test(t)?'Выпечка':/подай|подач|укрась/.test(t)?'Подача':(s[0]||names[i%4]).slice(0,24);
-    var img=/нареж|измельч|шинк/.test(t)?'assets/illustrations/chopping-board.png':/взбей|смеш|перемеш|тест/.test(t)?'assets/illustrations/bowl-whisk.png':/жар|сковород|обжар/.test(t)?'assets/illustrations/frying-pan.png':/вар|кип|суп/.test(t)?'assets/illustrations/soup-bowl.png':/духов|выпек|запек/.test(t)?'assets/illustrations/oven.png':/подай|подач|укрась/.test(t)?'assets/illustrations/plated-meal.png':art[i%art.length];
-    return '<div class="cw-step-item '+(i===si?'active':'')+'" data-cw-step="'+i+'"><span class="cw-step-no">'+(i+1)+'</span><img class="cw-step-art" src="'+img+'" alt=""><div><b>'+esc(n)+'</b><small>'+(i===si?'Сейчас готовим':'Шаг '+(i+1))+'</small></div></div>';
-  }).join('');
-  if(mini) mini.innerHTML=(sd||[]).slice(0,4).map(function(s,i){return '<div class="cw-mini-step"><i>'+(i+1)+'</i><span>'+esc(s[0]||'Следуйте инструкции')+'</span></div>';}).join('');
-  var cards=$('cwStepCards');
-  if(cards) cards.innerHTML=(sd||[]).map(function(s,i){
-    var t=(s[0]||'').toLowerCase(), img=/нареж|измельч|шинк/.test(t)?'assets/illustrations/chopping-board.png':/взбей|смеш|перемеш|тест|венчик/.test(t)?'assets/illustrations/bowl-whisk.png':/жар|сковород|обжар|переверн/.test(t)?'assets/illustrations/frying-pan.png':/вар|кип|суп/.test(t)?'assets/illustrations/soup-bowl.png':/пода|укрась|сервир|готово|тарел|сложи/.test(t)?'assets/illustrations/plated-meal.png':'assets/illustrations/mixing-bowl.png';
-    return '<button type="button" class="cw-step-card '+(i===si?'active':'')+'" data-cw-jump="'+i+'"><span class="cw-step-card-no">'+(i+1)+'</span><img src="'+img+'" alt=""><b>'+esc(s[0]||'Шаг '+(i+1))+'</b><small>'+(i===si?'Сейчас':'Шаг '+(i+1))+'</small></button>';
-  }).join('');
-
-  var ing=$('cwIngredients');
-  if(ing&&r.i){
-    ing.innerHTML=r.i.map(function(x,i){return '<div class="cw-ing"><label><input type="checkbox" data-cw-ing="'+i+'"><span>'+esc(x[1]||'Ингредиент')+'</span></label><span>'+esc(x[2]||'')+'</span></div>';}).join('');
-  }
-  var stepText=(step&&step[0])||'Подготовьте рабочее место.';
-  var sceneArt=$('cwSceneArt');
-  if(sceneArt){
-    var st=stepText.toLowerCase(), scene='assets/illustrations/chef-kitchen-scene.jpg';
-    if(/нареж|измельч|шинк|подготов|ингредиент/.test(st)) scene='assets/illustrations/ingredients-prep-scene.jpg';
-    else if(/жар|сковород|обжар|переверн|блин/.test(st)) scene='assets/illustrations/pan-pancake-scene.jpg';
-    else if(/пода|укрась|сервир|готово|тарел/.test(st)) scene='assets/illustrations/plating-pancakes-scene.jpg';
-    else if(/взбей|смеш|перемеш|тест|венчик/.test(st)) scene='assets/illustrations/chef-kitchen-scene.jpg';
-    if(sceneArt.getAttribute('src')!==scene){sceneArt.style.opacity='.35';sceneArt.setAttribute('src',scene);sceneArt.onload=function(){this.style.opacity='1';};}
-    sceneArt.alt='Иллюстрация этапа: '+stepText;
-  }
-  var title=$('cwTitle'), eyebrow=$('cwEyebrow'), sub=$('cwSub'), live=$('cwLiveText'), liveTitle=$('cwLiveTitle'), progress=$('cwLiveProgress'), clock=$('cwClock');
-  if(title) title.textContent=(stepText.length>46?stepText.slice(0,43)+'…':stepText);
-  if(eyebrow) eyebrow.textContent='ШАГ '+(si+1)+' ИЗ '+(sd.length||1);
-  if(sub) sub.textContent='Двигайтесь в комфортном темпе. Следующий шаг всегда под рукой.';
-  if(liveTitle) liveTitle.textContent=m?'Готовим '+m.name:'Готовим';
-  if(live) live.textContent=stepText;
-  if(progress) progress.style.width=((si+1)/Math.max(sd.length,1)*100)+'%';
-  if(clock) clock.textContent=(m&&m.time?m.time+' мин':'ПОЕХАЛИ');
-  var tip=$('cwChefTip');
-  if(tip){var t=(stepText||'').toLowerCase();tip.textContent=/взбей|смеш|перемеш/.test(t)?'Двигайтесь плавно и проверяйте консистенцию смеси — она подскажет больше, чем скорость.':/жар|сковород|обжар/.test(t)?'Хорошо разогрейте сковороду и не торопитесь переворачивать: дождитесь нужного цвета и текстуры.':/вар|кип|суп/.test(t)?'Поддерживайте умеренное кипение: слишком сильный огонь может испортить текстуру.':'Подготовьте ингредиенты заранее и ориентируйтесь на цвет, запах и текстуру блюда.';}
-}
-
-document.addEventListener('click',function(e){var card=e.target.closest('[data-cw-jump]');if(card){var n=Number(card.getAttribute('data-cw-jump'));if(Number.isFinite(n)&&n>=0&&n<sd.length){si=n;renderStep(true);}}});
-
+function renderCookingWorkspace(){
+  var r=allR()[curId], m=findD(curId), meta=MET[curId]||['','']; if(!r)return;
+  var dishMeta=DISHES[curId]||{category:'main'}, img=foodPhotoPath(curId,dishMeta.category);
+  $('cwDish').src=img; $('cwName').textContent=m?m.name:'Блюдо'; $('cwMeta').textContent=(meta[0]||'')+' · '+(meta[1]||'');
+  $('cwIngredients').innerHTML=r.i.map(function(g){return '<div class="cw-ing"><span>'+esc(g[1])+'</span><span>'+esc(g[2]||'')+'</span></div>'}).join('');
+  $('cwSteps').innerHTML=sd.map(function(x,i){return '<div class="cw-step '+(i===si?'on':'')+'" data-i="'+i+'"><span class="n">'+(i+1)+'</span><div><b>'+esc(x[0])+'</b><small>Шаг '+(i+1)+'</small></div></div>'}).join('');
+  $('cwGuide').innerHTML=sd.map(function(x,i){return '<div class="cw-guide-row '+(i===si?'on':'')+'"><i>'+(i+1)+'</i><span>'+esc(x[0])+'</span></div>'}).join('');
+  $('cwCards').innerHTML=sd.slice(0,4).map(function(x,i){return '<div class="cw-card '+(i===si?'on':'')+'" data-i="'+i+'"><div class="mini"><svg viewBox="0 0 200 160">'+scene(x[1],m?m.ico:'🍽')+'</svg></div><b>'+esc(x[0])+'</b></div>'}).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('#cwSteps [data-i],#cwCards [data-i]'),function(el){el.onclick=function(){si=parseInt(el.getAttribute('data-i'),10);renderStep(true)}});
+  var tip=cookingTip(curId,sd[si][0],sd[si][1]); $('cwChefTip').textContent=tip[0];
+} 
 function renderStep(animate){
   var step = sd[si];
   var m = findD(curId);
@@ -3371,7 +3074,6 @@ function renderStep(animate){
   setTimeout(function(){
     svg.innerHTML = scene(step[1], emo);
     txt.textContent = step[0];
-    renderCookingWorkspace(step);
     var tip = cookingTip(curId, step[0], step[1]);
     $('cookTipText').textContent = tip[0]; $('cookTipCheck').textContent = '✓ Признак готовности: ' + tip[1];
     var cheers=['Не спеши — точность важнее скорости.','Каждый шаг делает тебя увереннее на кухне.','Ошибки — часть обучения; исправляй по одному моменту.','Смотри на текстуру и цвет — они подскажут больше таймера.','Ты справляешься: следующий маленький шаг уже близко!']; $('cookEncourage').textContent = '✨ ' + cheers[si % cheers.length];
@@ -3380,6 +3082,8 @@ function renderStep(animate){
     $('prg').style.width = ((si+1)/sd.length*100) + '%';
     $('prevB').disabled = (si === 0);
     $('nextB').textContent = (si === sd.length-1) ? 'Готово! 🎉' : 'Далее →';
+    if($('cwAction')) $('cwAction').textContent=step[0];
+    renderCookingWorkspace();
 
     var mins = TIMER[curId];
     if(mins){
@@ -3429,6 +3133,8 @@ $('tmB').onclick = function(){
   update();
   tmInt = setInterval(update, 500);
 };
+
+$('cwStart').onclick=function(){si=0;renderStep(true);};
 
 $('cookB').onclick = function(){
   var r = allR()[curId];
@@ -3761,15 +3467,5 @@ window.addEventListener('unhandledrejection', function(e){
   b.textContent += '❌ Promise: ' + (e.reason && (e.reason.message || e.reason.code)) + '\n\n';
 });
 </script>
-
-<script>
-(function(){
-  var steps=document.getElementById('cwStepList');
-  if(steps) steps.addEventListener('click',function(e){var item=e.target.closest('[data-cw-step]');if(!item)return;var n=Number(item.getAttribute('data-cw-step'));if(Number.isFinite(n)&&n>=0&&n<sd.length){si=n;renderStep(true);}});
-  var start=document.getElementById('cwStart');if(start)start.addEventListener('click',function(){document.querySelector('#steps .cook-main').scrollIntoView({behavior:'smooth',block:'start'});});
-  var pause=document.getElementById('cwPause');if(pause)pause.addEventListener('click',function(){var stage=document.querySelector('#steps .stage');if(!stage)return;var paused=stage.classList.toggle('cw-paused');pause.textContent=paused?'▶':'Ⅱ';stage.querySelectorAll('*').forEach(function(el){if(el.style.animationPlayState!==undefined)el.style.animationPlayState=paused?'paused':'running';});});
-})();
-</script>
-
 </body>
 </html>

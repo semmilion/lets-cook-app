@@ -1,4 +1,4 @@
-const CACHE = 'lets-cook-v12-working-reset';
+const CACHE = 'lets-cook-v15-distinct-food';
 const ASSETS = [
   './',
   './index.html',
@@ -15,22 +15,6 @@ const ASSETS = [
   './assets/food/pasta.jpg',
   './assets/food/salmon.jpg',
   './assets/food/vegetable-stew.jpg',
-  './assets/illustrations/mixing-bowl.png',
-  './assets/illustrations/whisk.png',
-  './assets/illustrations/frying-pan.png',
-  './assets/illustrations/spatula.png',
-  './assets/illustrations/measuring-jug.png',
-  './assets/illustrations/kitchen-scale.png',
-  './assets/illustrations/bowl-whisk.png',
-  './assets/illustrations/chopping-board.png',
-  './assets/illustrations/soup-bowl.png',
-  './assets/illustrations/oven.png',
-  './assets/illustrations/plated-meal.png',
-  './assets/illustrations/chef-kitchen-scene.jpg',
-  './assets/illustrations/pan-pancake-scene.jpg',
-  './assets/illustrations/ingredients-prep-scene.jpg',
-  './assets/illustrations/plating-pancakes-scene.jpg',
-
   './assets/food/smoothie.jpg',
   './assets/food/cookies.jpg',
   './assets/food/berry-pancakes.jpg',
@@ -47,6 +31,7 @@ const ASSETS = [
   './assets/food/margherita-pizza.jpg',
   './assets/food/chocolate-cake-fresh.jpg',
   './privacy.html',
+  './delete-account.html',
   './assets/drawings/blender.webp',
   './assets/drawings/chef.webp',
   './assets/drawings/doodle_food.webp',
