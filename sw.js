@@ -1,4 +1,4 @@
-const CACHE = 'lets-cook-v15-distinct-food';
+const CACHE = 'lets-cook-v16-inline-cooking-media';
 const ASSETS = [
   './',
   './index.html',
