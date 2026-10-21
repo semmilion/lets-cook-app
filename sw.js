@@ -1,7 +1,8 @@
-const CACHE = 'lets-cook-v19-workspace-fix';
+const CACHE = 'lets-cook-v20-chef-cooking-ui';
 const ASSETS = [
   './',
   './index.html',
+  './assets/cooking-scenes/common/chef-kitchen.webp',
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
