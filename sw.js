@@ -1,4 +1,4 @@
-const CACHE = 'lets-cook-v18-illustrations';
+const CACHE = 'lets-cook-v19-workspace-fix';
 const ASSETS = [
   './',
   './index.html',
