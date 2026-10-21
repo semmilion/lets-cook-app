@@ -1,1 +1,0 @@
-{"name":"lets-cook","private":true,"type":"module","scripts":{"generate:images":"node scripts/generate-images.mjs"},"dependencies":{"dotenv":"^16.4.5","openai":"^4.77.0"}}
