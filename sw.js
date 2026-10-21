@@ -1,4 +1,4 @@
-const CACHE = 'lets-cook-v19-center-food-photo';
+const CACHE = 'lets-cook-v12-working-reset';
 const ASSETS = [
   './',
   './index.html',
@@ -47,7 +47,6 @@ const ASSETS = [
   './assets/food/margherita-pizza.jpg',
   './assets/food/chocolate-cake-fresh.jpg',
   './privacy.html',
-  './delete-account.html',
   './assets/drawings/blender.webp',
   './assets/drawings/chef.webp',
   './assets/drawings/doodle_food.webp',

@@ -1,0 +1,1 @@
+Исправленная рабочая версия. Рецепты встроены в index.html; data/recipes.json не требуется. Service Worker cache reset: lets-cook-v12-working-reset.
