@@ -1,4 +1,6 @@
-FIRESTORE-SETUP-RU.md
+# Documentation and maintenance notes are kept in GitHub, not deployed as public files.
+*.md
+*.txt
 firebase.json
 firestore.rules
 .vercelignore
