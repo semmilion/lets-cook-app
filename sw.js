@@ -1,4 +1,4 @@
-const CACHE = 'lets-cook-v30-embedded-food-20261025';
+const CACHE = 'lets-cook-v31-embedded-food-20261025';
 const ASSETS = [
   './index.html',
   './manifest.json',
