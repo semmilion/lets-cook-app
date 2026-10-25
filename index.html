@@ -4082,7 +4082,83 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 @media(max-width:480px){#steps .cw-scene{height:clamp(400px,68svh,560px)!important;min-height:400px}#steps .cw-title{max-width:calc(100% - 22px)}#steps .cw-timerbar{flex-wrap:wrap}#steps .cw-progress{min-width:120px}}
 </style>
 
+
+<style id="lc-cooking-premium-v37">
+/* Premium cooking workspace polish */
+#steps{min-height:100vh!important;box-sizing:border-box!important;padding:12px clamp(14px,2.2vw,36px) calc(32px + env(safe-area-inset-bottom))!important;background:radial-gradient(ellipse at 50% 0%,#fff8ed 0%,#f8eddc 58%,#f5e7d2 100%)!important}
+#steps .cw-head{width:100%;max-width:1540px!important;height:74px!important;min-height:74px!important;margin:0 auto!important;padding:0 4px 14px!important;display:flex!important;align-items:center!important;gap:16px!important;border-bottom:1px solid rgba(174,126,73,.2);box-sizing:border-box}
+#steps .bk{width:44px!important;height:44px!important;min-width:44px!important;border-radius:14px!important;border:1px solid #f0dfc9!important;background:#fffaf3!important;color:#513b2a!important;font-size:22px!important;box-shadow:0 4px 12px rgba(98,61,25,.06)!important}
+#steps .cw-brand{display:flex!important;align-items:center!important;gap:14px!important;min-width:0!important;flex:1!important}
+#steps .lc-cooking-wordmark{width:150px!important;flex:0 0 150px!important;display:flex!important;align-items:center!important}
+#steps .lc-cooking-wordmark .lc-logo-image{display:block!important;width:100%!important;height:auto!important;max-height:52px!important;object-fit:contain!important;object-position:left center!important}
+#steps .cw-brand small{font-size:13px!important;color:#8e765f!important;line-height:1.4!important}
+#steps .cw-head .ttl{font-size:13px!important;font-weight:800!important;color:#a45a20!important;background:#fff2df;padding:9px 13px;border-radius:999px}
+#steps .cw-grid{width:100%!important;max-width:1540px!important;margin:18px auto 0!important;grid-template-columns:minmax(250px,.82fr) minmax(430px,1.65fr) minmax(250px,.82fr)!important;gap:16px!important;align-items:stretch!important}
+#steps .cw-side{min-width:0!important;background:rgba(255,252,247,.94)!important;border:1px solid rgba(225,194,157,.72)!important;border-radius:22px!important;padding:18px!important;box-shadow:0 12px 34px rgba(100,66,31,.055)!important}
+#steps .cw-recipe-card{border-radius:16px!important;background:#fff7eb!important;padding:10px!important}
+#steps .cw-step{border-radius:13px!important;transition:background .18s ease,transform .18s ease!important}
+#steps .cw-step.active{background:#fff0dc!important;box-shadow:inset 3px 0 #ff781c!important}
+#steps .cw-step:hover{transform:translateX(2px)}
+#steps .cw-scene{height:clamp(500px,66vh,700px)!important;min-height:480px!important;border-radius:26px!important;overflow:hidden!important;box-shadow:0 18px 44px rgba(88,54,23,.15)!important;isolation:isolate}
+#steps .cw-bg{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;transform:none!important}
+#steps .cw-title{max-width:min(430px,65%)!important;width:auto!important;left:18px!important;top:18px!important;padding:18px 20px!important;border:1px solid rgba(255,255,255,.72)!important;border-radius:20px!important;background:rgba(255,251,244,.95)!important;box-shadow:0 12px 28px rgba(48,30,13,.12)!important;backdrop-filter:blur(10px)}
+#steps .cw-title strong{font-size:clamp(24px,2vw,32px)!important;letter-spacing:-.035em!important;line-height:1.12!important;color:#2e2118!important}
+#steps .cw-title small{font-size:13px!important;line-height:1.55!important}
+#steps .cw-timerbar{left:16px!important;right:16px!important;bottom:16px!important;padding:12px 14px!important;border:1px solid rgba(255,255,255,.8)!important;border-radius:20px!important;background:rgba(255,252,247,.96)!important;box-shadow:0 10px 28px rgba(47,28,13,.16)!important;backdrop-filter:blur(12px)}
+#steps .cw-progress{min-width:0!important}
+#steps .cw-timerbar button,#steps .cw-carousel>button#nextB{border-radius:14px!important;font-weight:800!important}
+#steps .cw-carousel>button#nextB{min-height:52px!important;box-shadow:0 9px 20px rgba(238,105,18,.2)!important}
+#steps .cw-right .cw-tip{background:#fff1dc!important;border-radius:17px!important}
+#steps .cw-tools>div{background:#fff8ed!important;border:1px solid #f1dfc6!important;border-radius:14px!important;transition:transform .18s ease,border-color .18s ease}
+#steps .cw-tools>div:hover{transform:translateY(-2px);border-color:#f3bd83!important}
+/* Remove the legacy empty outlined action-art overlay; step artwork is optional. */
+#steps .cw-art,#steps .cw-art:before,#steps .cw-art:after{display:none!important;content:none!important;border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important}
+#steps #cwActionArt,#steps #stg{display:none!important;border:0!important;outline:0!important;box-shadow:none!important}
+#steps .cw-empty{border:1px dashed #e8d2b5;background:#fff8ee;border-radius:13px;padding:12px!important;color:#806a55}
+@media(max-width:1180px){#steps .cw-grid{grid-template-columns:minmax(220px,.8fr) minmax(360px,1.4fr)!important;gap:14px!important}#steps .cw-right{grid-column:1/-1;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}#steps .cw-scene{height:clamp(480px,62vh,640px)!important}}
+@media(max-width:820px){#steps{padding:8px 12px calc(28px + env(safe-area-inset-bottom))!important}#steps .cw-head{height:62px!important;min-height:62px!important;padding-bottom:8px!important;gap:10px!important}#steps .lc-cooking-wordmark{width:118px!important;flex-basis:118px!important}#steps .lc-cooking-wordmark .lc-logo-image{max-height:42px!important}#steps .cw-brand{gap:8px!important}#steps .cw-brand small,#steps .cw-head .ttl{display:none!important}#steps .cw-grid{display:flex!important;flex-direction:column!important;gap:12px!important;margin-top:12px!important}#steps .cw-main{order:1}#steps .cw-left{order:2}#steps .cw-right{order:3;display:block!important}#steps .cw-scene{height:clamp(420px,66svh,600px)!important;min-height:420px!important;border-radius:22px!important}#steps .cw-title{left:12px!important;top:12px!important;max-width:76%!important;padding:13px 14px!important}#steps .cw-title strong{font-size:clamp(21px,5vw,27px)!important}#steps .cw-timerbar{left:9px!important;right:9px!important;bottom:9px!important;padding:9px!important;gap:8px!important}#steps .cw-side{padding:14px!important;border-radius:18px!important}#steps .cw-right{display:block!important}#steps .cw-right section{margin-bottom:10px!important}}
+@media(max-width:420px){#steps .bk{width:40px!important;height:40px!important;min-width:40px!important}#steps .lc-cooking-wordmark{width:105px!important;flex-basis:105px!important}#steps .cw-scene{height:440px!important;min-height:400px!important}#steps .cw-title{max-width:82%!important}#steps .cw-timerbar{flex-wrap:wrap!important}#steps .cw-timerbar button{min-height:40px!important}}
+@media(prefers-reduced-motion:reduce){#steps *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+</style>
+
 </body>
+
+<style id="lc-global-design-system-v38">
+/* Global visual system v38 — consistent surfaces, spacing, focus, and responsive layout. */
+:root{
+ --lc-canvas:#fbf4e9;--lc-surface:#fffdf9;--lc-surface-soft:#fff5e7;--lc-ink:#30251d;--lc-muted:#8a7563;--lc-line:#efdfcc;--lc-orange:#ff781e;--lc-orange-deep:#ed6410;--lc-peach:#ffe6c8;--lc-shadow:0 10px 30px rgba(92,57,25,.07);--lc-shadow-hover:0 16px 36px rgba(92,57,25,.12);--lc-radius:18px;
+}
+html{scroll-behavior:smooth;scroll-padding-top:18px}body{background:var(--lc-canvas);color:var(--lc-ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+body,button,input,select,textarea{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,select,textarea{font-size:inherit}button{touch-action:manipulation}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid rgba(255,120,30,.42)!important;outline-offset:3px}
+.view{box-sizing:border-box} .view *{box-sizing:border-box}
+#main{width:100%!important;max-width:none!important;padding-left:clamp(14px,2.2vw,32px)!important;padding-right:clamp(14px,2.2vw,32px)!important}
+#main .feed{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,235px),1fr));gap:16px}
+.card,.cardS,.cardT,.modalCard,.searchHist,.stnav,.pill,.btn,.abtn,.thbtn{transition:background-color .18s ease,border-color .18s ease,box-shadow .18s ease,transform .18s ease}
+.card,.cardS,.cardT{border-color:var(--lc-line)!important;border-radius:var(--lc-radius)!important;box-shadow:0 3px 12px rgba(92,57,25,.035)}
+.card:hover,.cardS:hover,.cardT:hover{box-shadow:var(--lc-shadow-hover);transform:translateY(-2px)}
+.btn,.abtn,.thbtn{border-radius:13px!important;font-weight:700;min-height:40px}
+.btn:active,.abtn:active,.thbtn:active{transform:translateY(1px)}
+input,select,textarea,.search{border-radius:13px!important;border-color:var(--lc-line)!important;background:var(--lc-surface)!important;color:var(--lc-ink)}
+input::placeholder,textarea::placeholder{color:#a18b77}
+.pill{border-radius:999px!important;border-color:var(--lc-line)!important}
+.bnav{border:1px solid rgba(239,223,204,.95)!important;border-radius:22px!important;box-shadow:0 12px 34px rgba(72,47,24,.12)!important;backdrop-filter:blur(16px)}
+.modalBg{backdrop-filter:blur(5px)}.modalCard{border:1px solid var(--lc-line)!important;border-radius:22px!important;box-shadow:0 24px 70px rgba(50,35,20,.2)!important}
+#splash{min-height:100svh!important;width:100%!important;max-width:none!important;display:flex;align-items:center;justify-content:center}
+#splash .splash-wordmark{margin-inline:auto}
+#steps{width:100%!important;max-width:none!important;margin-inline:auto!important}
+#steps .cw-grid{width:min(100%,1680px)!important;margin-inline:auto!important}
+#steps .cw-side{border:1px solid var(--lc-line)!important;box-shadow:var(--lc-shadow)!important}
+#steps .cw-scene{box-shadow:0 18px 42px rgba(83,49,20,.14)!important}
+#steps .cw-tip,#steps .cw-tools>div{color:var(--lc-ink)}
+img{max-width:100%}svg{flex-shrink:0}
+@media(min-width:1500px){#main .feed{grid-template-columns:repeat(5,minmax(0,1fr));gap:18px}}
+@media(max-width:760px){#main{padding-left:12px!important;padding-right:12px!important}#main .feed{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px} .card:hover,.cardS:hover,.cardT:hover{transform:none}}
+@media(max-width:380px){#main .feed{grid-template-columns:minmax(0,1fr)}.bnav{left:10px!important;right:10px!important;width:auto!important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+[data-theme="dark"]{--lc-canvas:#171411;--lc-surface:#24201b;--lc-surface-soft:#30261c;--lc-ink:#f7eee3;--lc-muted:#c0ad99;--lc-line:#493a2d;--lc-peach:#4a3020;--lc-shadow:0 10px 30px rgba(0,0,0,.2);--lc-shadow-hover:0 16px 36px rgba(0,0,0,.3)}
+[data-theme="dark"] body{background:var(--lc-canvas);color:var(--lc-ink)}[data-theme="dark"] input,[data-theme="dark"] select,[data-theme="dark"] textarea,[data-theme="dark"] .search{background:var(--lc-surface)!important;color:var(--lc-ink)}
+</style>
 </html>
 
 <style id="lc-fullscreen-and-splash-fix-v36">
